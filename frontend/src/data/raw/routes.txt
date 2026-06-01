@@ -1,0 +1,21 @@
+route_id,route_short_name,route_long_name,route_desc,route_type,route_color,route_sort_order
+TL-2,,Charter,,3,ff69b4,3000
+TL-11,,Training,,3,92FB02,3001
+TL-33,,Training - Please Ignore,,3,712828,3003
+TL-38,,UTS Test Route - Please Ignore,,3,000000,3002
+TL-53,,Orange Line,,3,ff7300,2009
+TL-54,,Green Loop,,3,0c8103,2008
+TL-55,,Orange Loop,,3,ff7300,2010
+TL-57,,Gold Line,,3,ffdd00,2012
+TL-58,,Silver Line,,3,5f6367,2013
+TL-59,,Night Pilot,,3,232d48,2014
+TL-60,,JPJ Arena Fan Shuttle,,3,25e012,2015
+TL-61,,North Grounds Fan Shuttle,,3,0072bc,2016
+TL-62,,Fontaine Research Park Fan Shuttle,,3,f60303,2017
+TL-63,,Post-Game Fan Shuttle,,3,232d80,2018
+TL-66,,Green Line,,3,0c8103,1999
+TL-67,,Gold Line,,3,ffdd00,1001
+TL-69,,Snow Special,,3,697bc3,4000
+TL-72,,Purple Line,,3,662c90,5000
+TL-73,,Purple Line,,3,662c90,5002
+TL-74,,Purple Line,,3,662c90,5001
