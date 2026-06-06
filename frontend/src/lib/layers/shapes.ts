@@ -7,7 +7,6 @@ import routes from "@/data/json/routes.json";
 export function addShapesLayer(map: mapboxgl.Map) {
   const routesMap = new Map<string, string>(routes.map(route => [route.route_id, route.route_color]));
   const geojson = shapesToGeoJSON(shapes as ShapePoint[], routesMap);
-  console.log(geojson.features[0].properties);
   map.addSource("shapes", {
     type: "geojson",
     data: geojson,
