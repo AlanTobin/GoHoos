@@ -2,6 +2,7 @@ import type { Stop } from "@/types/stop";
 import type { ShapePoint } from "@/types/shapes";
 import type { Vehicle } from "@/types/vehicle";
 import { FeatureCollection, Point, LineString, Feature } from "geojson";
+import { Route } from "@/types/route";
 
 export function stopsToGeoJSON(stops: Stop[]): FeatureCollection<Point> {
     return {
@@ -21,7 +22,7 @@ export function stopsToGeoJSON(stops: Stop[]): FeatureCollection<Point> {
     }
   }
   
-  export function shapesToGeoJSON(shapes: ShapePoint[]): FeatureCollection<LineString> {
+  export function shapesToGeoJSON(shapes: ShapePoint[], routesMap: Map<string, string>): FeatureCollection<LineString> {
     const buckets = new Map<string, ShapePoint[]>();
     for (const shape of shapes) {
         if (!buckets.has(shape.shape_id)) {
@@ -39,7 +40,7 @@ export function stopsToGeoJSON(stops: Stop[]): FeatureCollection<Point> {
         features.features.push({
             type: "Feature",
             geometry: { type: "LineString", coordinates: sortedGroup.map(point => [point.shape_pt_lon, point.shape_pt_lat]) },
-            properties: { id: shape_id }
+            properties: { id: shape_id, routeColor: routesMap.get(shape_id) }
         });
     }
     return features;

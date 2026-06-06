@@ -1,47 +1,11 @@
 [
   {
-    "route_id": "TL-2",
-    "route_short_name": null,
-    "route_long_name": "Charter",
-    "route_desc": null,
-    "route_type": 3,
-    "route_color": "ff69b4",
-    "route_sort_order": 3000
-  },
-  {
-    "route_id": "TL-11",
-    "route_short_name": null,
-    "route_long_name": "Training",
-    "route_desc": null,
-    "route_type": 3,
-    "route_color": "92FB02",
-    "route_sort_order": 3001
-  },
-  {
-    "route_id": "TL-33",
-    "route_short_name": null,
-    "route_long_name": "Training - Please Ignore",
-    "route_desc": null,
-    "route_type": 3,
-    "route_color": "712828",
-    "route_sort_order": 3003
-  },
-  {
-    "route_id": "TL-38",
-    "route_short_name": null,
-    "route_long_name": "UTS Test Route - Please Ignore",
-    "route_desc": null,
-    "route_type": 3,
-    "route_color": "000000",
-    "route_sort_order": 3002
-  },
-  {
     "route_id": "TL-53",
     "route_short_name": null,
     "route_long_name": "Orange Line",
     "route_desc": null,
     "route_type": 3,
-    "route_color": "ff7300",
+    "route_color": "#ff7300",
     "route_sort_order": 2009
   },
   {
@@ -50,7 +14,7 @@
     "route_long_name": "Green Loop",
     "route_desc": null,
     "route_type": 3,
-    "route_color": "0c8103",
+    "route_color": "#0c8103",
     "route_sort_order": 2008
   },
   {
@@ -59,7 +23,7 @@
     "route_long_name": "Orange Loop",
     "route_desc": null,
     "route_type": 3,
-    "route_color": "ff7300",
+    "route_color": "#ff7300",
     "route_sort_order": 2010
   },
   {
@@ -68,7 +32,7 @@
     "route_long_name": "Gold Line",
     "route_desc": null,
     "route_type": 3,
-    "route_color": "ffdd00",
+    "route_color": "#ffdd00",
     "route_sort_order": 2012
   },
   {
@@ -77,7 +41,7 @@
     "route_long_name": "Silver Line",
     "route_desc": null,
     "route_type": 3,
-    "route_color": "5f6367",
+    "route_color": "#5f6367",
     "route_sort_order": 2013
   },
   {
@@ -86,7 +50,7 @@
     "route_long_name": "Night Pilot",
     "route_desc": null,
     "route_type": 3,
-    "route_color": "232d48",
+    "route_color": "#232d48",
     "route_sort_order": 2014
   },
   {
@@ -95,7 +59,7 @@
     "route_long_name": "JPJ Arena Fan Shuttle",
     "route_desc": null,
     "route_type": 3,
-    "route_color": "25e012",
+    "route_color": "#25e012",
     "route_sort_order": 2015
   },
   {
@@ -104,7 +68,7 @@
     "route_long_name": "North Grounds Fan Shuttle",
     "route_desc": null,
     "route_type": 3,
-    "route_color": "0072bc",
+    "route_color": "#0072bc",
     "route_sort_order": 2016
   },
   {
@@ -113,7 +77,7 @@
     "route_long_name": "Fontaine Research Park Fan Shuttle",
     "route_desc": null,
     "route_type": 3,
-    "route_color": "f60303",
+    "route_color": "#f60303",
     "route_sort_order": 2017
   },
   {
@@ -122,7 +86,7 @@
     "route_long_name": "Post-Game Fan Shuttle",
     "route_desc": null,
     "route_type": 3,
-    "route_color": "232d80",
+    "route_color": "#232d80",
     "route_sort_order": 2018
   },
   {
@@ -131,7 +95,7 @@
     "route_long_name": "Green Line",
     "route_desc": null,
     "route_type": 3,
-    "route_color": "0c8103",
+    "route_color": "#0c8103",
     "route_sort_order": 1999
   },
   {
@@ -140,7 +104,7 @@
     "route_long_name": "Gold Line",
     "route_desc": null,
     "route_type": 3,
-    "route_color": "ffdd00",
+    "route_color": "#ffdd00",
     "route_sort_order": 1001
   },
   {
@@ -149,7 +113,7 @@
     "route_long_name": "Snow Special",
     "route_desc": null,
     "route_type": 3,
-    "route_color": "697bc3",
+    "route_color": "#697bc3",
     "route_sort_order": 4000
   },
   {
@@ -158,7 +122,7 @@
     "route_long_name": "Purple Line",
     "route_desc": null,
     "route_type": 3,
-    "route_color": "662c90",
+    "route_color": "#662c90",
     "route_sort_order": 5000
   },
   {
@@ -167,7 +131,7 @@
     "route_long_name": "Purple Line",
     "route_desc": null,
     "route_type": 3,
-    "route_color": "662c90",
+    "route_color": "#662c90",
     "route_sort_order": 5002
   },
   {
@@ -176,7 +140,7 @@
     "route_long_name": "Purple Line",
     "route_desc": null,
     "route_type": 3,
-    "route_color": "662c90",
+    "route_color": "#662c90",
     "route_sort_order": 5001
   }
 ]

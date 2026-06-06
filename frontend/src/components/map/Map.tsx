@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import { addStopsLayer } from "@/lib/layers/stops";
 import { addShapesLayer } from "@/lib/layers/shapes";
@@ -12,6 +12,7 @@ mapboxgl.accessToken =
 
 export default function Map() {
   const mapContainerRef = useRef<HTMLDivElement>(null);
+  const [selectedShapeID, setSelectedShapeID] = useState<string | null>(null);
 
   useEffect(() => {
     if (!mapContainerRef.current) return;
@@ -20,13 +21,39 @@ export default function Map() {
       container: mapContainerRef.current,
       style: "mapbox://styles/mapbox/streets-v12",
       center: [-78.508, 38.0385], // UVA
-      zoom: 14,
+      zoom: 13.5,
     });
-
+  
     map.on("load", async () => {
       addStopsLayer(map);
       addShapesLayer(map);
+
+    map.on("click", "shapes", (e) => {
+        const selection = e.features?.[0]?.properties?.id;
+        setSelectedShapeID(current => {
+          if (current === selection) {
+            map.setFilter("shapes", null);
+            return null;
+          }
+          map.setFilter("shapes", [
+            "==",
+            ["get", "id"],
+            selection,
+          ]);
+          return selection;
+        });
+      });
       
+    map.on("click", (e) => {
+        const features = map.queryRenderedFeatures(e.point, {
+          layers: ["shapes"],
+        });
+      
+        if (features.length === 0) {
+          setSelectedShapeID(null);
+          map.setFilter("shapes", null);
+        }
+      });
       
       const vehicles = await getVehicles();
       addVehiclesLayer(map, vehicles);
@@ -35,6 +62,7 @@ export default function Map() {
         const vehicles = await getVehicles();
         updateVehiclesLayer(map, vehicles);
       }, 1000);
+
     });
 
     return () => map.remove();
