@@ -16,10 +16,26 @@ export function addStopsLayer(map: mapboxgl.Map) {
     type: "circle",
     source: "stops",
     paint: {
-        "circle-radius": 6,
-        "circle-color": "#DC2626",
-        "circle-stroke-width": 1,
-        "circle-stroke-color": "#FFFFFF",
-      }
+      "circle-radius": 5,
+      "circle-color": "#FFFFFF",
+      "circle-stroke-width": 2.5,
+      "circle-stroke-opacity": 1,
+      "circle-stroke-color": "#000000",
+    },
   });
+}
+
+export function stopRouteFilter(
+  selectedRoutes: Set<string>
+): mapboxgl.FilterSpecification {
+  if (selectedRoutes.size === 0) {
+    return ["==", ["get", "id"], ""];
+  }
+
+  return [
+    "any",
+    ...[...selectedRoutes].map(
+      (routeId): mapboxgl.Expression => ["in", routeId, ["get", "routeIds"]]
+    ),
+  ];
 }

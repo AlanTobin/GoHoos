@@ -1,8 +1,8 @@
 import type { Stop } from "@/types/stop";
 import type { ShapePoint } from "@/types/shapes";
 import type { Vehicle } from "@/types/vehicle";
-import { FeatureCollection, Point, LineString, Feature } from "geojson";
-import { Route } from "@/types/route";
+import { toRouteId } from "@/lib/routes";
+import { FeatureCollection, Point, LineString } from "geojson";
 
 export function stopsToGeoJSON(stops: Stop[]): FeatureCollection<Point> {
     return {
@@ -16,7 +16,8 @@ export function stopsToGeoJSON(stops: Stop[]): FeatureCollection<Point> {
                 code: stop.stop_code,
                 description: stop.stop_desc,
                 location_type: stop.location_type,
-                parent_station: stop.parent_station
+                parent_station: stop.parent_station,
+                routeIds: stop.routeIds,
             }
         }))
     }
@@ -40,7 +41,7 @@ export function stopsToGeoJSON(stops: Stop[]): FeatureCollection<Point> {
         features.features.push({
             type: "Feature",
             geometry: { type: "LineString", coordinates: sortedGroup.map(point => [point.shape_pt_lon, point.shape_pt_lat]) },
-            properties: { id: shape_id, routeColor: routesMap.get(shape_id) }
+            properties: { id: shape_id, routeColor: routesMap.get(shape_id) ?? "#888888" }
         });
     }
     return features;
@@ -55,7 +56,7 @@ export function stopsToGeoJSON(stops: Stop[]): FeatureCollection<Point> {
             properties: {
                 id: vehicle.VehicleID,
                 name: vehicle.Name,
-                route: vehicle.RouteID,
+                route: toRouteId(vehicle.RouteID),
                 speed: vehicle.GroundSpeed,
                 heading: vehicle.Heading,
                 delayed: vehicle.IsDelayed,

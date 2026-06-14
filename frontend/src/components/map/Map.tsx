@@ -1,18 +1,42 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import mapboxgl from "mapbox-gl";
-import { addStopsLayer } from "@/lib/layers/stops";
-import { addShapesLayer } from "@/lib/layers/shapes";
+import "mapbox-gl/dist/mapbox-gl.css";
+import { addStopsLayer, stopRouteFilter } from "@/lib/layers/stops";
+import {
+  addShapesLayer,
+  setShapeRouteVisibility,
+  shapesLayersReady,
+} from "@/lib/layers/shapes";
 import { addVehiclesLayer, updateVehiclesLayer } from "@/lib/layers/vehicles";
-import { getVehicles } from "@/services/vehicles";
+import { Vehicle } from "@/types/vehicle";
 
-mapboxgl.accessToken =
-  process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN!;
+mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN!;
 
-export default function Map() {
+function applyMapFilters(map: mapboxgl.Map, selectedRoutes: Set<string>) {
+  setShapeRouteVisibility(map, selectedRoutes);
+  map.setFilter("stops", stopRouteFilter(selectedRoutes));
+}
+
+interface Props {
+  selectedRoutes: Set<string>;
+  visibleVehicles: Vehicle[];
+}
+
+export default function Map({ selectedRoutes, visibleVehicles }: Props) {
   const mapContainerRef = useRef<HTMLDivElement>(null);
-  const [selectedShapeID, setSelectedShapeID] = useState<string | null>(null);
+  const mapRef = useRef<mapboxgl.Map | null>(null);
+  const selectedRoutesRef = useRef<Set<string>>(selectedRoutes);
+  const visibleVehiclesRef = useRef<Vehicle[]>(visibleVehicles);
+
+  useEffect(() => {
+    selectedRoutesRef.current = selectedRoutes;
+  }, [selectedRoutes]);
+
+  useEffect(() => {
+    visibleVehiclesRef.current = visibleVehicles;
+  }, [visibleVehicles]);
 
   useEffect(() => {
     if (!mapContainerRef.current) return;
@@ -20,58 +44,37 @@ export default function Map() {
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: "mapbox://styles/mapbox/streets-v12",
-      center: [-78.508, 38.0385], // UVA
+      center: [-78.508, 38.0385],
       zoom: 13.5,
     });
-  
-    map.on("load", async () => {
-      addStopsLayer(map);
+
+    mapRef.current = map;
+
+    map.on("load", () => {
       addShapesLayer(map);
-
-    map.on("click", "shapes", (e) => {
-        const selection = e.features?.[0]?.properties?.id;
-        setSelectedShapeID(current => {
-          if (current === selection) {
-            map.setFilter("shapes", null);
-            return null;
-          }
-          map.setFilter("shapes", [
-            "==",
-            ["get", "id"],
-            selection,
-          ]);
-          return selection;
-        });
-      });
-      
-    map.on("click", (e) => {
-        const features = map.queryRenderedFeatures(e.point, {
-          layers: ["shapes"],
-        });
-      
-        if (features.length === 0) {
-          setSelectedShapeID(null);
-          map.setFilter("shapes", null);
-        }
-      });
-      
-      const vehicles = await getVehicles();
-      addVehiclesLayer(map, vehicles);
-
-      setInterval(async () => {
-        const vehicles = await getVehicles();
-        updateVehiclesLayer(map, vehicles);
-      }, 1000);
-
+      addStopsLayer(map);
+      addVehiclesLayer(map, visibleVehiclesRef.current);
+      applyMapFilters(map, selectedRoutesRef.current);
     });
 
     return () => map.remove();
   }, []);
 
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map?.getSource("vehicles")) return;
+    updateVehiclesLayer(map, visibleVehicles);
+  }, [visibleVehicles]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !shapesLayersReady(map)) return;
+    applyMapFilters(map, selectedRoutes);
+  }, [selectedRoutes]);
+
   return (
-    <div
-      ref={mapContainerRef}
-      className="h-screen w-full"
-    />
+    <div className="absolute inset-0">
+      <div ref={mapContainerRef} className="h-full w-full" />
+    </div>
   );
 }

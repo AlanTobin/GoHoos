@@ -8,7 +8,10 @@
     "stop_lon": -78.5076160767,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-11"
+    ]
   },
   {
     "stop_id": "TL-406",
@@ -19,7 +22,10 @@
     "stop_lon": -78.5076160767,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-2"
+    ]
   },
   {
     "stop_id": "TL-498",
@@ -30,7 +36,13 @@
     "stop_lon": -78.505219,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-38",
+      "TL-57",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-499",
@@ -41,7 +53,13 @@
     "stop_lon": -78.508089411,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-38",
+      "TL-57",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-500",
@@ -52,7 +70,8 @@
     "stop_lon": -78.510184,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": []
   },
   {
     "stop_id": "TL-501",
@@ -63,7 +82,15 @@
     "stop_lon": -78.5125531,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-38",
+      "TL-57",
+      "TL-61",
+      "TL-63",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-502",
@@ -74,7 +101,8 @@
     "stop_lon": -78.5122346994,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": []
   },
   {
     "stop_id": "TL-503",
@@ -85,7 +113,15 @@
     "stop_lon": -78.508648,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-38",
+      "TL-57",
+      "TL-58",
+      "TL-60",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-504",
@@ -96,7 +132,11 @@
     "stop_lon": -78.505573,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-57",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-505",
@@ -107,7 +147,8 @@
     "stop_lon": -78.506361,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": []
   },
   {
     "stop_id": "TL-506",
@@ -118,7 +159,12 @@
     "stop_lon": -78.509224,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-58",
+      "TL-60"
+    ]
   },
   {
     "stop_id": "TL-507",
@@ -129,7 +175,18 @@
     "stop_lon": -78.51424,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-54",
+      "TL-55",
+      "TL-57",
+      "TL-60",
+      "TL-61",
+      "TL-63",
+      "TL-66",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-508",
@@ -140,7 +197,22 @@
     "stop_lon": -78.516414,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-57",
+      "TL-60",
+      "TL-61",
+      "TL-62",
+      "TL-63",
+      "TL-66",
+      "TL-67",
+      "TL-72",
+      "TL-73"
+    ]
   },
   {
     "stop_id": "TL-509",
@@ -151,7 +223,17 @@
     "stop_lon": -78.5122195,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-53",
+      "TL-60",
+      "TL-61",
+      "TL-62",
+      "TL-63",
+      "TL-72",
+      "TL-73"
+    ]
   },
   {
     "stop_id": "TL-510",
@@ -162,7 +244,22 @@
     "stop_lon": -78.516386325,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-57",
+      "TL-60",
+      "TL-61",
+      "TL-62",
+      "TL-63",
+      "TL-66",
+      "TL-67",
+      "TL-72",
+      "TL-73"
+    ]
   },
   {
     "stop_id": "TL-511",
@@ -173,7 +270,8 @@
     "stop_lon": -79.516388,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": []
   },
   {
     "stop_id": "TL-512",
@@ -184,7 +282,18 @@
     "stop_lon": -78.514117,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-54",
+      "TL-55",
+      "TL-57",
+      "TL-60",
+      "TL-61",
+      "TL-63",
+      "TL-66",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-513",
@@ -195,7 +304,15 @@
     "stop_lon": -78.51205,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-38",
+      "TL-57",
+      "TL-61",
+      "TL-63",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-514",
@@ -206,7 +323,15 @@
     "stop_lon": -78.5124984,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-38",
+      "TL-57",
+      "TL-61",
+      "TL-63",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-515",
@@ -217,7 +342,15 @@
     "stop_lon": -78.509797,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-38",
+      "TL-57",
+      "TL-61",
+      "TL-63",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-516",
@@ -228,7 +361,13 @@
     "stop_lon": -78.506336,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-38",
+      "TL-57",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-556",
@@ -239,7 +378,13 @@
     "stop_lon": -78.505219,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-38",
+      "TL-57",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-557",
@@ -250,7 +395,13 @@
     "stop_lon": -78.508089411,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-38",
+      "TL-57",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-558",
@@ -261,7 +412,10 @@
     "stop_lon": -78.510184,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-38"
+    ]
   },
   {
     "stop_id": "TL-559",
@@ -272,7 +426,10 @@
     "stop_lon": -78.5122346994,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-38"
+    ]
   },
   {
     "stop_id": "TL-560",
@@ -283,7 +440,15 @@
     "stop_lon": -78.5125531,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-38",
+      "TL-57",
+      "TL-61",
+      "TL-63",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-561",
@@ -294,7 +459,15 @@
     "stop_lon": -78.508648,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-38",
+      "TL-57",
+      "TL-58",
+      "TL-60",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-653",
@@ -305,7 +478,14 @@
     "stop_lon": -78.5047036181,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-54",
+      "TL-55",
+      "TL-57",
+      "TL-59",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-654",
@@ -316,7 +496,12 @@
     "stop_lon": -78.501313,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-54",
+      "TL-55",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-655",
@@ -327,7 +512,12 @@
     "stop_lon": -78.498187,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-54",
+      "TL-55",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-656",
@@ -338,7 +528,13 @@
     "stop_lon": -78.496028,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-657",
@@ -349,7 +545,13 @@
     "stop_lon": -78.493186,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-658",
@@ -360,7 +562,13 @@
     "stop_lon": -78.491635,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-659",
@@ -371,7 +579,13 @@
     "stop_lon": -78.492414,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-660",
@@ -382,7 +596,13 @@
     "stop_lon": -78.496089,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-661",
@@ -393,7 +613,12 @@
     "stop_lon": -78.497755,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55"
+    ]
   },
   {
     "stop_id": "TL-662",
@@ -404,7 +629,12 @@
     "stop_lon": -78.499384,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55"
+    ]
   },
   {
     "stop_id": "TL-663",
@@ -415,7 +645,10 @@
     "stop_lon": -78.500447464,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-54"
+    ]
   },
   {
     "stop_id": "TL-664",
@@ -426,7 +659,17 @@
     "stop_lon": -78.504069,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-58",
+      "TL-59",
+      "TL-72",
+      "TL-73",
+      "TL-74"
+    ]
   },
   {
     "stop_id": "TL-665",
@@ -437,7 +680,12 @@
     "stop_lon": -78.5098208221,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-74"
+    ]
   },
   {
     "stop_id": "TL-666",
@@ -448,7 +696,12 @@
     "stop_lon": -78.511548,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-74"
+    ]
   },
   {
     "stop_id": "TL-667",
@@ -459,7 +712,12 @@
     "stop_lon": -78.514556,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-74"
+    ]
   },
   {
     "stop_id": "TL-668",
@@ -470,7 +728,15 @@
     "stop_lon": -78.5158914328,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-59",
+      "TL-62",
+      "TL-72"
+    ]
   },
   {
     "stop_id": "TL-670",
@@ -481,7 +747,18 @@
     "stop_lon": -78.514117,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-54",
+      "TL-55",
+      "TL-57",
+      "TL-60",
+      "TL-61",
+      "TL-63",
+      "TL-66",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-671",
@@ -492,7 +769,10 @@
     "stop_lon": -78.5116969103,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-54"
+    ]
   },
   {
     "stop_id": "TL-672",
@@ -503,7 +783,14 @@
     "stop_lon": -78.506057481,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-54",
+      "TL-55",
+      "TL-57",
+      "TL-59",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-674",
@@ -514,7 +801,22 @@
     "stop_lon": -78.516388,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-57",
+      "TL-60",
+      "TL-61",
+      "TL-62",
+      "TL-63",
+      "TL-66",
+      "TL-67",
+      "TL-72",
+      "TL-73"
+    ]
   },
   {
     "stop_id": "TL-675",
@@ -525,7 +827,13 @@
     "stop_lon": -78.493186,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-676",
@@ -536,7 +844,13 @@
     "stop_lon": -78.491635,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-677",
@@ -547,7 +861,13 @@
     "stop_lon": -78.492414,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-678",
@@ -558,7 +878,13 @@
     "stop_lon": -78.496089,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-679",
@@ -569,7 +895,12 @@
     "stop_lon": -78.497755,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55"
+    ]
   },
   {
     "stop_id": "TL-680",
@@ -580,7 +911,12 @@
     "stop_lon": -78.499384,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55"
+    ]
   },
   {
     "stop_id": "TL-681",
@@ -591,7 +927,10 @@
     "stop_lon": -78.500447464,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53"
+    ]
   },
   {
     "stop_id": "TL-682",
@@ -602,7 +941,17 @@
     "stop_lon": -78.504069,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-58",
+      "TL-59",
+      "TL-72",
+      "TL-73",
+      "TL-74"
+    ]
   },
   {
     "stop_id": "TL-683",
@@ -613,7 +962,12 @@
     "stop_lon": -78.5098208221,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-74"
+    ]
   },
   {
     "stop_id": "TL-684",
@@ -624,7 +978,12 @@
     "stop_lon": -78.511548,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-74"
+    ]
   },
   {
     "stop_id": "TL-685",
@@ -635,7 +994,12 @@
     "stop_lon": -78.514556,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-74"
+    ]
   },
   {
     "stop_id": "TL-686",
@@ -646,7 +1010,15 @@
     "stop_lon": -78.5158914328,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-59",
+      "TL-62",
+      "TL-72"
+    ]
   },
   {
     "stop_id": "TL-687",
@@ -657,7 +1029,22 @@
     "stop_lon": -78.516388,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-57",
+      "TL-60",
+      "TL-61",
+      "TL-62",
+      "TL-63",
+      "TL-66",
+      "TL-67",
+      "TL-72",
+      "TL-73"
+    ]
   },
   {
     "stop_id": "TL-688",
@@ -668,7 +1055,15 @@
     "stop_lon": -78.5128796432,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-53",
+      "TL-60",
+      "TL-61",
+      "TL-62",
+      "TL-63"
+    ]
   },
   {
     "stop_id": "TL-689",
@@ -679,7 +1074,17 @@
     "stop_lon": -78.5122195,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-53",
+      "TL-60",
+      "TL-61",
+      "TL-62",
+      "TL-63",
+      "TL-72",
+      "TL-73"
+    ]
   },
   {
     "stop_id": "TL-690",
@@ -690,7 +1095,22 @@
     "stop_lon": -78.516386325,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-57",
+      "TL-60",
+      "TL-61",
+      "TL-62",
+      "TL-63",
+      "TL-66",
+      "TL-67",
+      "TL-72",
+      "TL-73"
+    ]
   },
   {
     "stop_id": "TL-691",
@@ -701,7 +1121,15 @@
     "stop_lon": -78.513313,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-55",
+      "TL-59",
+      "TL-72",
+      "TL-73",
+      "TL-74"
+    ]
   },
   {
     "stop_id": "TL-692",
@@ -712,7 +1140,15 @@
     "stop_lon": -78.5109978601,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-55",
+      "TL-59",
+      "TL-72",
+      "TL-73",
+      "TL-74"
+    ]
   },
   {
     "stop_id": "TL-693",
@@ -723,7 +1159,15 @@
     "stop_lon": -78.5096342012,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-55",
+      "TL-59",
+      "TL-72",
+      "TL-73",
+      "TL-74"
+    ]
   },
   {
     "stop_id": "TL-694",
@@ -734,7 +1178,15 @@
     "stop_lon": -78.508086108,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-55",
+      "TL-59",
+      "TL-72",
+      "TL-73",
+      "TL-74"
+    ]
   },
   {
     "stop_id": "TL-695",
@@ -745,7 +1197,17 @@
     "stop_lon": -78.503314,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-58",
+      "TL-59",
+      "TL-72",
+      "TL-73",
+      "TL-74"
+    ]
   },
   {
     "stop_id": "TL-696",
@@ -756,7 +1218,17 @@
     "stop_lon": -78.500844,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-58",
+      "TL-59",
+      "TL-72",
+      "TL-73",
+      "TL-74"
+    ]
   },
   {
     "stop_id": "TL-697",
@@ -767,7 +1239,12 @@
     "stop_lon": -78.499256,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55"
+    ]
   },
   {
     "stop_id": "TL-698",
@@ -778,7 +1255,12 @@
     "stop_lon": -78.497805,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55"
+    ]
   },
   {
     "stop_id": "TL-699",
@@ -789,7 +1271,13 @@
     "stop_lon": -78.496028,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-700",
@@ -800,7 +1288,13 @@
     "stop_lon": -78.493186,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-701",
@@ -811,7 +1305,13 @@
     "stop_lon": -78.491635,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-702",
@@ -822,7 +1322,13 @@
     "stop_lon": -78.492414,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-703",
@@ -833,7 +1339,13 @@
     "stop_lon": -78.496089,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-704",
@@ -844,7 +1356,12 @@
     "stop_lon": -78.498636,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-54",
+      "TL-55",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-705",
@@ -855,7 +1372,12 @@
     "stop_lon": -78.501384,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-54",
+      "TL-55",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-706",
@@ -866,7 +1388,14 @@
     "stop_lon": -78.505295,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-54",
+      "TL-55",
+      "TL-57",
+      "TL-59",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-707",
@@ -877,7 +1406,14 @@
     "stop_lon": -78.5061534957,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-54",
+      "TL-55",
+      "TL-57",
+      "TL-59",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-708",
@@ -888,7 +1424,10 @@
     "stop_lon": -78.5117900079,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-55"
+    ]
   },
   {
     "stop_id": "TL-709",
@@ -899,7 +1438,18 @@
     "stop_lon": -78.51424,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-54",
+      "TL-55",
+      "TL-57",
+      "TL-60",
+      "TL-61",
+      "TL-63",
+      "TL-66",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-710",
@@ -910,7 +1460,22 @@
     "stop_lon": -78.516414,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-57",
+      "TL-60",
+      "TL-61",
+      "TL-62",
+      "TL-63",
+      "TL-66",
+      "TL-67",
+      "TL-72",
+      "TL-73"
+    ]
   },
   {
     "stop_id": "TL-711",
@@ -921,7 +1486,15 @@
     "stop_lon": -78.513313,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-55",
+      "TL-59",
+      "TL-72",
+      "TL-73",
+      "TL-74"
+    ]
   },
   {
     "stop_id": "TL-712",
@@ -932,7 +1505,15 @@
     "stop_lon": -78.5109978601,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-55",
+      "TL-59",
+      "TL-72",
+      "TL-73",
+      "TL-74"
+    ]
   },
   {
     "stop_id": "TL-713",
@@ -943,7 +1524,15 @@
     "stop_lon": -78.5096342012,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-55",
+      "TL-59",
+      "TL-72",
+      "TL-73",
+      "TL-74"
+    ]
   },
   {
     "stop_id": "TL-714",
@@ -954,7 +1543,15 @@
     "stop_lon": -78.508086108,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-55",
+      "TL-59",
+      "TL-72",
+      "TL-73",
+      "TL-74"
+    ]
   },
   {
     "stop_id": "TL-715",
@@ -965,7 +1562,17 @@
     "stop_lon": -78.503314,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-58",
+      "TL-59",
+      "TL-72",
+      "TL-73",
+      "TL-74"
+    ]
   },
   {
     "stop_id": "TL-716",
@@ -976,7 +1583,17 @@
     "stop_lon": -78.500844,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-58",
+      "TL-59",
+      "TL-72",
+      "TL-73",
+      "TL-74"
+    ]
   },
   {
     "stop_id": "TL-717",
@@ -987,7 +1604,12 @@
     "stop_lon": -78.499256,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55"
+    ]
   },
   {
     "stop_id": "TL-718",
@@ -998,7 +1620,12 @@
     "stop_lon": -78.497805,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55"
+    ]
   },
   {
     "stop_id": "TL-719",
@@ -1009,7 +1636,13 @@
     "stop_lon": -78.496028,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-720",
@@ -1020,7 +1653,15 @@
     "stop_lon": -78.508648,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-38",
+      "TL-57",
+      "TL-58",
+      "TL-60",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-721",
@@ -1031,7 +1672,12 @@
     "stop_lon": -78.505573,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-57",
+      "TL-58",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-722",
@@ -1042,7 +1688,10 @@
     "stop_lon": -78.506361,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-58"
+    ]
   },
   {
     "stop_id": "TL-723",
@@ -1053,7 +1702,10 @@
     "stop_lon": -78.507302,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-58"
+    ]
   },
   {
     "stop_id": "TL-724",
@@ -1064,7 +1716,11 @@
     "stop_lon": -78.50832373,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-58",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-725",
@@ -1075,7 +1731,17 @@
     "stop_lon": -78.503314,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-58",
+      "TL-59",
+      "TL-72",
+      "TL-73",
+      "TL-74"
+    ]
   },
   {
     "stop_id": "TL-726",
@@ -1086,7 +1752,17 @@
     "stop_lon": -78.500844,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-58",
+      "TL-59",
+      "TL-72",
+      "TL-73",
+      "TL-74"
+    ]
   },
   {
     "stop_id": "TL-727",
@@ -1097,7 +1773,11 @@
     "stop_lon": -78.5028022238,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-58",
+      "TL-59"
+    ]
   },
   {
     "stop_id": "TL-728",
@@ -1108,7 +1788,11 @@
     "stop_lon": -78.504722,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-57",
+      "TL-58"
+    ]
   },
   {
     "stop_id": "TL-729",
@@ -1119,7 +1803,12 @@
     "stop_lon": -78.509224,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-58",
+      "TL-60"
+    ]
   },
   {
     "stop_id": "TL-730",
@@ -1130,7 +1819,14 @@
     "stop_lon": -78.505295,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-54",
+      "TL-55",
+      "TL-57",
+      "TL-59",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-731",
@@ -1141,7 +1837,14 @@
     "stop_lon": -78.5061534957,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-54",
+      "TL-55",
+      "TL-57",
+      "TL-59",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-732",
@@ -1152,7 +1855,8 @@
     "stop_lon": -78.5117900079,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": []
   },
   {
     "stop_id": "TL-733",
@@ -1163,7 +1867,13 @@
     "stop_lon": -78.5155971628,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-57",
+      "TL-59",
+      "TL-66",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-734",
@@ -1174,7 +1884,13 @@
     "stop_lon": -78.519666572,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-57",
+      "TL-59",
+      "TL-66",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-735",
@@ -1185,7 +1901,13 @@
     "stop_lon": -78.5195046086,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-57",
+      "TL-59",
+      "TL-66",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-736",
@@ -1196,7 +1918,15 @@
     "stop_lon": -78.5165663984,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-59",
+      "TL-62",
+      "TL-72"
+    ]
   },
   {
     "stop_id": "TL-737",
@@ -1207,7 +1937,15 @@
     "stop_lon": -78.513313,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-55",
+      "TL-59",
+      "TL-72",
+      "TL-73",
+      "TL-74"
+    ]
   },
   {
     "stop_id": "TL-738",
@@ -1218,7 +1956,15 @@
     "stop_lon": -78.5109978601,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-55",
+      "TL-59",
+      "TL-72",
+      "TL-73",
+      "TL-74"
+    ]
   },
   {
     "stop_id": "TL-739",
@@ -1229,7 +1975,15 @@
     "stop_lon": -78.5096342012,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-55",
+      "TL-59",
+      "TL-72",
+      "TL-73",
+      "TL-74"
+    ]
   },
   {
     "stop_id": "TL-740",
@@ -1240,7 +1994,15 @@
     "stop_lon": -78.508086108,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-55",
+      "TL-59",
+      "TL-72",
+      "TL-73",
+      "TL-74"
+    ]
   },
   {
     "stop_id": "TL-741",
@@ -1251,7 +2013,17 @@
     "stop_lon": -78.503314,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-58",
+      "TL-59",
+      "TL-72",
+      "TL-73",
+      "TL-74"
+    ]
   },
   {
     "stop_id": "TL-742",
@@ -1262,7 +2034,17 @@
     "stop_lon": -78.500844,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-58",
+      "TL-59",
+      "TL-72",
+      "TL-73",
+      "TL-74"
+    ]
   },
   {
     "stop_id": "TL-743",
@@ -1273,7 +2055,11 @@
     "stop_lon": -78.5028022238,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-58",
+      "TL-59"
+    ]
   },
   {
     "stop_id": "TL-744",
@@ -1284,7 +2070,15 @@
     "stop_lon": -78.508648,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-38",
+      "TL-57",
+      "TL-58",
+      "TL-60",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-745",
@@ -1295,7 +2089,15 @@
     "stop_lon": -78.5128796432,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-53",
+      "TL-60",
+      "TL-61",
+      "TL-62",
+      "TL-63"
+    ]
   },
   {
     "stop_id": "TL-746",
@@ -1306,7 +2108,11 @@
     "stop_lon": -78.507437,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-61",
+      "TL-63"
+    ]
   },
   {
     "stop_id": "TL-747",
@@ -1317,7 +2123,15 @@
     "stop_lon": -78.5128796432,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-53",
+      "TL-60",
+      "TL-61",
+      "TL-62",
+      "TL-63"
+    ]
   },
   {
     "stop_id": "TL-748",
@@ -1328,7 +2142,10 @@
     "stop_lon": -78.5268881904,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-62"
+    ]
   },
   {
     "stop_id": "TL-749",
@@ -1339,7 +2156,20 @@
     "stop_lon": -78.515322,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-57",
+      "TL-60",
+      "TL-61",
+      "TL-62",
+      "TL-63",
+      "TL-66",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-750",
@@ -1350,7 +2180,15 @@
     "stop_lon": -78.5128796432,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-53",
+      "TL-60",
+      "TL-61",
+      "TL-62",
+      "TL-63"
+    ]
   },
   {
     "stop_id": "TL-751",
@@ -1361,7 +2199,14 @@
     "stop_lon": -78.510106,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-58",
+      "TL-60",
+      "TL-61",
+      "TL-63"
+    ]
   },
   {
     "stop_id": "TL-752",
@@ -1372,7 +2217,10 @@
     "stop_lon": -78.513922,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-63"
+    ]
   },
   {
     "stop_id": "TL-753",
@@ -1383,7 +2231,11 @@
     "stop_lon": -78.507437,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-61",
+      "TL-63"
+    ]
   },
   {
     "stop_id": "TL-814",
@@ -1394,7 +2246,13 @@
     "stop_lon": -78.5195046086,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-57",
+      "TL-59",
+      "TL-66",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-815",
@@ -1405,7 +2263,13 @@
     "stop_lon": -78.519591,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-57",
+      "TL-59",
+      "TL-66",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-816",
@@ -1416,7 +2280,13 @@
     "stop_lon": -78.517766,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-57",
+      "TL-59",
+      "TL-66",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-817",
@@ -1427,7 +2297,13 @@
     "stop_lon": -78.516092108,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-57",
+      "TL-59",
+      "TL-66",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-818",
@@ -1438,7 +2314,10 @@
     "stop_lon": -78.5116969103,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-57"
+    ]
   },
   {
     "stop_id": "TL-819",
@@ -1449,7 +2328,14 @@
     "stop_lon": -78.506057481,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-54",
+      "TL-55",
+      "TL-57",
+      "TL-59",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-820",
@@ -1460,7 +2346,14 @@
     "stop_lon": -78.5047036181,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-54",
+      "TL-55",
+      "TL-57",
+      "TL-59",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-821",
@@ -1471,7 +2364,11 @@
     "stop_lon": -78.504722,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-57",
+      "TL-58"
+    ]
   },
   {
     "stop_id": "TL-822",
@@ -1482,7 +2379,14 @@
     "stop_lon": -78.5061281919,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-57",
+      "TL-58",
+      "TL-60",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-823",
@@ -1493,7 +2397,14 @@
     "stop_lon": -78.505373,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-57",
+      "TL-58",
+      "TL-60",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-824",
@@ -1504,7 +2415,10 @@
     "stop_lon": -78.5077582509,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-57"
+    ]
   },
   {
     "stop_id": "TL-825",
@@ -1515,7 +2429,15 @@
     "stop_lon": -78.51205,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-38",
+      "TL-57",
+      "TL-61",
+      "TL-63",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-826",
@@ -1526,7 +2448,15 @@
     "stop_lon": -78.5124984,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-38",
+      "TL-57",
+      "TL-61",
+      "TL-63",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-827",
@@ -1537,7 +2467,15 @@
     "stop_lon": -78.509797,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-38",
+      "TL-57",
+      "TL-61",
+      "TL-63",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-828",
@@ -1548,7 +2486,13 @@
     "stop_lon": -78.506336,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-38",
+      "TL-57",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-829",
@@ -1559,7 +2503,13 @@
     "stop_lon": -78.505219,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-38",
+      "TL-57",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-830",
@@ -1570,7 +2520,13 @@
     "stop_lon": -78.508089411,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-38",
+      "TL-57",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-831",
@@ -1581,7 +2537,10 @@
     "stop_lon": -78.510184,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-57"
+    ]
   },
   {
     "stop_id": "TL-832",
@@ -1592,7 +2551,15 @@
     "stop_lon": -78.5125531,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-38",
+      "TL-57",
+      "TL-61",
+      "TL-63",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-833",
@@ -1603,7 +2570,10 @@
     "stop_lon": -78.5122346994,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-57"
+    ]
   },
   {
     "stop_id": "TL-834",
@@ -1614,7 +2584,15 @@
     "stop_lon": -78.508648,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-38",
+      "TL-57",
+      "TL-58",
+      "TL-60",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-835",
@@ -1625,7 +2603,11 @@
     "stop_lon": -78.505573,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-57",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-836",
@@ -1636,7 +2618,10 @@
     "stop_lon": -78.506361,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-57"
+    ]
   },
   {
     "stop_id": "TL-837",
@@ -1647,7 +2632,11 @@
     "stop_lon": -78.505094029,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-57",
+      "TL-58"
+    ]
   },
   {
     "stop_id": "TL-838",
@@ -1658,7 +2647,14 @@
     "stop_lon": -78.505295,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-54",
+      "TL-55",
+      "TL-57",
+      "TL-59",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-839",
@@ -1669,7 +2665,14 @@
     "stop_lon": -78.5061534957,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-54",
+      "TL-55",
+      "TL-57",
+      "TL-59",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-840",
@@ -1680,7 +2683,10 @@
     "stop_lon": -78.5117900079,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-57"
+    ]
   },
   {
     "stop_id": "TL-841",
@@ -1691,7 +2697,18 @@
     "stop_lon": -78.51424,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-54",
+      "TL-55",
+      "TL-57",
+      "TL-60",
+      "TL-61",
+      "TL-63",
+      "TL-66",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-843",
@@ -1702,7 +2719,22 @@
     "stop_lon": -78.516414,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-57",
+      "TL-60",
+      "TL-61",
+      "TL-62",
+      "TL-63",
+      "TL-66",
+      "TL-67",
+      "TL-72",
+      "TL-73"
+    ]
   },
   {
     "stop_id": "TL-844",
@@ -1713,7 +2745,14 @@
     "stop_lon": -78.5182733,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-57",
+      "TL-59",
+      "TL-66",
+      "TL-67",
+      "TL-73"
+    ]
   },
   {
     "stop_id": "TL-845",
@@ -1724,7 +2763,20 @@
     "stop_lon": -78.515322,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-57",
+      "TL-60",
+      "TL-61",
+      "TL-62",
+      "TL-63",
+      "TL-66",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-846",
@@ -1735,7 +2787,20 @@
     "stop_lon": -78.515322,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-57",
+      "TL-60",
+      "TL-61",
+      "TL-62",
+      "TL-63",
+      "TL-66",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-847",
@@ -1746,7 +2811,15 @@
     "stop_lon": -78.5128796432,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-53",
+      "TL-60",
+      "TL-61",
+      "TL-62",
+      "TL-63"
+    ]
   },
   {
     "stop_id": "TL-849",
@@ -1757,7 +2830,10 @@
     "stop_lon": -78.5254188083,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-62"
+    ]
   },
   {
     "stop_id": "TL-850",
@@ -1768,7 +2844,20 @@
     "stop_lon": -78.515322,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-57",
+      "TL-60",
+      "TL-61",
+      "TL-62",
+      "TL-63",
+      "TL-66",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-874",
@@ -1779,7 +2868,13 @@
     "stop_lon": -78.5195046086,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-57",
+      "TL-59",
+      "TL-66",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-875",
@@ -1790,7 +2885,13 @@
     "stop_lon": -78.519591,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-57",
+      "TL-59",
+      "TL-66",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-876",
@@ -1801,7 +2902,13 @@
     "stop_lon": -78.517766,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-57",
+      "TL-59",
+      "TL-66",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-877",
@@ -1812,7 +2919,13 @@
     "stop_lon": -78.516092108,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-57",
+      "TL-59",
+      "TL-66",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-878",
@@ -1823,7 +2936,18 @@
     "stop_lon": -78.51424,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-54",
+      "TL-55",
+      "TL-57",
+      "TL-60",
+      "TL-61",
+      "TL-63",
+      "TL-66",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-879",
@@ -1834,7 +2958,8 @@
     "stop_lon": -78.5116969103,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": []
   },
   {
     "stop_id": "TL-880",
@@ -1845,7 +2970,11 @@
     "stop_lon": -78.5079176675,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-58",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-881",
@@ -1856,7 +2985,11 @@
     "stop_lon": -78.507065624,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-58",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-882",
@@ -1867,7 +3000,14 @@
     "stop_lon": -78.5061281919,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-57",
+      "TL-58",
+      "TL-60",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-883",
@@ -1878,7 +3018,14 @@
     "stop_lon": -78.505373,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-57",
+      "TL-58",
+      "TL-60",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-884",
@@ -1889,7 +3036,8 @@
     "stop_lon": -78.5077582509,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": []
   },
   {
     "stop_id": "TL-885",
@@ -1900,7 +3048,15 @@
     "stop_lon": -78.51205,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-38",
+      "TL-57",
+      "TL-61",
+      "TL-63",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-886",
@@ -1911,7 +3067,15 @@
     "stop_lon": -78.5124984,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-38",
+      "TL-57",
+      "TL-61",
+      "TL-63",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-887",
@@ -1922,7 +3086,15 @@
     "stop_lon": -78.509797,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-38",
+      "TL-57",
+      "TL-61",
+      "TL-63",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-888",
@@ -1933,7 +3105,13 @@
     "stop_lon": -78.506336,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-38",
+      "TL-57",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-889",
@@ -1944,7 +3122,13 @@
     "stop_lon": -78.505219,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-38",
+      "TL-57",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-890",
@@ -1955,7 +3139,13 @@
     "stop_lon": -78.508089411,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-38",
+      "TL-57",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-891",
@@ -1966,7 +3156,8 @@
     "stop_lon": -78.510184,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": []
   },
   {
     "stop_id": "TL-892",
@@ -1977,7 +3168,15 @@
     "stop_lon": -78.5125531,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-38",
+      "TL-57",
+      "TL-61",
+      "TL-63",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-893",
@@ -1988,7 +3187,8 @@
     "stop_lon": -78.5122346994,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": []
   },
   {
     "stop_id": "TL-894",
@@ -1999,7 +3199,15 @@
     "stop_lon": -78.508648,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-38",
+      "TL-57",
+      "TL-58",
+      "TL-60",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-895",
@@ -2010,7 +3218,11 @@
     "stop_lon": -78.505573,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-57",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-896",
@@ -2021,7 +3233,8 @@
     "stop_lon": -78.506361,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": []
   },
   {
     "stop_id": "TL-897",
@@ -2032,7 +3245,8 @@
     "stop_lon": -78.507302,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": []
   },
   {
     "stop_id": "TL-898",
@@ -2043,7 +3257,11 @@
     "stop_lon": -78.50832373,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-58",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-899",
@@ -2054,7 +3272,8 @@
     "stop_lon": -78.5117900079,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": []
   },
   {
     "stop_id": "TL-900",
@@ -2065,7 +3284,22 @@
     "stop_lon": -78.516414,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-57",
+      "TL-60",
+      "TL-61",
+      "TL-62",
+      "TL-63",
+      "TL-66",
+      "TL-67",
+      "TL-72",
+      "TL-73"
+    ]
   },
   {
     "stop_id": "TL-901",
@@ -2076,7 +3310,14 @@
     "stop_lon": -78.5182733,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-57",
+      "TL-59",
+      "TL-66",
+      "TL-67",
+      "TL-73"
+    ]
   },
   {
     "stop_id": "TL-971",
@@ -2087,7 +3328,11 @@
     "stop_lon": -78.514843,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-72",
+      "TL-73"
+    ]
   },
   {
     "stop_id": "TL-972",
@@ -2098,7 +3343,17 @@
     "stop_lon": -78.503314,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-58",
+      "TL-59",
+      "TL-72",
+      "TL-73",
+      "TL-74"
+    ]
   },
   {
     "stop_id": "TL-973",
@@ -2109,7 +3364,12 @@
     "stop_lon": -78.500824,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-72",
+      "TL-73",
+      "TL-74"
+    ]
   },
   {
     "stop_id": "TL-974",
@@ -2120,7 +3380,10 @@
     "stop_lon": -78.4980769737,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-72"
+    ]
   },
   {
     "stop_id": "TL-975",
@@ -2131,7 +3394,10 @@
     "stop_lon": -78.500447464,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-72"
+    ]
   },
   {
     "stop_id": "TL-976",
@@ -2142,7 +3408,17 @@
     "stop_lon": -78.504069,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-58",
+      "TL-59",
+      "TL-72",
+      "TL-73",
+      "TL-74"
+    ]
   },
   {
     "stop_id": "TL-977",
@@ -2153,7 +3429,11 @@
     "stop_lon": -78.514843,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-72",
+      "TL-73"
+    ]
   },
   {
     "stop_id": "TL-978",
@@ -2164,7 +3444,17 @@
     "stop_lon": -78.503314,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-58",
+      "TL-59",
+      "TL-72",
+      "TL-73",
+      "TL-74"
+    ]
   },
   {
     "stop_id": "TL-979",
@@ -2175,7 +3465,12 @@
     "stop_lon": -78.500824,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-72",
+      "TL-73",
+      "TL-74"
+    ]
   },
   {
     "stop_id": "TL-980",
@@ -2186,7 +3481,10 @@
     "stop_lon": -78.4980769737,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-73"
+    ]
   },
   {
     "stop_id": "TL-981",
@@ -2197,7 +3495,10 @@
     "stop_lon": -78.500447464,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-73"
+    ]
   },
   {
     "stop_id": "TL-982",
@@ -2208,7 +3509,17 @@
     "stop_lon": -78.504069,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-58",
+      "TL-59",
+      "TL-72",
+      "TL-73",
+      "TL-74"
+    ]
   },
   {
     "stop_id": "TL-983",
@@ -2219,7 +3530,12 @@
     "stop_lon": -78.5251283,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-62",
+      "TL-73",
+      "TL-74"
+    ]
   },
   {
     "stop_id": "TL-984",
@@ -2230,7 +3546,17 @@
     "stop_lon": -78.503314,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-58",
+      "TL-59",
+      "TL-72",
+      "TL-73",
+      "TL-74"
+    ]
   },
   {
     "stop_id": "TL-985",
@@ -2241,7 +3567,12 @@
     "stop_lon": -78.500824,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-72",
+      "TL-73",
+      "TL-74"
+    ]
   },
   {
     "stop_id": "TL-986",
@@ -2252,7 +3583,10 @@
     "stop_lon": -78.4980769737,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-74"
+    ]
   },
   {
     "stop_id": "TL-987",
@@ -2263,7 +3597,10 @@
     "stop_lon": -78.500447464,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-74"
+    ]
   },
   {
     "stop_id": "TL-988",
@@ -2274,7 +3611,17 @@
     "stop_lon": -78.504069,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-58",
+      "TL-59",
+      "TL-72",
+      "TL-73",
+      "TL-74"
+    ]
   },
   {
     "stop_id": "TL-989",
@@ -2285,7 +3632,12 @@
     "stop_lon": -78.5251283,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-62",
+      "TL-73",
+      "TL-74"
+    ]
   },
   {
     "stop_id": "TL-994",
@@ -2296,7 +3648,13 @@
     "stop_lon": -78.5195046086,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-57",
+      "TL-59",
+      "TL-66",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-995",
@@ -2307,7 +3665,13 @@
     "stop_lon": -78.519591,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-57",
+      "TL-59",
+      "TL-66",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-996",
@@ -2318,7 +3682,13 @@
     "stop_lon": -78.517766,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-57",
+      "TL-59",
+      "TL-66",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-997",
@@ -2329,7 +3699,13 @@
     "stop_lon": -78.516092108,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-57",
+      "TL-59",
+      "TL-66",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-998",
@@ -2340,7 +3716,10 @@
     "stop_lon": -78.5116969103,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-999",
@@ -2351,7 +3730,14 @@
     "stop_lon": -78.506057481,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-54",
+      "TL-55",
+      "TL-57",
+      "TL-59",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-1000",
@@ -2362,7 +3748,14 @@
     "stop_lon": -78.5047036181,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-54",
+      "TL-55",
+      "TL-57",
+      "TL-59",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-1001",
@@ -2373,7 +3766,12 @@
     "stop_lon": -78.501313,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-54",
+      "TL-55",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-1002",
@@ -2384,7 +3782,12 @@
     "stop_lon": -78.498187,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-54",
+      "TL-55",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-1003",
@@ -2395,7 +3798,13 @@
     "stop_lon": -78.496028,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-1004",
@@ -2406,7 +3815,13 @@
     "stop_lon": -78.493186,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-1005",
@@ -2417,7 +3832,13 @@
     "stop_lon": -78.491635,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-1006",
@@ -2428,7 +3849,13 @@
     "stop_lon": -78.492414,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-1007",
@@ -2439,7 +3866,13 @@
     "stop_lon": -78.496089,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-1008",
@@ -2450,7 +3883,12 @@
     "stop_lon": -78.498636,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-54",
+      "TL-55",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-1009",
@@ -2461,7 +3899,12 @@
     "stop_lon": -78.501384,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-54",
+      "TL-55",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-1010",
@@ -2472,7 +3915,14 @@
     "stop_lon": -78.505295,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-54",
+      "TL-55",
+      "TL-57",
+      "TL-59",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-1011",
@@ -2483,7 +3933,14 @@
     "stop_lon": -78.5061534957,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-54",
+      "TL-55",
+      "TL-57",
+      "TL-59",
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-1012",
@@ -2494,7 +3951,10 @@
     "stop_lon": -78.5117900079,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-66"
+    ]
   },
   {
     "stop_id": "TL-1013",
@@ -2505,7 +3965,18 @@
     "stop_lon": -78.51424,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-54",
+      "TL-55",
+      "TL-57",
+      "TL-60",
+      "TL-61",
+      "TL-63",
+      "TL-66",
+      "TL-67"
+    ]
   },
   {
     "stop_id": "TL-1014",
@@ -2516,7 +3987,22 @@
     "stop_lon": -78.516414,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-33",
+      "TL-53",
+      "TL-54",
+      "TL-55",
+      "TL-57",
+      "TL-60",
+      "TL-61",
+      "TL-62",
+      "TL-63",
+      "TL-66",
+      "TL-67",
+      "TL-72",
+      "TL-73"
+    ]
   },
   {
     "stop_id": "TL-1015",
@@ -2527,6 +4013,13 @@
     "stop_lon": -78.5182733,
     "stop_url": null,
     "location_type": 0,
-    "parent_station": null
+    "parent_station": null,
+    "routeIds": [
+      "TL-57",
+      "TL-59",
+      "TL-66",
+      "TL-67",
+      "TL-73"
+    ]
   }
 ]

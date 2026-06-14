@@ -8,4 +8,5 @@ export interface Stop {
   stop_url: string | null;
   location_type: number;
   parent_station: string | null;
+  routeIds: string[];
 }

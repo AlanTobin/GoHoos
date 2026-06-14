@@ -1,0 +1,442 @@
+[
+  {
+    "route_id": "TL-11",
+    "service_id": "TL-37",
+    "trip_id": "TL-1343",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "Training",
+    "shape_id": null
+  },
+  {
+    "route_id": "TL-11",
+    "service_id": "TL-37",
+    "trip_id": "TL-1344",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "Training",
+    "shape_id": null
+  },
+  {
+    "route_id": "TL-11",
+    "service_id": "TL-37",
+    "trip_id": "TL-1345",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "Training",
+    "shape_id": null
+  },
+  {
+    "route_id": "TL-2",
+    "service_id": "TL-37",
+    "trip_id": "TL-1338",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "Charter",
+    "shape_id": null
+  },
+  {
+    "route_id": "TL-2",
+    "service_id": "TL-37",
+    "trip_id": "TL-1339",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "Charter",
+    "shape_id": null
+  },
+  {
+    "route_id": "TL-2",
+    "service_id": "TL-37",
+    "trip_id": "TL-1340",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "Charter",
+    "shape_id": null
+  },
+  {
+    "route_id": "TL-2",
+    "service_id": "TL-37",
+    "trip_id": "TL-1341",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "Charter",
+    "shape_id": null
+  },
+  {
+    "route_id": "TL-2",
+    "service_id": "TL-37",
+    "trip_id": "TL-1342",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "Charter",
+    "shape_id": null
+  },
+  {
+    "route_id": "TL-38",
+    "service_id": "TL-42",
+    "trip_id": "TL-1389",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "UTS Test Rte",
+    "shape_id": "TL-38"
+  },
+  {
+    "route_id": "TL-58",
+    "service_id": "TL-48",
+    "trip_id": "TL-1429",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "[13]",
+    "shape_id": "TL-58"
+  },
+  {
+    "route_id": "TL-58",
+    "service_id": "TL-48",
+    "trip_id": "TL-1430",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "[14]",
+    "shape_id": "TL-58"
+  },
+  {
+    "route_id": "TL-53",
+    "service_id": "TL-57",
+    "trip_id": "TL-1620",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "[05] Recess",
+    "shape_id": "TL-53"
+  },
+  {
+    "route_id": "TL-53",
+    "service_id": "TL-57",
+    "trip_id": "TL-1621",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "[07] Recess",
+    "shape_id": "TL-53"
+  },
+  {
+    "route_id": "TL-54",
+    "service_id": "TL-57",
+    "trip_id": "TL-1618",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "[01] Recess",
+    "shape_id": "TL-54"
+  },
+  {
+    "route_id": "TL-54",
+    "service_id": "TL-57",
+    "trip_id": "TL-1619",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "[02] Recess",
+    "shape_id": "TL-54"
+  },
+  {
+    "route_id": "TL-55",
+    "service_id": "TL-57",
+    "trip_id": "TL-1622",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "[05] Recess",
+    "shape_id": "TL-55"
+  },
+  {
+    "route_id": "TL-55",
+    "service_id": "TL-57",
+    "trip_id": "TL-1623",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "[07] Recess",
+    "shape_id": "TL-55"
+  },
+  {
+    "route_id": "TL-57",
+    "service_id": "TL-57",
+    "trip_id": "TL-1624",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "[09] Recess",
+    "shape_id": "TL-57"
+  },
+  {
+    "route_id": "TL-57",
+    "service_id": "TL-57",
+    "trip_id": "TL-1625",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "[11] Recess",
+    "shape_id": "TL-57"
+  },
+  {
+    "route_id": "TL-66",
+    "service_id": "TL-57",
+    "trip_id": "TL-1616",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "[01] Recess",
+    "shape_id": "TL-66"
+  },
+  {
+    "route_id": "TL-66",
+    "service_id": "TL-57",
+    "trip_id": "TL-1617",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "[02] Recess",
+    "shape_id": "TL-66"
+  },
+  {
+    "route_id": "TL-72",
+    "service_id": "TL-60",
+    "trip_id": "TL-1699",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "[17]/[10]",
+    "shape_id": "TL-72"
+  },
+  {
+    "route_id": "TL-72",
+    "service_id": "TL-60",
+    "trip_id": "TL-1700",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "[18] AM",
+    "shape_id": "TL-72"
+  },
+  {
+    "route_id": "TL-72",
+    "service_id": "TL-60",
+    "trip_id": "TL-1702",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "[20]",
+    "shape_id": "TL-72"
+  },
+  {
+    "route_id": "TL-72",
+    "service_id": "TL-60",
+    "trip_id": "TL-1703",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "[21]",
+    "shape_id": "TL-72"
+  },
+  {
+    "route_id": "TL-72",
+    "service_id": "TL-60",
+    "trip_id": "TL-1704",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "[22] AM",
+    "shape_id": "TL-72"
+  },
+  {
+    "route_id": "TL-72",
+    "service_id": "TL-60",
+    "trip_id": "TL-1705",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "[23]",
+    "shape_id": "TL-72"
+  },
+  {
+    "route_id": "TL-72",
+    "service_id": "TL-60",
+    "trip_id": "TL-1728",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "[19]/[06]",
+    "shape_id": "TL-72"
+  },
+  {
+    "route_id": "TL-73",
+    "service_id": "TL-60",
+    "trip_id": "TL-1713",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "[17] PM",
+    "shape_id": "TL-73"
+  },
+  {
+    "route_id": "TL-73",
+    "service_id": "TL-60",
+    "trip_id": "TL-1714",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "[18] PM",
+    "shape_id": "TL-73"
+  },
+  {
+    "route_id": "TL-73",
+    "service_id": "TL-60",
+    "trip_id": "TL-1715",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "[19] PM",
+    "shape_id": "TL-73"
+  },
+  {
+    "route_id": "TL-73",
+    "service_id": "TL-60",
+    "trip_id": "TL-1716",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "[20]",
+    "shape_id": "TL-73"
+  },
+  {
+    "route_id": "TL-73",
+    "service_id": "TL-60",
+    "trip_id": "TL-1717",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "[21]",
+    "shape_id": "TL-73"
+  },
+  {
+    "route_id": "TL-73",
+    "service_id": "TL-60",
+    "trip_id": "TL-1718",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "[22] PM",
+    "shape_id": "TL-73"
+  },
+  {
+    "route_id": "TL-73",
+    "service_id": "TL-60",
+    "trip_id": "TL-1719",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "[23]",
+    "shape_id": "TL-73"
+  },
+  {
+    "route_id": "TL-73",
+    "service_id": "TL-60",
+    "trip_id": "TL-1720",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "[24] PM",
+    "shape_id": "TL-73"
+  },
+  {
+    "route_id": "TL-73",
+    "service_id": "TL-60",
+    "trip_id": "TL-1721",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "[25] PM",
+    "shape_id": "TL-73"
+  },
+  {
+    "route_id": "TL-74",
+    "service_id": "TL-60",
+    "trip_id": "TL-1706",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "[17]/[10]",
+    "shape_id": "TL-74"
+  },
+  {
+    "route_id": "TL-74",
+    "service_id": "TL-60",
+    "trip_id": "TL-1707",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "[18] AM",
+    "shape_id": "TL-74"
+  },
+  {
+    "route_id": "TL-74",
+    "service_id": "TL-60",
+    "trip_id": "TL-1709",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "[20]",
+    "shape_id": "TL-74"
+  },
+  {
+    "route_id": "TL-74",
+    "service_id": "TL-60",
+    "trip_id": "TL-1710",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "[21]",
+    "shape_id": "TL-74"
+  },
+  {
+    "route_id": "TL-74",
+    "service_id": "TL-60",
+    "trip_id": "TL-1711",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "[22] AM",
+    "shape_id": "TL-74"
+  },
+  {
+    "route_id": "TL-74",
+    "service_id": "TL-60",
+    "trip_id": "TL-1712",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "[23]",
+    "shape_id": "TL-74"
+  },
+  {
+    "route_id": "TL-74",
+    "service_id": "TL-60",
+    "trip_id": "TL-1729",
+    "trip_headsign": null,
+    "trip_short_name": null,
+    "direction_id": null,
+    "block_id": "[19]/[06]",
+    "shape_id": "TL-74"
+  }
+]
