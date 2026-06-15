@@ -1,83 +1,20 @@
-"use client";
+import Link from "next/link";
+import Logo from "@/components/brand/Logo";
 
-import { useState, useEffect, useMemo } from "react";
-import Map from "@/components/map/Map";
-import RouteSelector from "@/components/sidebar/RouteSelector";
-import routesData from "@/data/json/routes.json";
-import { getVehicles } from "@/services/vehicles";
-import { toRouteId } from "@/lib/routes";
-import { Vehicle } from "@/types/vehicle";
-import { Route } from "@/types/route";
-
-export default function RoutesPage() {
-  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
-  const [selectedRoutes, setSelectedRoutes] = useState<Set<string>>(new Set());
-  const [isLoadingVehicles, setIsLoadingVehicles] = useState(true);
-
-  useEffect(() => {
-    let isMounted = true;
-    let initialized = false;
-  
-    const fetchVehicles = async () => {
-      try {
-        const data = await getVehicles();
-        if (!isMounted) return;
-
-        setVehicles(data);
-        setIsLoadingVehicles(false);
-
-        // only set selected routes on very first fetch
-        if (!initialized) {
-          setSelectedRoutes(new Set(data.map(v => toRouteId(v.RouteID))));
-          initialized = true;
-        }
-      } catch (err) {
-        console.error("Failed to fetch vehicles", err);
-        if (isMounted) setIsLoadingVehicles(false);
-      }
-    };
-  
-    fetchVehicles();
-    const interval = setInterval(fetchVehicles, 15000);
-  
-    return () => {
-      isMounted = false;
-      clearInterval(interval);
-    };
-  }, []);
-
-  const routesWithVehicles = new Set(
-    vehicles.map(v => toRouteId(v.RouteID))
-  );
-  function toggleRoute(routeId: string) {
-    console.log("toggleRoute", routeId);
-    setSelectedRoutes(prev => {
-      const next = new Set(prev);
-      if (next.has(routeId)) next.delete(routeId);
-      else next.add(routeId);
-      return next;
-    });
-  }
-
-  const visibleVehicles = useMemo(
-    () => vehicles.filter(v => selectedRoutes.has(toRouteId(v.RouteID))),
-    [vehicles, selectedRoutes]
-  );
-
+export default function HomePage() {
   return (
-    <div className="relative h-screen w-full overflow-hidden">
-      <Map
-        selectedRoutes={selectedRoutes}
-        visibleVehicles={visibleVehicles}
-      />
-      <RouteSelector
-        routes={routesData as Route[]}
-        routesWithVehicles={routesWithVehicles}
-        selectedRoutes={selectedRoutes}
-        onToggle={toggleRoute}
-        onSetSelectedRoutes={setSelectedRoutes}
-        isLoading={isLoadingVehicles}
-      />
+    <div className="flex min-h-full flex-col items-center justify-center px-6 py-16">
+      <Logo priority className="h-24 w-auto sm:h-28" />
+      <p className="mt-6 max-w-md text-center text-lg text-uva-navy/70">
+        Live UVA bus tracking, routes, and stops — built for students navigating
+        Grounds.
+      </p>
+      <Link
+        href="/routes"
+        className="mt-8 inline-flex items-center rounded-lg bg-uva-orange px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-uva-orange-hover"
+      >
+        View live routes
+      </Link>
     </div>
   );
 }

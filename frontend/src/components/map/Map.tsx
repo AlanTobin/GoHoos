@@ -84,7 +84,7 @@ export default function Map({ selectedRoutes, visibleVehicles }: Props) {
   }, [selectedRoutes, mapReady]);
 
   return (
-    <div className="absolute inset-0">
+    <div className="absolute inset-0 min-h-0">
       <div ref={mapContainerRef} className="h-full w-full" />
     </div>
   );

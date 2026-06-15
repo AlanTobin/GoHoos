@@ -221,27 +221,30 @@ async function enrichStopsWithRouteIds() {
   const outputPath = join(jsonDataDir, "stops.json");
   await writeJsonFile(outputPath, stops);
 
+  const tripByRoute = new Map();
+  for (const trip of trips) {
+    if (!tripByRoute.has(trip.route_id)) {
+      tripByRoute.set(trip.route_id, trip.trip_id);
+    }
+  }
+
   const routeStops = {};
 
   for (const [routeId, stopIds] of Object.entries(ROUTE_STOP_OVERRIDES)) {
-    routeStops[routeId] = [...stopIds].sort();
+    routeStops[routeId] = [...stopIds];
   }
 
-  for (const stop of stops) {
-    for (const routeId of stop.routeIds) {
-      if (routeId in ROUTE_STOP_OVERRIDES) continue;
+  for (const [routeId, tripId] of tripByRoute) {
+    if (routeId in ROUTE_STOP_OVERRIDES) continue;
 
-      if (!routeStops[routeId]) {
-        routeStops[routeId] = [];
-      }
-      routeStops[routeId].push(stop.stop_id);
-    }
+    const orderedStopIds = stopTimes
+      .filter((stopTime) => stopTime.trip_id === tripId)
+      .sort((a, b) => a.stop_sequence - b.stop_sequence)
+      .map((stopTime) => stopTime.stop_id);
+
+    routeStops[routeId] = [...new Set(orderedStopIds)];
   }
-  for (const routeId of Object.keys(routeStops)) {
-    if (!(routeId in ROUTE_STOP_OVERRIDES)) {
-      routeStops[routeId].sort();
-    }
-  }
+
   await writeJsonFile(join(jsonDataDir, "route-stops.json"), routeStops);
   await writeJsonFile(join(jsonDataDir, "route-stop-overrides.json"), ROUTE_STOP_OVERRIDES);
 
