@@ -1,8 +1,22 @@
 import type { Stop } from "@/types/stop";
 import type { ShapePoint } from "@/types/shapes";
 import type { Vehicle } from "@/types/vehicle";
-import { toRouteId } from "@/lib/routes";
+import { toRouteId, isGoldYellow } from "@/lib/routes";
+import routes from "@/data/json/routes.json";
 import { FeatureCollection, Point, LineString } from "geojson";
+
+const routeColorById = new Map(
+  routes.map((route) => [
+    route.route_id,
+    String(route.route_color).replace(/^#/, ""),
+  ])
+);
+
+const routeById = new Map(routes.map((route) => [route.route_id, route]));
+
+function vehicleArrowColor(routeColor: string) {
+  return isGoldYellow(routeColor) ? "333333" : "ffffff";
+}
 
 export function stopsToGeoJSON(stops: Stop[]): FeatureCollection<Point> {
     return {
@@ -50,20 +64,35 @@ export function stopsToGeoJSON(stops: Stop[]): FeatureCollection<Point> {
   export function vehiclesToGeoJSON(vehicles: Vehicle[]): FeatureCollection<Point> {
     return {
         type: "FeatureCollection",
-        features: vehicles.map(vehicle => ({
+        features: vehicles.map(vehicle => {
+            const route = toRouteId(vehicle.RouteID);
+            const routeColor = routeColorById.get(route) ?? "888888";
+            const routeMeta = routeById.get(route);
+
+            return {
             type: "Feature",
             geometry: { type: "Point", coordinates: [vehicle.Longitude, vehicle.Latitude] },
             properties: {
                 id: vehicle.VehicleID,
                 name: vehicle.Name,
-                route: toRouteId(vehicle.RouteID),
+                route,
+                routeName: routeMeta?.route_long_name ?? route,
+                routeDesc: routeMeta?.route_desc ?? "",
+                routeColor,
+                arrowColor: vehicleArrowColor(routeColor),
                 speed: vehicle.GroundSpeed,
                 heading: vehicle.Heading,
+                capacity: Math.max(0, Math.min(100, vehicle.Capacity ?? 0)),
+                occupancy: vehicle.Occupancy ?? 0,
+                maxPassengers: vehicle.MaxPassengers ?? 50,
                 delayed: vehicle.IsDelayed,
                 on_route: vehicle.IsOnRoute,
                 seconds: vehicle.Seconds,
-                timestamp: vehicle.TimeStamp
+                timestamp: vehicle.TimeStamp,
+                positionLastUpdated: vehicle.PositionLastUpdated ?? null,
+                occupancyLastUpdated: vehicle.OccupancyLastUpdated ?? null,
             }
-        }))
+        };
+        })
     }
   }

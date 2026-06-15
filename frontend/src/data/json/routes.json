@@ -39,7 +39,7 @@
     "route_id": "TL-53",
     "route_short_name": null,
     "route_long_name": "Orange Line",
-    "route_desc": null,
+    "route_desc": "Pre-6PM",
     "route_type": 3,
     "route_color": "ff7300",
     "route_sort_order": 2009
@@ -48,7 +48,7 @@
     "route_id": "TL-54",
     "route_short_name": null,
     "route_long_name": "Green Loop",
-    "route_desc": null,
+    "route_desc": "Post-6PM/Weekends",
     "route_type": 3,
     "route_color": "0c8103",
     "route_sort_order": 2008
@@ -57,7 +57,7 @@
     "route_id": "TL-55",
     "route_short_name": null,
     "route_long_name": "Orange Loop",
-    "route_desc": null,
+    "route_desc": "Post-6PM/Weekends",
     "route_type": 3,
     "route_color": "ff7300",
     "route_sort_order": 2010
@@ -66,7 +66,7 @@
     "route_id": "TL-57",
     "route_short_name": null,
     "route_long_name": "Gold Line",
-    "route_desc": null,
+    "route_desc": "Post-6PM/Weekends",
     "route_type": 3,
     "route_color": "ffdd00",
     "route_sort_order": 2012
@@ -129,7 +129,7 @@
     "route_id": "TL-66",
     "route_short_name": null,
     "route_long_name": "Green Line",
-    "route_desc": null,
+    "route_desc": "Exam Service",
     "route_type": 3,
     "route_color": "0c8103",
     "route_sort_order": 1999
@@ -138,7 +138,7 @@
     "route_id": "TL-67",
     "route_short_name": null,
     "route_long_name": "Gold Line",
-    "route_desc": null,
+    "route_desc": "Pre-6PM",
     "route_type": 3,
     "route_color": "ffdd00",
     "route_sort_order": 1001
@@ -156,7 +156,7 @@
     "route_id": "TL-72",
     "route_short_name": null,
     "route_long_name": "Purple Line",
-    "route_desc": null,
+    "route_desc": "Scott Stadium Service",
     "route_type": 3,
     "route_color": "662c90",
     "route_sort_order": 5000
@@ -165,7 +165,7 @@
     "route_id": "TL-73",
     "route_short_name": null,
     "route_long_name": "Purple Line",
-    "route_desc": null,
+    "route_desc": "Scott Stadium & Fontaine Service",
     "route_type": 3,
     "route_color": "662c90",
     "route_sort_order": 5002
@@ -174,7 +174,7 @@
     "route_id": "TL-74",
     "route_short_name": null,
     "route_long_name": "Purple Line",
-    "route_desc": null,
+    "route_desc": "Fontaine Service",
     "route_type": 3,
     "route_color": "662c90",
     "route_sort_order": 5001

@@ -50,6 +50,7 @@ export default function RoutesPage() {
     vehicles.map(v => toRouteId(v.RouteID))
   );
   function toggleRoute(routeId: string) {
+    console.log("toggleRoute", routeId);
     setSelectedRoutes(prev => {
       const next = new Set(prev);
       if (next.has(routeId)) next.delete(routeId);

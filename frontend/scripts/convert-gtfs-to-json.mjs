@@ -11,6 +11,41 @@ const jsonDataDir = join(projectRoot, "src/data/json");
 
 const files = ["routes", "shapes", "stops", "trips", "stop_times"];
 
+async function loadExistingRouteDescriptions() {
+  try {
+    const existing = JSON.parse(
+      await readFile(join(jsonDataDir, "routes.json"), "utf8")
+    );
+    return new Map(
+      existing
+        .filter((route) => route.route_desc)
+        .map((route) => [route.route_id, route.route_desc])
+    );
+  } catch {
+    return new Map();
+  }
+}
+
+async function preserveRouteDescriptions(descriptions) {
+  if (descriptions.size === 0) return;
+
+  const routes = JSON.parse(
+    await readFile(join(jsonDataDir, "routes.json"), "utf8")
+  );
+
+  for (const route of routes) {
+    const description = descriptions.get(route.route_id);
+    if (description) {
+      route.route_desc = description;
+    }
+  }
+
+  await writeJsonFile(join(jsonDataDir, "routes.json"), routes);
+  console.log(`Preserved route_desc for ${descriptions.size} routes`);
+}
+
+const routeDescriptions = await loadExistingRouteDescriptions();
+
 const normalizeEmptyStrings = (row) =>
   Object.fromEntries(
     Object.entries(row).map(([key, value]) => [
@@ -67,6 +102,8 @@ for (const name of files) {
 
   console.log(`Converted ${name}.txt -> ${name}.json (${rowCount} rows)`);
 }
+
+await preserveRouteDescriptions(routeDescriptions);
 
 function lightenColor(hex, amount = 0.45) {
   const normalized = hex.replace(/^#/, "");
@@ -127,81 +164,23 @@ async function buildShapesLinesGeoJSON() {
   console.log(`Built shapes-lines.json (${features.length} features)`);
 }
 
-const STOP_SHAPE_DISTANCE_METERS = 10;
-
-function toRadians(degrees) {
-  return (degrees * Math.PI) / 180;
-}
-
-function haversineMeters(lat1, lon1, lat2, lon2) {
-  const earthRadius = 6371000;
-  const dLat = toRadians(lat2 - lat1);
-  const dLon = toRadians(lon2 - lon1);
-  const a =
-    Math.sin(dLat / 2) ** 2 +
-    Math.cos(toRadians(lat1)) *
-      Math.cos(toRadians(lat2)) *
-      Math.sin(dLon / 2) ** 2;
-  return 2 * earthRadius * Math.asin(Math.sqrt(a));
-}
-
-function closestPointOnSegment(lon, lat, lon1, lat1, lon2, lat2) {
-  const cosLat = Math.cos(toRadians((lat1 + lat2 + lat) / 3));
-  const dx = (lon2 - lon1) * cosLat;
-  const dy = lat2 - lat1;
-  const lengthSquared = dx * dx + dy * dy;
-  if (lengthSquared < 1e-12) {
-    return [lon1, lat1];
-  }
-
-  const t = Math.max(
-    0,
-    Math.min(
-      1,
-      ((lon - lon1) * cosLat * dx + (lat - lat1) * dy) / lengthSquared
-    )
-  );
-  return [lon1 + (lon2 - lon1) * t, lat1 + (lat2 - lat1) * t];
-}
-
-function pointToSegmentMeters(lon, lat, lon1, lat1, lon2, lat2) {
-  const [closestLon, closestLat] = closestPointOnSegment(
-    lon,
-    lat,
-    lon1,
-    lat1,
-    lon2,
-    lat2
-  );
-  return haversineMeters(lat, lon, closestLat, closestLon);
-}
-
-function minDistanceToShapeMeters(stop, shapePoints) {
-  let minDistance = Infinity;
-
-  for (let i = 0; i < shapePoints.length - 1; i++) {
-    const start = shapePoints[i];
-    const end = shapePoints[i + 1];
-    const distance = pointToSegmentMeters(
-      stop.stop_lon,
-      stop.stop_lat,
-      start.shape_pt_lon,
-      start.shape_pt_lat,
-      end.shape_pt_lon,
-      end.shape_pt_lat
-    );
-    minDistance = Math.min(minDistance, distance);
-  }
-
-  return minDistance;
-}
+const ROUTE_STOP_OVERRIDES = {
+  "TL-59": [
+    "TL-733", "TL-734", "TL-994", "TL-736", "TL-737", "TL-738", "TL-739", "TL-740",
+    "TL-984", "TL-742", "TL-743", "TL-1010", "TL-1011", "TL-1012",
+  ],
+  "TL-67": [
+    "TL-843", "TL-844", "TL-814", "TL-815", "TL-816", "TL-817", "TL-841", "TL-840",
+    "TL-818", "TL-822", "TL-898", "TL-880", "TL-897", "TL-881",
+    "TL-836", "TL-823", "TL-835", "TL-824", "TL-834", "TL-833", "TL-825", "TL-826",
+    "TL-832", "TL-831", "TL-827", "TL-830", "TL-828", "TL-829",
+  ],
+};
 
 async function enrichStopsWithRouteIds() {
   const stops = JSON.parse(await readFile(join(jsonDataDir, "stops.json"), "utf8"));
-  const shapes = JSON.parse(await readFile(join(jsonDataDir, "shapes.json"), "utf8"));
   const trips = JSON.parse(await readFile(join(jsonDataDir, "trips.json"), "utf8"));
   const stopTimes = JSON.parse(await readFile(join(jsonDataDir, "stop_times.json"), "utf8"));
-  const shapeBuckets = groupShapesById(shapes);
 
   const tripToRoute = new Map(trips.map((trip) => [trip.trip_id, trip.route_id]));
   const stopToRoutes = new Map();
@@ -216,30 +195,59 @@ async function enrichStopsWithRouteIds() {
     stopToRoutes.get(stopTime.stop_id).add(routeId);
   }
 
+  const stopsById = new Map(stops.map((stop) => [stop.stop_id, stop]));
+
   for (const stop of stops) {
-    const routeIds = new Set(stopToRoutes.get(stop.stop_id) ?? []);
-
-    for (const [shapeId, group] of shapeBuckets) {
-      group.sort((a, b) => a.shape_pt_sequence - b.shape_pt_sequence);
-      if (minDistanceToShapeMeters(stop, group) <= STOP_SHAPE_DISTANCE_METERS) {
-        routeIds.add(shapeId);
-      }
-    }
-
-    stop.routeIds = [...routeIds].sort();
+    stop.routeIds = [...(stopToRoutes.get(stop.stop_id) ?? [])];
   }
 
-  const nightPilotStops = stops
-  .filter(s => s.routeIds.includes('TL-59'))
-  .map(s => ({ id: s.stop_id, name: s.stop_name }));
+  for (const [routeId, stopIds] of Object.entries(ROUTE_STOP_OVERRIDES)) {
+    for (const stop of stops) {
+      stop.routeIds = stop.routeIds.filter((id) => id !== routeId);
+    }
 
-  console.log('Night Pilot stops:', JSON.stringify(nightPilotStops, null, 2));
+    for (const stopId of stopIds) {
+      const stop = stopsById.get(stopId);
+      if (stop && !stop.routeIds.includes(routeId)) {
+        stop.routeIds.push(routeId);
+      }
+    }
+  }
+
+  for (const stop of stops) {
+    stop.routeIds.sort();
+  }
 
   const outputPath = join(jsonDataDir, "stops.json");
   await writeJsonFile(outputPath, stops);
+
+  const routeStops = {};
+
+  for (const [routeId, stopIds] of Object.entries(ROUTE_STOP_OVERRIDES)) {
+    routeStops[routeId] = [...stopIds].sort();
+  }
+
+  for (const stop of stops) {
+    for (const routeId of stop.routeIds) {
+      if (routeId in ROUTE_STOP_OVERRIDES) continue;
+
+      if (!routeStops[routeId]) {
+        routeStops[routeId] = [];
+      }
+      routeStops[routeId].push(stop.stop_id);
+    }
+  }
+  for (const routeId of Object.keys(routeStops)) {
+    if (!(routeId in ROUTE_STOP_OVERRIDES)) {
+      routeStops[routeId].sort();
+    }
+  }
+  await writeJsonFile(join(jsonDataDir, "route-stops.json"), routeStops);
+  await writeJsonFile(join(jsonDataDir, "route-stop-overrides.json"), ROUTE_STOP_OVERRIDES);
+
   const withRoutes = stops.filter((stop) => stop.routeIds.length > 0).length;
   console.log(
-    `Enriched stops.json with routeIds (${withRoutes}/${stops.length} stops, stop_times + shape proximity)`
+    `Enriched stops.json with routeIds (${withRoutes}/${stops.length} stops, stop_times + route overrides)`
   );
 }
 

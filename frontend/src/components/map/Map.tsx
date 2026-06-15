@@ -1,22 +1,26 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { addStopsLayer, stopRouteFilter } from "@/lib/layers/stops";
+import { addStopsLayer, addStopClickHandler, updateStopsLayer } from "@/lib/layers/stops";
 import {
   addShapesLayer,
   setShapeRouteVisibility,
   shapesLayersReady,
 } from "@/lib/layers/shapes";
-import { addVehiclesLayer, updateVehiclesLayer } from "@/lib/layers/vehicles";
+import { addVehiclesLayer, addVehicleClickHandler, updateVehiclesLayer } from "@/lib/layers/vehicles";
 import { Vehicle } from "@/types/vehicle";
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN!;
 
 function applyMapFilters(map: mapboxgl.Map, selectedRoutes: Set<string>) {
-  setShapeRouteVisibility(map, selectedRoutes);
-  map.setFilter("stops", stopRouteFilter(selectedRoutes));
+  if (map.getSource("stops")) {
+    updateStopsLayer(map, selectedRoutes);
+  }
+  if (shapesLayersReady(map)) {
+    setShapeRouteVisibility(map, selectedRoutes);
+  }
 }
 
 interface Props {
@@ -29,6 +33,7 @@ export default function Map({ selectedRoutes, visibleVehicles }: Props) {
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const selectedRoutesRef = useRef<Set<string>>(selectedRoutes);
   const visibleVehiclesRef = useRef<Vehicle[]>(visibleVehicles);
+  const [mapReady, setMapReady] = useState(false);
 
   useEffect(() => {
     selectedRoutesRef.current = selectedRoutes;
@@ -53,11 +58,17 @@ export default function Map({ selectedRoutes, visibleVehicles }: Props) {
     map.on("load", () => {
       addShapesLayer(map);
       addStopsLayer(map);
+      addStopClickHandler(map);
       addVehiclesLayer(map, visibleVehiclesRef.current);
+      addVehicleClickHandler(map);
       applyMapFilters(map, selectedRoutesRef.current);
+      setMapReady(true);
     });
 
-    return () => map.remove();
+    return () => {
+      setMapReady(false);
+      map.remove();
+    };
   }, []);
 
   useEffect(() => {
@@ -68,9 +79,9 @@ export default function Map({ selectedRoutes, visibleVehicles }: Props) {
 
   useEffect(() => {
     const map = mapRef.current;
-    if (!map || !shapesLayersReady(map)) return;
+    if (!mapReady || !map) return;
     applyMapFilters(map, selectedRoutes);
-  }, [selectedRoutes]);
+  }, [selectedRoutes, mapReady]);
 
   return (
     <div className="absolute inset-0">
