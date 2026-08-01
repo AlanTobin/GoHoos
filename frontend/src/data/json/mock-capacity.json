@@ -1,0 +1,13 @@
+[
+  { "Capacity": 50, "CurrentOccupation": 12, "Percentage": 0.24, "VehicleID": 13 },
+  { "Capacity": 50, "CurrentOccupation": 8, "Percentage": 0.16, "VehicleID": 19 },
+  { "Capacity": 50, "CurrentOccupation": 28, "Percentage": 0.56, "VehicleID": 22 },
+  { "Capacity": 50, "CurrentOccupation": 5, "Percentage": 0.1, "VehicleID": 24 },
+  { "Capacity": 50, "CurrentOccupation": 35, "Percentage": 0.7, "VehicleID": 34 },
+  { "Capacity": 50, "CurrentOccupation": 18, "Percentage": 0.36, "VehicleID": 35 },
+  { "Capacity": 50, "CurrentOccupation": 3, "Percentage": 0.06, "VehicleID": 38 },
+  { "Capacity": 50, "CurrentOccupation": 42, "Percentage": 0.84, "VehicleID": 44 },
+  { "Capacity": 18, "CurrentOccupation": 9, "Percentage": 0.5, "VehicleID": 55 },
+  { "Capacity": 18, "CurrentOccupation": 14, "Percentage": 0.78, "VehicleID": 56 },
+  { "Capacity": 50, "CurrentOccupation": 22, "Percentage": 0.44, "VehicleID": 64 }
+]
