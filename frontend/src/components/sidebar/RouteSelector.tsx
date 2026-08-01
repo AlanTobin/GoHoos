@@ -123,7 +123,7 @@ export default function RouteSelector({
               type="search"
               value={search}
               onChange={event => setSearch(event.target.value)}
-              placeholder="Search routes..."
+              placeholder="Search routes and descriptions..."
               className="mb-4 w-full rounded-lg border border-uva-navy/15 bg-white px-3 py-2 text-sm text-uva-navy placeholder:text-uva-navy/40 outline-none focus:border-uva-orange"
             />
 
