@@ -183,7 +183,7 @@ const STEPS: Step[] = [
     body: (
       <>
         <p>
-          A few features that I'm currently working on:
+          A few features that I&apos;m currently working on:
         </p>
         <ul className="space-y-3">
           <li className="rounded-lg border border-uva-navy/10 bg-white p-4">
@@ -216,6 +216,11 @@ const STEPS: Step[] = [
             </span>
           </li>
         </ul>
+        <p>
+          If you have any ideas or suggestions, I&apos;d love to hear them!
+                    <br />
+          Reach me at <a href="mailto:srp4da@virginia.edu" className="text-uva-orange hover:underline">srp4da@virginia.edu</a> or submit an issue on <a href="https://github.com/AlanTobin/GoHoos/issues" className="text-uva-orange hover:underline">GitHub</a>.
+        </p>
       </>
     ),
   },
