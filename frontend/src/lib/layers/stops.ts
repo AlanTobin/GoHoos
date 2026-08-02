@@ -62,11 +62,14 @@ export function updateStopsLayer(map: mapboxgl.Map, selectedRoutes: Set<string>)
   source.setData(stopsToGeoJSON(getStopsForSelection(selectedRoutes)));
 }
 
-export function addStopClickHandler(map: mapboxgl.Map) {
+export function addStopClickHandler(
+  map: mapboxgl.Map,
+  onStopClick?: (stopId: string) => void
+) {
   map.on("click", "stops", (event) => {
     const stopId = event.features?.[0]?.properties?.id;
-    if (stopId) {
-      console.log(stopId);
+    if (stopId && onStopClick) {
+      onStopClick(String(stopId));
     }
   });
 
@@ -77,4 +80,40 @@ export function addStopClickHandler(map: mapboxgl.Map) {
   map.on("mouseleave", "stops", () => {
     map.getCanvas().style.cursor = "";
   });
+}
+
+export function updateStopHighlights(
+  map: mapboxgl.Map,
+  originStopId: string | null,
+  destinationStopId: string | null
+) {
+  if (!map.getLayer("stops")) return;
+
+  const origin = originStopId ?? "";
+  const destination = destinationStopId ?? "";
+
+  map.setPaintProperty("stops", "circle-color", [
+    "case",
+    ["==", ["get", "id"], origin],
+    "#3B82F6",
+    ["==", ["get", "id"], destination],
+    "#E57200",
+    "#FFFFFF",
+  ]);
+
+  map.setPaintProperty("stops", "circle-stroke-color", [
+    "case",
+    ["==", ["get", "id"], origin],
+    "#1D4ED8",
+    ["==", ["get", "id"], destination],
+    "#C45A00",
+    "#000000",
+  ]);
+
+  map.setPaintProperty("stops", "circle-radius", [
+    "case",
+    ["any", ["==", ["get", "id"], origin], ["==", ["get", "id"], destination]],
+    7,
+    5,
+  ]);
 }
