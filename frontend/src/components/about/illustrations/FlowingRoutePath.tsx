@@ -63,9 +63,9 @@ function buildFlowingPath(width: number, height: number): string {
 }
 
 function segmentOpacity(index: number, activeIndex: number): number {
-  if (index === activeIndex) return 0.38;
-  if (index < activeIndex) return 0.18;
-  return 0.08;
+  if (index === activeIndex) return 0.62;
+  if (index < activeIndex) return 0.16;
+  return 0.07;
 }
 
 export default function FlowingRoutePath({
@@ -179,7 +179,7 @@ export default function FlowingRoutePath({
             d={path}
             clipPath={`url(#about-route-clip-${segment.id})`}
             stroke={color}
-            strokeWidth={isActive ? strokeWidth * 1.06 : strokeWidth}
+            strokeWidth={isActive ? strokeWidth * 1.14 : strokeWidth}
             strokeLinecap="round"
             strokeLinejoin="round"
             opacity={opacity}

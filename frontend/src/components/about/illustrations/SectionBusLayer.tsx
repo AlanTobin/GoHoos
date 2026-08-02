@@ -130,18 +130,20 @@ export default function SectionBusLayer({
       {buses.map((bus) => (
         <div
           key={bus.id}
-          className="absolute transition-opacity duration-300"
+          className={`absolute transition-all duration-300 ${
+            bus.isActive ? "drop-shadow-[0_6px_14px_rgba(35,45,75,0.28)]" : ""
+          }`}
           style={{
             left: bus.x,
             top: bus.y,
-            transform: `rotate(${bus.rotation}deg)`,
+            transform: `rotate(${bus.rotation}deg) scale(${bus.isActive ? 1.06 : 1})`,
           }}
         >
           <RouteMapClip
             primaryColor={bus.primaryColor}
             accentColor={bus.accentColor}
             size="sm"
-            opacity={bus.isActive ? 0.58 : 0.24}
+            opacity={bus.isActive ? 0.96 : 0.18}
           />
         </div>
       ))}

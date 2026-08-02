@@ -152,8 +152,7 @@ const STEPS: Step[] = [
       <>
         <p>
           <span className="font-medium text-uva-navy">
-            (This is for all my people who park at JPJ, live at Faulkner, and{" "}
-            <strong>especially live at Lambeth.</strong>)
+            (This is for all my people who park at JPJ or live at Faulkner/Lambeth)
           </span>
         </p>
         <p>
