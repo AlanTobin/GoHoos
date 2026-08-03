@@ -1,6 +1,6 @@
 # GoHoos
 
-Real-time UVA transit app — live bus tracking, route exploration, and trip planning for UTS riders on Grounds and in Charlottesville.
+Real-time UVA transit app with live bus tracking, route exploration, and trip planning for UTS riders on Grounds and in Charlottesville.
 
 ![GoHoos routes map with live UTS buses, route lines, and stops around UVA Grounds](frontend/public/about/routes-map.png)
 
