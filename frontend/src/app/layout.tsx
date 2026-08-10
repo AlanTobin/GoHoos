@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import AppHeader from "@/components/layout/AppHeader";
 import "./globals.css";
 
@@ -40,6 +41,7 @@ export default function RootLayout({
       <body className="flex h-dvh flex-col">
         <AppHeader />
         <main className="min-h-0 flex-1 overflow-auto">{children}</main>
+        <Analytics />
       </body>
     </html>
   );
