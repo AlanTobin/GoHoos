@@ -77,7 +77,7 @@ export default function HomePlanner() {
     };
 
     fetchVehicles();
-    const interval = setInterval(fetchVehicles, 15000);
+    const interval = setInterval(fetchVehicles, 5000);
 
     return () => {
       isMounted = false;
