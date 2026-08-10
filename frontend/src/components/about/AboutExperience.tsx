@@ -36,26 +36,25 @@ const STEPS: Step[] = [
     body: (
       <>
         <p>
-          Hey there! I&apos;m Alan, and I&apos;m a rising third-year at UVA. This project was inspired by my experience living off Grounds after
-          my first year at UVA and relying on the university bus system to get
-          to class. That was when my journey with the university bus system began.
-          If you use TransLoc, you know that it is not the most user-friendly. You definitely have 
-          to do a lot of digging around and it often feels overwhelming especially at the start. 
-          I remember being frustrated and struggling to answer questions such as
-          which bus to take, when to leave, and how bus routes connect across Grounds
-          and the surrounding Charlottesville area.
+          GoHoos was built primarily as a more informative companion to TransLoc,
+          with clearer tools for new UTS riders. GoHoos helps you see which bus to take,
+          when to leave, and how routes connect across Grounds and Charlottesville.
         </p>
         <p>
-          The goal of this project is to make it more accessible for first time riders and provide a more user-friendly experience alongside
-          better analytics and decision-making tools.
+          The goal is to make that information easier to understand for first-time
+          riders, while adding functionality that supports better day-to-day trip
+          decisions.
           <br />
           <br />
-           <span className="font-medium text-uva-navy bullet-list">
-           Please keep in mind that this app is not intended to be a replacement for TransLoc. Since I am not affiliated with the university, a lot of features that are available on TransLoc are not available here (example: SafeRide)
-           </span>
-        <br />
-        <br />
-          Feel free to scroll down to see what I have built so far and what I am working on next.
+          <span className="font-medium text-uva-navy bullet-list">
+            Please keep in mind that this app is not intended to be a replacement
+            for TransLoc. Since it is not affiliated with the university, a lot of
+            features that are available on TransLoc are not available here
+            (example: SafeRide).
+          </span>
+          <br />
+          <br />
+          Scroll down to see what has been built so far and what is coming next.
         </p>
       </>
     ),
@@ -478,7 +477,7 @@ export default function AboutExperience() {
         />
         <footer className="relative z-10 mt-10 space-y-4 border-t border-uva-navy/10 pt-10 text-base leading-relaxed text-uva-navy/70">
           <p className="text-sm text-uva-navy/50">
-            GoHoos is independently developed and is not affiliated with or
+            GoHoos is independently developed and maintained by Alan Tobin and is not affiliated with or
             endorsed by the University of Virginia, UVA Transportation, or
             TransLoc.
           </p>
