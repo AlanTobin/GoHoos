@@ -18,15 +18,12 @@ import { buildTripPathGeoJSON } from "@/lib/planner/buildTripPathGeoJSON";
 import { boardAlightForTripStep } from "@/lib/planner/boardAlight";
 import { stepFocusTarget } from "@/lib/planner/stepFocusBounds";
 import { stopIdsForTripStep } from "@/lib/planner/tripStepStops";
-import { getMockVehicles } from "@/services/mockVehicles";
 import type { PickedLocation, PlannerPickMode } from "@/types/planner";
 
 const ALL_MAPPED_ROUTE_IDS = new Set(Object.keys(routeStops));
 const CAMPUS_CENTER: LatLng = { lat: 38.0385, lon: -78.508 };
 
-/** Flip to true for local testing without geolocation / live vehicles. */
-const USE_MOCK_USER_LOCATION = true;
-const USE_MOCK_ACTIVE_ROUTES = true;
+const USE_MOCK_USER_LOCATION = false;
 const MOCK_USER_LOCATION: LatLng = {
   lat: 38.04778,
   lon: -78.51361,
@@ -78,9 +75,7 @@ export default function HomePlanner() {
 
     const fetchVehicles = async () => {
       try {
-        const data = USE_MOCK_ACTIVE_ROUTES
-          ? getMockVehicles()
-          : await getVehicles();
+        const data = await getVehicles();
         if (!isMounted) return;
         setActiveRoutes(new Set(data.map((v) => toRouteId(v.RouteID))));
       } catch {
@@ -91,13 +86,11 @@ export default function HomePlanner() {
     };
 
     fetchVehicles();
-    const interval = USE_MOCK_ACTIVE_ROUTES
-      ? null
-      : setInterval(fetchVehicles, 5000);
+    const interval = setInterval(fetchVehicles, 5000);
 
     return () => {
       isMounted = false;
-      if (interval) clearInterval(interval);
+      clearInterval(interval);
     };
   }, []);
 
