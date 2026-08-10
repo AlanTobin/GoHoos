@@ -62,6 +62,19 @@ export function updateStopsLayer(map: mapboxgl.Map, selectedRoutes: Set<string>)
   source.setData(stopsToGeoJSON(getStopsForSelection(selectedRoutes)));
 }
 
+/** Show only the given stop ids (e.g. board→alight for the active trip step). */
+export function updateStopsLayerByIds(
+  map: mapboxgl.Map,
+  stopIds: ReadonlySet<string> | string[]
+) {
+  const source = map.getSource("stops") as mapboxgl.GeoJSONSource | undefined;
+  if (!source) return;
+
+  const allowed = stopIds instanceof Set ? stopIds : new Set(stopIds);
+  const filtered = allStops.filter((stop) => allowed.has(stop.stop_id));
+  source.setData(stopsToGeoJSON(filtered));
+}
+
 export function addStopClickHandler(
   map: mapboxgl.Map,
   onStopClick?: (stopId: string) => void
