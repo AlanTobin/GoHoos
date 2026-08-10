@@ -1,7 +1,54 @@
 "use client";
 
-import type { PickedLocation } from "@/types/planner";
-import { formatWalkDistance, stopDisplayName } from "@/lib/geo";
+import type { PickedLocation, TripOption, TripStep } from "@/types/planner";
+import { stopDisplayName } from "@/lib/geo";
+import { isGoldYellow } from "@/lib/routes";
+import { getRouteColor } from "@/lib/planner/buildTripPathGeoJSON";
+
+function formatStepMeters(meters: number): string {
+  if (meters < 1000) return `${Math.round(meters)} m`;
+  return `${(meters / 1609.34).toFixed(1)} mi`;
+}
+
+function primaryRide(trip: TripOption): Extract<TripStep, { kind: "ride" }> | null {
+  return (
+    trip.steps.find((s): s is Extract<TripStep, { kind: "ride" }> => s.kind === "ride") ??
+    null
+  );
+}
+
+function tripHeadline(trip: TripOption): string {
+  const rides = trip.steps.filter(
+    (s): s is Extract<TripStep, { kind: "ride" }> => s.kind === "ride"
+  );
+  if (rides.length === 0) return "Walking trip";
+  if (rides.length === 1) return rides[0].routeName;
+  return `${rides[0].routeName} → ${rides[rides.length - 1].routeName}`;
+}
+
+function tripDestinationLabel(trip: TripOption): string {
+  const lastRide = [...trip.steps]
+    .reverse()
+    .find((s): s is Extract<TripStep, { kind: "ride" }> => s.kind === "ride");
+  if (lastRide) return stopDisplayName(lastRide.toStopName);
+  const last = trip.steps[trip.steps.length - 1];
+  return stopDisplayName(last.toStopName);
+}
+
+function tripBoardLabel(trip: TripOption): string {
+  const firstRide = primaryRide(trip);
+  if (!firstRide) return "Your location";
+  return stopDisplayName(firstRide.fromStopName);
+}
+
+function cardColor(trip: TripOption): string {
+  const ride = primaryRide(trip);
+  return ride ? getRouteColor(ride.routeId) : "#232D4B";
+}
+
+function textOn(color: string): string {
+  return isGoldYellow(color) ? "#232D4B" : "#FFFFFF";
+}
 
 interface LocationGateProps {
   geoLoading: boolean;
@@ -80,20 +127,15 @@ export function DestinationPickBar({ draftDestination, onConfirm }: PickBarProps
   return (
     <div className="absolute inset-x-0 bottom-0 z-30 p-3">
       <div className="mx-auto max-w-md rounded-2xl border border-uva-navy/10 bg-white/95 px-4 py-3 shadow-xl backdrop-blur-sm">
-        <p className="mb-2 text-sm font-medium text-uva-navy">
+        <p className="mb-3 text-sm font-medium text-uva-navy">
           Drag the pin to where you want to go
         </p>
 
-        {draftDestination ? (
-          <p className="mb-3 text-xs text-uva-navy/55">
-            Nearest stop: {stopDisplayName(draftDestination.stopName)} (
-            {formatWalkDistance(draftDestination.walkMeters)})
-          </p>
-        ) : (
+        {!draftDestination ? (
           <p className="mb-3 text-sm text-uva-navy/50">
             No nearby bus stop — try moving the pin closer to campus
           </p>
-        )}
+        ) : null}
 
         <button
           type="button"
@@ -108,25 +150,139 @@ export function DestinationPickBar({ draftDestination, onConfirm }: PickBarProps
   );
 }
 
+function cardRankLabel(
+  trip: TripOption,
+  rank: number,
+  trips: TripOption[]
+): string {
+  if (rank === 0) return "Best";
+  const minWalk = Math.min(...trips.map((t) => t.walkMeters));
+  if (trips[0].walkMeters === minWalk) return `#${rank + 1}`;
+  const leastIndex = trips.findIndex((t) => t.walkMeters === minWalk);
+  if (rank === leastIndex && trip.walkMeters === minWalk) return "Least walk";
+  return `#${rank + 1}`;
+}
+
+function TripOptionCard({
+  trip,
+  rank,
+  trips,
+  selected,
+  onSelect,
+}: {
+  trip: TripOption;
+  rank: number;
+  trips: TripOption[];
+  selected: boolean;
+  onSelect: () => void;
+}) {
+  const color = cardColor(trip);
+  const onColor = textOn(color);
+  const rideCount = trip.steps.filter((s) => s.kind === "ride").length;
+  const rankLabel = cardRankLabel(trip, rank, trips);
+
+  return (
+    <button
+      type="button"
+      onClick={onSelect}
+      aria-pressed={selected}
+      className={`flex w-full items-stretch overflow-hidden rounded-xl text-left shadow-md transition-transform ${
+        selected
+          ? "scale-[1.01] ring-2 ring-white ring-offset-2 ring-offset-uva-navy/20"
+          : "hover:brightness-105"
+      }`}
+      style={{ backgroundColor: color, color: onColor }}
+    >
+      <div className="flex min-w-0 flex-1 items-center gap-3 px-3 py-3">
+        <div className="shrink-0">
+          <p className="text-sm font-bold leading-none tracking-tight">
+            {rankLabel}
+          </p>
+          <p className="mt-1 text-[10px] font-medium uppercase tracking-wide opacity-80">
+            {rideCount <= 1 ? "Direct" : "1 transfer"}
+          </p>
+        </div>
+
+        <div className="min-w-0 flex-1 border-l border-white/25 pl-3">
+          <p className="flex items-center gap-1.5 text-sm font-semibold leading-snug">
+            <span aria-hidden className="opacity-80">
+              →
+            </span>
+            <span className="truncate">{tripDestinationLabel(trip)}</span>
+          </p>
+          <p className="mt-0.5 truncate text-xs opacity-80">
+            {tripHeadline(trip)} · board at {tripBoardLabel(trip)}
+          </p>
+        </div>
+      </div>
+
+      <div className="flex w-[5.25rem] shrink-0 flex-col items-center justify-center border-l border-white/25 px-2 py-3 text-center">
+        <p className="text-lg font-bold leading-none tabular-nums">
+          ~{trip.totalMinutes}
+        </p>
+        <p className="mt-0.5 text-[10px] font-medium uppercase tracking-wide opacity-80">
+          min
+        </p>
+        <p className="mt-1 text-[10px] opacity-70">
+          {formatStepMeters(trip.totalMeters)}
+        </p>
+      </div>
+    </button>
+  );
+}
+
 interface ResultsBarProps {
+  trips: TripOption[];
+  selectedTripIndex: number | null;
+  isLoadingRoutes: boolean;
+  onSelectTrip: (index: number) => void;
   onChangeDestination: () => void;
 }
 
-export function TripResultsBar({ onChangeDestination }: ResultsBarProps) {
+export function TripResultsBar({
+  trips,
+  selectedTripIndex,
+  isLoadingRoutes,
+  onSelectTrip,
+  onChangeDestination,
+}: ResultsBarProps) {
   return (
     <div className="absolute inset-x-0 bottom-0 z-30 p-3">
-      <div className="mx-auto max-w-md rounded-2xl border border-uva-navy/10 bg-white/95 px-4 py-3 shadow-xl backdrop-blur-sm">
-        <p className="text-sm font-medium text-uva-navy">Planning your route</p>
-        <p className="mt-3 rounded-lg border border-dashed border-uva-navy/15 px-3 py-2 text-center text-xs text-uva-navy/45">
-          Route recommendations coming soon
-        </p>
-        <button
-          type="button"
-          onClick={onChangeDestination}
-          className="mt-3 w-full rounded-lg border border-uva-navy/15 px-4 py-2.5 text-sm font-medium text-uva-navy transition-colors hover:bg-uva-navy/5"
-        >
-          Change destination
-        </button>
+      <div className="mx-auto max-w-md rounded-2xl border border-uva-navy/10 bg-white/95 px-3 py-3 shadow-xl backdrop-blur-sm">
+        <div className="mb-2 flex items-center justify-between gap-2 px-1">
+          <p className="text-sm font-medium text-uva-navy">Route options</p>
+          <button
+            type="button"
+            onClick={onChangeDestination}
+            className="text-xs font-medium text-uva-orange hover:text-uva-orange-hover"
+          >
+            Change destination
+          </button>
+        </div>
+
+        {isLoadingRoutes && trips.length === 0 ? (
+          <p className="px-1 py-4 text-center text-xs text-uva-navy/45">
+            Loading active routes…
+          </p>
+        ) : trips.length === 0 ? (
+          <p className="rounded-lg border border-dashed border-uva-navy/15 px-3 py-3 text-center text-xs text-uva-navy/45">
+            No route found with at most one transfer
+          </p>
+        ) : (
+          <ul className="max-h-[40vh] space-y-2 overflow-y-auto">
+            {trips.map((trip, index) => (
+              <li key={`trip-${index}`}>
+                <TripOptionCard
+                  trip={trip}
+                  rank={index}
+                  trips={trips}
+                  selected={selectedTripIndex === index}
+                  onSelect={() => onSelectTrip(index)}
+                />
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );

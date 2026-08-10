@@ -7,6 +7,7 @@ import {
   addStopsLayer,
   updateStopHighlights,
   updateStopsLayer,
+  updateStopsLayerByIds,
 } from "@/lib/layers/stops";
 import {
   addShapesLayer,
@@ -21,13 +22,30 @@ import {
   addPlannerMarkersLayer,
   updatePlannerMarkersLayer,
 } from "@/lib/layers/plannerMarkers";
+import {
+  addTripPathLayer,
+  setTripPathActiveStep,
+  updateTripPathLayer,
+} from "@/lib/layers/tripPath";
 import { createDestinationPinElement } from "@/lib/planner/createDestinationPinElement";
+import { createBoardAlightArrowElement } from "@/lib/planner/createBoardAlightArrowElement";
+import type { BoardAlightMarkers } from "@/lib/planner/boardAlight";
+import type { StepFocusTarget } from "@/lib/planner/stepFocusBounds";
 import type { LatLng } from "@/lib/geo";
+import type { FeatureCollection, LineString } from "geojson";
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN!;
 
 interface Props {
   activeRoutes: Set<string>;
+  /** When set, only these route shapes stay visible. */
+  highlightedRouteIds: Set<string> | null;
+  /** When set, only these stop dots are shown for the active step. */
+  visibleStopIds: string[] | null;
+  tripPath: FeatureCollection<LineString> | null;
+  activeStepIndex: number | null;
+  stepFocus: StepFocusTarget | null;
+  boardAlight: BoardAlightMarkers | null;
   originStopId: string | null;
   destinationStopId: string | null;
   originPoint: LatLng | null;
@@ -39,6 +57,12 @@ interface Props {
 
 export default function PlannerMap({
   activeRoutes,
+  highlightedRouteIds,
+  visibleStopIds,
+  tripPath,
+  activeStepIndex,
+  stepFocus,
+  boardAlight,
   originStopId,
   destinationStopId,
   originPoint,
@@ -50,6 +74,8 @@ export default function PlannerMap({
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const destMarkerRef = useRef<mapboxgl.Marker | null>(null);
+  const boardMarkerRef = useRef<mapboxgl.Marker | null>(null);
+  const alightMarkerRef = useRef<mapboxgl.Marker | null>(null);
   const activeRoutesRef = useRef(activeRoutes);
   const onDestinationPinMoveRef = useRef(onDestinationPinMove);
   const pickingRef = useRef(pickingDestination);
@@ -84,6 +110,7 @@ export default function PlannerMap({
       addStopsLayer(map);
       addWalkRangeLayer(map);
       addPlannerMarkersLayer(map);
+      addTripPathLayer(map);
       updateStopsLayer(map, activeRoutesRef.current);
       setShapeRouteVisibility(map, activeRoutesRef.current);
       setMapReady(true);
@@ -92,6 +119,10 @@ export default function PlannerMap({
     return () => {
       destMarkerRef.current?.remove();
       destMarkerRef.current = null;
+      boardMarkerRef.current?.remove();
+      boardMarkerRef.current = null;
+      alightMarkerRef.current?.remove();
+      alightMarkerRef.current = null;
       setMapReady(false);
       map.remove();
     };
@@ -100,11 +131,99 @@ export default function PlannerMap({
   useEffect(() => {
     const map = mapRef.current;
     if (!mapReady || !map) return;
-    updateStopsLayer(map, activeRoutes);
-    if (shapesLayersReady(map)) {
-      setShapeRouteVisibility(map, activeRoutes);
+    const visibleRoutes = highlightedRouteIds ?? activeRoutes;
+    if (visibleStopIds) {
+      updateStopsLayerByIds(map, visibleStopIds);
+    } else {
+      updateStopsLayer(map, visibleRoutes);
     }
-  }, [activeRoutes, mapReady]);
+    if (shapesLayersReady(map)) {
+      setShapeRouteVisibility(map, visibleRoutes);
+    }
+  }, [activeRoutes, highlightedRouteIds, visibleStopIds, mapReady]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!mapReady || !map) return;
+    updateTripPathLayer(map, tripPath);
+    setTripPathActiveStep(map, tripPath ? activeStepIndex : null);
+  }, [tripPath, activeStepIndex, mapReady]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!mapReady || !map) return;
+
+    const clearBoardAlight = () => {
+      boardMarkerRef.current?.remove();
+      boardMarkerRef.current = null;
+      alightMarkerRef.current?.remove();
+      alightMarkerRef.current = null;
+    };
+
+    if (!boardAlight) {
+      clearBoardAlight();
+      return;
+    }
+
+    const boardLngLat: [number, number] = [
+      boardAlight.board.lon,
+      boardAlight.board.lat,
+    ];
+    const alightLngLat: [number, number] = [
+      boardAlight.alight.lon,
+      boardAlight.alight.lat,
+    ];
+
+    // Recreate so arrow artwork stays in sync (tip on stop, label outward).
+    boardMarkerRef.current?.remove();
+    alightMarkerRef.current?.remove();
+
+    boardMarkerRef.current = new mapboxgl.Marker({
+      element: createBoardAlightArrowElement("get-on"),
+      anchor: "bottom",
+      offset: [0, 0],
+    })
+      .setLngLat(boardLngLat)
+      .addTo(map);
+
+    alightMarkerRef.current = new mapboxgl.Marker({
+      element: createBoardAlightArrowElement("get-off"),
+      anchor: "bottom",
+      offset: [0, 0],
+    })
+      .setLngLat(alightLngLat)
+      .addTo(map);
+  }, [boardAlight, mapReady]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!mapReady || !map || !stepFocus) return;
+
+    const padding = { top: 120, bottom: 320, left: 56, right: 56 };
+
+    if (stepFocus.mode === "center") {
+      map.flyTo({
+        center: [stepFocus.point.lon, stepFocus.point.lat],
+        zoom: stepFocus.zoom,
+        essential: true,
+        duration: 550,
+        padding,
+      });
+      return;
+    }
+
+    const bounds = new mapboxgl.LngLatBounds();
+    for (const point of stepFocus.points) {
+      bounds.extend([point.lon, point.lat]);
+    }
+    if (bounds.isEmpty()) return;
+
+    map.fitBounds(bounds, {
+      padding,
+      maxZoom: 16.5,
+      duration: 550,
+    });
+  }, [stepFocus, mapReady]);
 
   useEffect(() => {
     const map = mapRef.current;
@@ -164,8 +283,11 @@ export default function PlannerMap({
   useEffect(() => {
     const map = mapRef.current;
     if (!mapReady || !map || !originPoint) return;
+    if (stepFocus || boardAlight || (tripPath && tripPath.features.length > 0)) {
+      return;
+    }
     flyToPoint(map, originPoint);
-  }, [originPoint, mapReady]);
+  }, [originPoint, mapReady, tripPath, boardAlight, stepFocus]);
 
   useEffect(() => {
     const map = mapRef.current;
