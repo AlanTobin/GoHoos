@@ -8,16 +8,25 @@ import {
   LocationRequiredOverlay,
   TripResultsBar,
 } from "@/components/home/TripPlannerPanel";
+import TripStepTrail from "@/components/home/TripStepTrail";
 import routeStops from "@/data/json/route-stops.json";
 import { getVehicles } from "@/services/vehicles";
 import { toRouteId } from "@/lib/routes";
-import { snapToStop, type LatLng } from "@/lib/geo";
+import { snapToStop, stopDisplayName, type LatLng } from "@/lib/geo";
+import { planTrips } from "@/lib/planTrips";
+import { buildTripPathGeoJSON } from "@/lib/planner/buildTripPathGeoJSON";
+import { boardAlightForTripStep } from "@/lib/planner/boardAlight";
+import { stepFocusTarget } from "@/lib/planner/stepFocusBounds";
+import { stopIdsForTripStep } from "@/lib/planner/tripStepStops";
+import { getMockVehicles } from "@/services/mockVehicles";
 import type { PickedLocation, PlannerPickMode } from "@/types/planner";
 
 const ALL_MAPPED_ROUTE_IDS = new Set(Object.keys(routeStops));
 const CAMPUS_CENTER: LatLng = { lat: 38.0385, lon: -78.508 };
 
-const USE_MOCK_USER_LOCATION = false;
+/** Flip to true for local testing without geolocation / live vehicles. */
+const USE_MOCK_USER_LOCATION = true;
+const USE_MOCK_ACTIVE_ROUTES = true;
 const MOCK_USER_LOCATION: LatLng = {
   lat: 38.04778,
   lon: -78.51361,
@@ -59,13 +68,19 @@ export default function HomePlanner() {
   const [geoLoading, setGeoLoading] = useState(false);
   const [geoError, setGeoError] = useState<string | null>(null);
   const [geoPermission, setGeoPermission] = useState<GeoPermission>("unknown");
+  const [selectedTripIndex, setSelectedTripIndex] = useState(0);
+  const [activeStepIndex, setActiveStepIndex] = useState(0);
+  const [tripsKey, setTripsKey] = useState("");
+  const [itineraryOpen, setItineraryOpen] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
 
     const fetchVehicles = async () => {
       try {
-        const data = await getVehicles();
+        const data = USE_MOCK_ACTIVE_ROUTES
+          ? getMockVehicles()
+          : await getVehicles();
         if (!isMounted) return;
         setActiveRoutes(new Set(data.map((v) => toRouteId(v.RouteID))));
       } catch {
@@ -76,11 +91,13 @@ export default function HomePlanner() {
     };
 
     fetchVehicles();
-    const interval = setInterval(fetchVehicles, 5000);
+    const interval = USE_MOCK_ACTIVE_ROUTES
+      ? null
+      : setInterval(fetchVehicles, 5000);
 
     return () => {
       isMounted = false;
-      clearInterval(interval);
+      if (interval) clearInterval(interval);
     };
   }, []);
 
@@ -89,7 +106,6 @@ export default function HomePlanner() {
     [activeRoutes]
   );
 
-  const walkRangeCenter = userLocation ?? origin?.point ?? null;
   const mapOriginPoint = userLocation ?? origin?.point ?? null;
 
   const applyUserPoint = useCallback(
@@ -239,18 +255,128 @@ export default function HomePlanner() {
 
   const handleChangeDestination = useCallback(() => {
     setDestination(null);
+    setSelectedTripIndex(0);
+    setActiveStepIndex(0);
+    setItineraryOpen(false);
+    setTripsKey("");
     beginDestinationPick(null);
   }, [beginDestinationPick]);
+
+  const trips = useMemo(() => {
+    if (!origin || !destination || isLoadingRoutes) return [];
+    return planTrips({
+      origin,
+      destination,
+      activeRouteIds: activeRoutes,
+    });
+  }, [origin, destination, activeRoutes, isLoadingRoutes]);
+
+  const nextTripsKey = useMemo(
+    () =>
+      trips
+        .map((trip) =>
+          trip.steps
+            .map((step) =>
+              step.kind === "ride"
+                ? `r:${step.routeId}:${step.fromStopId}:${step.toStopId}`
+                : `w:${step.toStopId ?? "dest"}:${Math.round(step.meters)}`
+            )
+            .join(">")
+        )
+        .join("|"),
+    [trips]
+  );
+
+  if (nextTripsKey !== tripsKey) {
+    setTripsKey(nextTripsKey);
+    setSelectedTripIndex(0);
+    setActiveStepIndex(0);
+    setItineraryOpen(false);
+  }
+
+  const safeSelectedTripIndex =
+    trips.length === 0
+      ? null
+      : Math.min(selectedTripIndex, trips.length - 1);
+
+  const selectedTrip =
+    safeSelectedTripIndex !== null ? trips[safeSelectedTripIndex] ?? null : null;
+
+  const detailTrip = itineraryOpen ? selectedTrip : null;
+
+  const tripPath = useMemo(() => {
+    if (!origin || !destination || !detailTrip) return null;
+    return buildTripPathGeoJSON(detailTrip, origin, destination);
+  }, [origin, destination, detailTrip]);
+
+  const boardAlight = useMemo(() => {
+    if (!detailTrip) return null;
+    return boardAlightForTripStep(detailTrip, activeStepIndex);
+  }, [detailTrip, activeStepIndex]);
+
+  const visibleStopIds = useMemo(() => {
+    if (!detailTrip) return null;
+    return stopIdsForTripStep(detailTrip, activeStepIndex);
+  }, [detailTrip, activeStepIndex]);
+
+  const highlightedRouteIds = useMemo(() => {
+    if (!detailTrip) return null;
+    // Full shape only while on a ride step; walks keep the route hidden.
+    if (boardAlight) return new Set([boardAlight.routeId]);
+    return new Set<string>();
+  }, [detailTrip, boardAlight]);
+
+  const stepFocus = useMemo(() => {
+    if (!detailTrip || !origin || !destination) return null;
+    return stepFocusTarget(
+      detailTrip,
+      activeStepIndex,
+      origin,
+      destination,
+      tripPath
+    );
+  }, [detailTrip, activeStepIndex, origin, destination, tripPath]);
+
+  const handleSelectTrip = useCallback((index: number) => {
+    setSelectedTripIndex(index);
+    setActiveStepIndex(0);
+    setItineraryOpen(true);
+  }, []);
+
+  const handleBackToRoutes = useCallback(() => {
+    setItineraryOpen(false);
+    setActiveStepIndex(0);
+  }, []);
 
   return (
     <div className="relative h-full min-h-0 w-full overflow-hidden">
       <PageBackdrop variant="home" />
       <PlannerMap
         activeRoutes={mapRouteIds}
-        originStopId={null}
-        destinationStopId={null}
+        highlightedRouteIds={
+          pickMode === "idle" && destination ? highlightedRouteIds : null
+        }
+        visibleStopIds={
+          pickMode === "idle" && destination ? visibleStopIds : null
+        }
+        tripPath={pickMode === "idle" && destination ? tripPath : null}
+        activeStepIndex={
+          pickMode === "idle" && destination ? activeStepIndex : null
+        }
+        stepFocus={pickMode === "idle" && destination ? stepFocus : null}
+        boardAlight={pickMode === "idle" && destination ? boardAlight : null}
+        originStopId={
+          pickMode === "idle" && destination
+            ? boardAlight?.boardStopId ?? null
+            : null
+        }
+        destinationStopId={
+          pickMode === "idle" && destination
+            ? boardAlight?.alightStopId ?? null
+            : null
+        }
         originPoint={mapOriginPoint}
-        walkRangeCenter={walkRangeCenter}
+        walkRangeCenter={null}
         pickingDestination={pickMode === "picking-destination"}
         destinationPinPoint={
           pickMode === "picking-destination"
@@ -272,7 +398,24 @@ export default function HomePlanner() {
           onConfirm={handleConfirmDestination}
         />
       ) : destination ? (
-        <TripResultsBar onChangeDestination={handleChangeDestination} />
+        itineraryOpen && detailTrip ? (
+          <TripStepTrail
+            trip={detailTrip}
+            activeStepIndex={activeStepIndex}
+            onStepFocus={setActiveStepIndex}
+            destinationLabel={stopDisplayName(destination.stopName)}
+            onBackToRoutes={handleBackToRoutes}
+            onChangeDestination={handleChangeDestination}
+          />
+        ) : (
+          <TripResultsBar
+            trips={trips}
+            selectedTripIndex={null}
+            isLoadingRoutes={isLoadingRoutes}
+            onSelectTrip={handleSelectTrip}
+            onChangeDestination={handleChangeDestination}
+          />
+        )
       ) : null}
     </div>
   );
