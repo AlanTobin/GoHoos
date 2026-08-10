@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "node --test",
+    "test": "node --experimental-strip-types --test src/lib/*.test.ts src/lib/**/*.test.ts",
     "convert:gtfs": "node scripts/convert-gtfs-to-json.mjs"
   },
   "dependencies": {
