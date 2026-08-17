@@ -10,12 +10,14 @@ Built to fix the gap between UTS's official app and what students actually need 
 
 **Live today**
 
+- **Route planner (home page)** — start/destination stop selection and map UI are in place alongside route recommendations and ETAs
 - **Routes page** — interactive Mapbox map with UTS route lines and stops (GTFS), live vehicle positions, route search/toggle, and bus detail popups (speed, route, passenger count when available)
 - **About page** — product overview, feature walkthrough, and roadmap
 
 **Under active development**
 
-- **Route planner (home page)** — start/destination stop selection and map UI are in place; route recommendations and ETAs are not shipped yet
+- **Historical ETAs**
+- **Break Notifications**
 
 GoHoos is an independent student project and is not affiliated with the University of Virginia, UVA Transportation Services, or TransLoc.
 
