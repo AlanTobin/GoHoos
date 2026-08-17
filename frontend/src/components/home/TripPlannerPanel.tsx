@@ -2,7 +2,6 @@
 
 import PlannerSheet, {
   PlannerAccentBar,
-  PlannerActionRow,
   plannerActionLabelClassName,
 } from "@/components/home/PlannerSheet";
 import type { TripOption, TripStep } from "@/types/planner";
@@ -105,7 +104,7 @@ export function LocationRequiredOverlay({
           type="button"
           onClick={onUseLocation}
           disabled={geoLoading}
-          className="w-full rounded-[10px] bg-academical-orange px-4 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-95 disabled:cursor-wait disabled:opacity-70"
+          className="w-full rounded-[10px] bg-uva-orange px-4 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-95 disabled:cursor-wait disabled:opacity-70"
         >
           {geoLoading ? "Requesting…" : "Allow access"}
         </button>
@@ -151,11 +150,11 @@ export function DestinationPickBar({
   onSelectShortcut,
 }: PickBarProps) {
   const accent = (
-    <div className="mx-auto w-full max-w-xl">
-      <h2 className="text-center text-xl font-bold tracking-tight text-white sm:text-2xl">
+    <div className="w-full pb-1">
+      <h2 className="text-center text-[1.15rem] font-bold tracking-tight text-white">
         Where to?
       </h2>
-      <p className="mt-1 text-center text-sm text-white/55">
+      <p className="mt-1 text-center text-[0.8rem] leading-snug text-white/55">
         Drag the pin on the map, or pick a stop below
       </p>
       <div className="mt-3">
@@ -165,9 +164,7 @@ export function DestinationPickBar({
           disabled={!pinTouched}
           className={pinTouched ? "animate-go-cta-pop" : ""}
         >
-          <p className="text-sm font-semibold sm:text-base">
-            Confirm destination
-          </p>
+          <p className="text-[0.92rem] font-semibold">Confirm destination</p>
         </PlannerAccentBar>
       </div>
     </div>
@@ -175,7 +172,7 @@ export function DestinationPickBar({
 
   return (
     <PlannerSheet ariaLabel="Choose a destination" accent={accent}>
-      <ul className="flex h-full min-h-0 flex-col">
+      <ul className="flex flex-col">
         {shortcuts.map((shortcut) => {
           const minutesLabel = shortcutMinutesDisplay(
             shortcut.minutes,
@@ -183,24 +180,21 @@ export function DestinationPickBar({
           );
 
           return (
-            <li
-              key={shortcut.id}
-              className="flex min-h-0 flex-1 border-b border-white/10"
-            >
+            <li key={shortcut.id} className="border-t border-white/12">
               <button
                 type="button"
                 disabled={shortcut.disabled || shortcutsLoading}
                 onClick={() => onSelectShortcut(shortcut.id)}
-                className="flex h-full w-full min-w-0 items-center justify-between gap-3 px-4 py-3.5 text-left transition-colors hover:bg-white/5 disabled:cursor-not-allowed disabled:opacity-45 sm:px-6 sm:py-4 md:px-8"
+                className="flex w-full min-w-0 items-center justify-between gap-3 py-3.5 text-left transition-colors hover:bg-white/5 disabled:cursor-not-allowed disabled:opacity-45"
               >
-                <p className="min-w-0 truncate text-base font-semibold tracking-tight text-white sm:text-lg">
+                <p className="min-w-0 truncate text-[0.95rem] font-semibold tracking-tight text-white">
                   {shortcut.label}
                 </p>
-                <p className="shrink-0 text-right tabular-nums">
-                  <span className="text-base font-bold text-white sm:text-lg">
+                <p className="inline-flex shrink-0 items-baseline gap-0.5 tabular-nums">
+                  <span className="text-[0.98rem] font-bold text-white">
                     {minutesLabel}
                   </span>
-                  <span className="ml-1 text-xs font-medium text-white/55">
+                  <span className="text-[0.7rem] font-medium text-white/55">
                     min
                   </span>
                 </p>
@@ -247,29 +241,29 @@ function TripOptionCard({
       type="button"
       onClick={onSelect}
       aria-pressed={selected}
-      className={`flex h-full w-full min-w-0 items-center justify-between gap-3 px-4 py-3.5 text-left transition-colors hover:bg-white/5 sm:px-6 sm:py-4 md:px-8 ${
-        selected ? "bg-academical-orange/15" : ""
+      className={`flex w-full min-w-0 items-center justify-between gap-3 py-3.5 text-left transition-colors hover:bg-white/5 ${
+        selected ? "bg-uva-orange/15" : ""
       }`}
     >
       <div className="min-w-0 flex-1">
-        <p className="truncate text-base font-semibold tracking-tight text-white sm:text-lg">
+        <p className="truncate text-[0.95rem] font-semibold tracking-tight text-white">
           {rankLabel}
           <span className="font-medium text-white/70">
             {" "}
             · {tripHeadline(trip)}
           </span>
         </p>
-        <p className="mt-1 truncate text-xs text-white/55 sm:text-sm">
+        <p className="mt-1 truncate text-xs text-white/55">
           {rideCount <= 1 ? "Direct" : "1 transfer"} · {tripBoardLabel(trip)} ·{" "}
           {formatStepMeters(trip.totalMeters)}
         </p>
       </div>
 
-      <p className="shrink-0 text-right tabular-nums">
-        <span className="text-base font-bold text-white sm:text-lg">
+      <p className="inline-flex shrink-0 items-baseline gap-0.5 tabular-nums">
+        <span className="text-[0.98rem] font-bold text-white">
           {Math.round(trip.totalMinutes)}
         </span>
-        <span className="ml-1 text-xs font-medium text-white/55">min</span>
+        <span className="text-[0.7rem] font-medium text-white/55">min</span>
       </p>
     </button>
   );
@@ -291,26 +285,19 @@ export function TripResultsBar({
   onChangeDestination,
 }: ResultsBarProps) {
   const accent = (
-    <div className="mx-auto w-full max-w-xl">
-      <h2 className="text-center text-xl font-bold tracking-tight text-white sm:text-2xl">
+    <div className="w-full pb-1">
+      <h2 className="text-center text-[1.15rem] font-bold tracking-tight text-white">
         Best routes
       </h2>
-      <p className="mt-1 text-center text-sm text-white/55">
+      <p className="mt-1 text-center text-[0.8rem] leading-snug text-white/55">
         Pick a route to see steps on the map
       </p>
       <div className="mt-3">
-        <PlannerActionRow>
-          <PlannerAccentBar
-            as="button"
-            size="action"
-            onClick={onChangeDestination}
-            className="min-w-0 flex-1"
-          >
-            <span className={plannerActionLabelClassName()}>
-              Change destination
-            </span>
-          </PlannerAccentBar>
-        </PlannerActionRow>
+        <PlannerAccentBar as="button" size="action" onClick={onChangeDestination}>
+          <span className={plannerActionLabelClassName()}>
+            Change destination
+          </span>
+        </PlannerAccentBar>
       </div>
     </div>
   );
@@ -318,20 +305,17 @@ export function TripResultsBar({
   return (
     <PlannerSheet ariaLabel="Route options" accent={accent}>
       {isLoadingRoutes && trips.length === 0 ? (
-        <p className="flex flex-1 items-center justify-center px-4 text-center text-sm text-white/55 sm:text-base">
+        <p className="px-4 py-8 text-center text-sm text-white/55">
           Loading active routes…
         </p>
       ) : trips.length === 0 ? (
-        <p className="flex flex-1 items-center justify-center px-4 text-center text-sm text-white/55 sm:text-base">
+        <p className="px-4 py-8 text-center text-sm text-white/55">
           No route found with at most one transfer
         </p>
       ) : (
-        <ul className="flex h-full min-h-0 flex-col">
+        <ul className="flex flex-col">
           {trips.map((trip, index) => (
-            <li
-              key={`trip-${index}`}
-              className="flex min-h-0 flex-1 border-b border-white/10"
-            >
+            <li key={`trip-${index}`} className="border-t border-white/12">
               <TripOptionCard
                 trip={trip}
                 rank={index}
