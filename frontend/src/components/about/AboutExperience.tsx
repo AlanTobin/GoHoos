@@ -186,21 +186,12 @@ const STEPS: Step[] = [
         <ul className="space-y-3">
           <li className="rounded-lg border border-uva-navy/10 bg-white p-4">
             <strong className="block font-semibold text-uva-navy">
-              Home page start &amp; stop selection
-            </strong>
-            <span className="mt-1 block text-sm">
-              Pick where you&apos;re leaving from and where you&apos;re going on
-              the home page so you can see the best routes to take.
-            </span>
-          </li>
-          <li className="rounded-lg border border-uva-navy/10 bg-white p-4">
-            <strong className="block font-semibold text-uva-navy">
               More accurate ETAs
             </strong>
             <span className="mt-1 block text-sm">
               Improved arrival-time estimates that account for real traffic,
-              dwell time at stops, and current vehicle speed, so you know when to
-              leave rather than TransLoc&apos;s rule-based "X minutes for each 100 yards" ETA.
+              dwell time at stops, and current vehicle speed, so you know
+              exactly when to leave.
             </span>
           </li>
           <li className="rounded-lg border border-uva-navy/10 bg-white p-4">

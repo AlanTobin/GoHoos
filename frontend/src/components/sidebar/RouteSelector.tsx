@@ -64,10 +64,19 @@ export default function RouteSelector({
   const [isOpen, setIsOpen] = useState(true);
   const [search, setSearch] = useState("");
 
-  const sortedRoutes = useMemo(
-    () => [...routes].sort((a, b) => a.route_sort_order - b.route_sort_order),
-    [routes]
-  );
+  const sortedRoutes = useMemo(() => {
+    const isPrimaryRoute = (name: string) =>
+      /\b(line|loop|pilot)\b/i.test(name);
+
+    return [...routes].sort((a, b) => {
+      const aPrimary = isPrimaryRoute(a.route_long_name);
+      const bPrimary = isPrimaryRoute(b.route_long_name);
+      if (aPrimary !== bPrimary) return aPrimary ? -1 : 1;
+      return a.route_long_name.localeCompare(b.route_long_name, undefined, {
+        sensitivity: "base",
+      });
+    });
+  }, [routes]);
 
   const activeRoutes = useMemo(
     () => sortedRoutes.filter(r => routesWithVehicles.has(r.route_id)),
@@ -189,19 +198,22 @@ export default function RouteSelector({
                         type="button"
                         aria-pressed={isSelected}
                         onClick={() => onToggle(route.route_id)}
-                        className={`relative flex w-full items-center gap-3 overflow-hidden rounded-lg border border-uva-navy/10 py-3 pl-4 pr-3 text-left transition-all duration-200 ${
+                        className={`relative flex w-full items-center gap-3 overflow-hidden rounded-lg bg-white py-3 pl-4 pr-3 text-left transition-all duration-200 ${
                           isSelected
-                            ? "bg-uva-orange-soft shadow-sm"
-                            : "bg-white hover:bg-uva-blue-soft/50"
+                            ? "border-2"
+                            : "border border-uva-navy/10 hover:bg-uva-blue-soft/50"
                         }`}
+                        style={
+                          isSelected ? { borderColor: color } : undefined
+                        }
                       >
-                        <span
-                          aria-hidden
-                          className={`absolute bottom-0 left-0 top-0 rounded-l-lg ${
-                            isSelected ? "w-1.5" : "w-0.5"
-                          }`}
-                          style={{ backgroundColor: color }}
-                        />
+                        {!isSelected ? (
+                          <span
+                            aria-hidden
+                            className="absolute bottom-0 left-0 top-0 w-0.5 rounded-l-lg"
+                            style={{ backgroundColor: color }}
+                          />
+                        ) : null}
                         <span className="min-w-0 flex-1 pl-2">
                           <span
                             className={`block truncate text-[15px] leading-tight text-uva-navy ${
