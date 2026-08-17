@@ -199,14 +199,17 @@ export default function PlannerMap({
     const map = mapRef.current;
     if (!mapReady || !map || !stepFocus) return;
 
-    const padding = { top: 120, bottom: 320, left: 56, right: 56 };
+    const padding = pickSheetCameraPadding();
+    const duration = 900;
+    const easing = cameraEaseOut;
 
     if (stepFocus.mode === "center") {
-      map.flyTo({
+      map.easeTo({
         center: [stepFocus.point.lon, stepFocus.point.lat],
-        zoom: stepFocus.zoom,
+        zoom: Math.min(stepFocus.zoom, 15),
         essential: true,
-        duration: 550,
+        duration,
+        easing,
         padding,
       });
       return;
@@ -220,8 +223,10 @@ export default function PlannerMap({
 
     map.fitBounds(bounds, {
       padding,
-      maxZoom: 16.5,
-      duration: 550,
+      maxZoom: 15,
+      duration,
+      essential: true,
+      easing,
     });
   }, [stepFocus, mapReady]);
 
@@ -277,7 +282,9 @@ export default function PlannerMap({
       return;
     }
 
-    destMarkerRef.current.setDraggable(pickingDestination);
+    destMarkerRef.current
+      .setLngLat([destinationPinPoint.lon, destinationPinPoint.lat])
+      .setDraggable(pickingDestination);
   }, [destinationPinPoint, pickingDestination, mapReady]);
 
   useEffect(() => {
@@ -308,13 +315,18 @@ export default function PlannerMap({
   );
 }
 
-/** Matches DestinationPickBar card height so the camera centers in the visible map. */
+/** Matches PlannerSheet (~42dvh) so the camera centers in the visible map. */
 export function pickSheetCameraPadding(): mapboxgl.PaddingOptions {
   if (typeof window === "undefined") {
-    return { top: 72, bottom: 320, left: 40, right: 40 };
+    return { top: 64, bottom: 220, left: 36, right: 36 };
   }
-  const bottom = Math.min(Math.round(window.innerHeight * 0.5) + 24, 448);
-  return { top: 72, bottom, left: 40, right: 40 };
+  const bottom = Math.max(Math.round(window.innerHeight * 0.3), 210);
+  return { top: 64, bottom, left: 36, right: 36 };
+}
+
+/** Soft ease-out — avoids Mapbox flyTo’s zoom-out-then-in arc. */
+function cameraEaseOut(t: number): number {
+  return 1 - Math.pow(1 - t, 2.6);
 }
 
 export function flyToPoint(
@@ -323,10 +335,12 @@ export function flyToPoint(
   zoom = 16,
   padding?: mapboxgl.PaddingOptions
 ) {
-  map.flyTo({
+  map.easeTo({
     center: [point.lon, point.lat],
     zoom,
     essential: true,
+    duration: 850,
+    easing: cameraEaseOut,
     ...(padding ? { padding } : {}),
   });
 }
