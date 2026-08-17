@@ -1,6 +1,9 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
+
+/** Shared expanded sheet height so every planner stage matches. */
+export const PLANNER_SHEET_HEIGHT_CLASS = "h-[42dvh] max-h-[42dvh]";
 
 interface PlannerSheetProps {
   ariaLabel: string;
@@ -8,48 +11,99 @@ interface PlannerSheetProps {
   accent: ReactNode;
   children: ReactNode;
   className?: string;
+  /** Optional label shown on the collapsed peek bar. */
+  collapsedLabel?: string;
+  /** Max sheet height when expanded. */
+  maxHeightClassName?: string;
+  /** Min sheet height when expanded. */
+  minHeightClassName?: string;
+  /** Sticky actions below the scrollable body (e.g. Back). */
+  footer?: ReactNode;
 }
 
-function SheetChevron() {
+function ChevronIcon({ up }: { up?: boolean }) {
   return (
-    <div className="flex justify-center pb-2 pt-1" aria-hidden>
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2.2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="size-[18px] text-white/45"
-      >
-        <path d="M6 9l6 6 6-6" />
-      </svg>
-    </div>
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={`size-4 text-white/70 transition-transform ${up ? "rotate-180" : ""}`}
+      aria-hidden
+    >
+      <path d="M6 9l6 6 6-6" />
+    </svg>
   );
 }
 
 /**
- * Full-bleed bottom sheet. Grows with content up to max height, then scrolls
- * as one unit — matches the compact mock without a fixed short viewport strip.
+ * Full-bleed bottom sheet when expanded.
+ * Collapsed peek floats above the map chrome so it stays tappable.
  */
 export default function PlannerSheet({
   ariaLabel,
   accent,
   children,
   className = "",
+  collapsedLabel = "Show panel",
+  maxHeightClassName = PLANNER_SHEET_HEIGHT_CLASS,
+  minHeightClassName = "",
+  footer,
 }: PlannerSheetProps) {
+  const [collapsed, setCollapsed] = useState(false);
+  const expandedHeightClass = [maxHeightClassName, minHeightClassName]
+    .filter(Boolean)
+    .join(" ");
+
   return (
-    <div className="pointer-events-none absolute inset-x-0 bottom-0 z-30">
+    <div className="pointer-events-none absolute inset-x-0 bottom-0 z-40">
       <section
         role="dialog"
         aria-label={ariaLabel}
-        className={`pointer-events-auto max-h-[min(70vh,40rem)] w-full overflow-y-auto overscroll-contain rounded-t-2xl bg-uva-navy text-white shadow-[0_-10px_32px_rgba(0,0,0,0.28)] ${className}`}
+        aria-expanded={!collapsed}
+        className={`pointer-events-auto w-full overflow-hidden bg-uva-navy text-white shadow-[0_-10px_32px_rgba(0,0,0,0.35)] ${
+          collapsed ? "" : `animate-planner-sheet-in ${expandedHeightClass}`
+        } ${className}`}
       >
-        <div className="mx-auto w-full max-w-3xl px-4 pb-5 pt-2 sm:px-6 md:px-8">
-          <SheetChevron />
-          {accent}
-          <div className="mt-1">{children}</div>
-        </div>
+        {collapsed ? (
+          <button
+            type="button"
+            onClick={() => setCollapsed(false)}
+            className="flex w-full items-center justify-center gap-2 px-4 pt-2.5 pb-4 transition-colors hover:bg-white/5 sm:pt-3 sm:pb-5"
+            aria-label="Expand panel"
+          >
+            <ChevronIcon up />
+            <span className="text-sm font-semibold text-white">
+              {collapsedLabel}
+            </span>
+          </button>
+        ) : (
+          <div className={`overflow-y-auto overscroll-contain ${expandedHeightClass}`}>
+            <div className="sticky top-0 z-10 bg-uva-navy/95 backdrop-blur-sm">
+              <button
+                type="button"
+                onClick={() => setCollapsed(true)}
+                className="flex w-full items-center justify-center gap-2 px-4 pt-2 pb-1 transition-colors hover:bg-white/5"
+                aria-label="Collapse panel"
+              >
+                <ChevronIcon />
+              </button>
+              <div className="px-3 pb-2 sm:px-5 lg:px-6">{accent}</div>
+            </div>
+
+            <div className="px-3 pb-2 sm:px-5 lg:px-6">{children}</div>
+
+            {footer ? (
+              <div className="sticky bottom-0 z-10 border-t border-white/10 bg-uva-navy/95 px-3 pt-2.5 pb-3 backdrop-blur-sm sm:px-5 lg:px-6">
+                {footer}
+              </div>
+            ) : (
+              <div className="h-1.5" />
+            )}
+          </div>
+        )}
       </section>
     </div>
   );
@@ -64,17 +118,18 @@ interface PlannerAccentBarProps {
   /** `action` = toolbar button; `hero` = larger pick CTA. */
   size?: "action" | "hero";
   /** Orange for primary actions; muted for secondary readouts. */
-  tone?: "primary" | "muted";
+  tone?: "primary" | "muted" | "ghost";
 }
 
 const accentToneClass = {
   primary: "bg-uva-orange text-white",
   muted: "bg-white/10 text-white ring-1 ring-white/15",
+  ghost: "bg-transparent text-white ring-1 ring-white/35",
 } as const;
 
 const accentSizeClass = {
-  action: "px-3 py-3 sm:px-4 sm:py-3.5",
-  hero: "px-4 py-3.5 sm:px-5 sm:py-3.5",
+  action: "px-3 py-2.5 sm:px-3.5 sm:py-2.5",
+  hero: "px-3 py-2.5 sm:px-4 sm:py-3",
 } as const;
 
 export function PlannerAccentBar({
@@ -94,7 +149,7 @@ export function PlannerAccentBar({
         type="button"
         onClick={onClick}
         disabled={disabled}
-        className={`${styles} disabled:cursor-not-allowed disabled:bg-uva-orange disabled:text-white disabled:opacity-55`}
+        className={`${styles} disabled:cursor-not-allowed disabled:bg-uva-orange disabled:text-white disabled:opacity-55 disabled:ring-0`}
       >
         {children}
       </button>
