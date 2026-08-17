@@ -1,9 +1,12 @@
 "use client";
 
+import PlannerSheet, {
+  PlannerAccentBar,
+  PlannerActionRow,
+  plannerActionLabelClassName,
+} from "@/components/home/PlannerSheet";
 import type { TripOption, TripStep } from "@/types/planner";
 import { stopDisplayName } from "@/lib/geo";
-import { isGoldYellow } from "@/lib/routes";
-import { getRouteColor } from "@/lib/planner/buildTripPathGeoJSON";
 
 function formatStepMeters(meters: number): string {
   if (meters < 1000) return `${Math.round(meters)} m`;
@@ -26,23 +29,10 @@ function tripHeadline(trip: TripOption): string {
   return `${rides[0].routeName} → ${rides[rides.length - 1].routeName}`;
 }
 
-function tripDestinationLabel(_trip: TripOption): string {
-  return "Your destination";
-}
-
 function tripBoardLabel(trip: TripOption): string {
   const firstRide = primaryRide(trip);
   if (!firstRide) return "Your location";
   return stopDisplayName(firstRide.fromStopName);
-}
-
-function cardColor(trip: TripOption): string {
-  const ride = primaryRide(trip);
-  return ride ? getRouteColor(ride.routeId) : "#232D4B";
-}
-
-function textOn(color: string): string {
-  return isGoldYellow(color) ? "#232D4B" : "#FFFFFF";
 }
 
 interface LocationGateProps {
@@ -51,20 +41,28 @@ interface LocationGateProps {
   onUseLocation: () => void;
 }
 
-function LocationIcon({ className }: { className?: string }) {
+function LocationGateArt() {
   return (
-    <svg
-      viewBox="0 0 20 20"
-      fill="currentColor"
-      className={className}
-      aria-hidden
-    >
-      <path
-        fillRule="evenodd"
-        d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-        clipRule="evenodd"
+    <div className="relative mx-auto mb-7 size-32" aria-hidden>
+      <div
+        className="absolute bottom-0 left-1/2 size-[6.5rem] -translate-x-1/2 rounded-full shadow-[inset_-8px_-6px_20px_rgba(0,0,0,0.35)]"
+        style={{
+          background:
+            "radial-gradient(circle at 35% 30%, #4a6a8a, transparent 42%), radial-gradient(circle at 70% 60%, #2a3d5c, #1a2740 72%, #141c30)",
+        }}
       />
-    </svg>
+      <svg
+        viewBox="0 0 36 48"
+        className="absolute left-1/2 top-0 h-11 w-8 -translate-x-1/2"
+        fill="none"
+      >
+        <path
+          d="M18 46c0 0 14-14.2 14-28A14 14 0 1 0 4 18c0 13.8 14 28 14 28z"
+          fill="#E57200"
+        />
+        <circle cx="18" cy="17" r="5.5" fill="#fff" />
+      </svg>
+    </div>
   );
 }
 
@@ -74,39 +72,45 @@ export function LocationRequiredOverlay({
   onUseLocation,
 }: LocationGateProps) {
   return (
-    <div className="pointer-events-auto absolute inset-0 z-50 flex items-end justify-center bg-red-950/35 p-3 backdrop-blur-[2px] sm:items-center sm:p-4">
-      <div
-        role="alertdialog"
-        aria-labelledby="location-required-title"
-        className="relative z-10 w-full max-w-md rounded-2xl border border-red-300/60 bg-red-50 px-4 py-5 shadow-2xl shadow-red-950/20"
-      >
-        <LocationIcon className="mx-auto size-8 text-red-500/80" />
-        <div className="mt-3 text-center">
-          <h2
-            id="location-required-title"
-            className="text-sm font-semibold text-red-950"
-          >
-            {geoLoading ? "Finding your location…" : "Location required"}
-          </h2>
-          <p className="mt-1 text-xs text-red-900/70">
-            {geoLoading
-              ? "Please ensure location is enabled in your browser."
-              : "Allow location access to use the trip planner."}
-          </p>
-        </div>
+    <div
+      className="pointer-events-auto absolute inset-0 z-50 flex flex-col bg-uva-navy text-white"
+      role="alertdialog"
+      aria-labelledby="location-required-title"
+      aria-describedby="location-required-desc"
+    >
+      <div className="flex flex-1 flex-col items-center justify-center px-8 text-center">
+        <LocationGateArt />
+        <h2
+          id="location-required-title"
+          className="text-2xl font-bold tracking-tight"
+        >
+          {geoLoading ? "Finding your location…" : "Allow location access"}
+        </h2>
+        <p
+          id="location-required-desc"
+          className="mt-2.5 max-w-[28ch] text-sm leading-snug text-white/60"
+        >
+          {geoLoading
+            ? "Please ensure location is enabled in your browser."
+            : "We use this to find nearby bus stops and plan your trip. You can change access in your browser settings."}
+        </p>
+      </div>
 
+      <div className="flex flex-col gap-3.5 px-5 pb-6 pt-4 sm:px-8">
+        <p className="text-center text-[0.7rem] leading-snug text-white/40">
+          By allowing access, you consent to share your location with GoHoos to
+          plan trips on Grounds.
+        </p>
         <button
           type="button"
           onClick={onUseLocation}
           disabled={geoLoading}
-          className="mt-4 flex w-full items-center justify-center gap-2 rounded-lg bg-red-700 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-red-800 disabled:cursor-wait disabled:opacity-70"
+          className="w-full rounded-[10px] bg-academical-orange px-4 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-95 disabled:cursor-wait disabled:opacity-70"
         >
-          <LocationIcon className="size-4" />
-          {geoLoading ? "Requesting location…" : "Enable location"}
+          {geoLoading ? "Requesting…" : "Allow access"}
         </button>
-
         {geoError && !geoLoading ? (
-          <p className="mt-3 text-center text-xs text-red-700">{geoError}</p>
+          <p className="text-center text-xs text-red-300">{geoError}</p>
         ) : null}
       </div>
     </div>
@@ -130,40 +134,6 @@ interface PickBarProps {
   onSelectShortcut: (id: string) => void;
 }
 
-function LiveSignalIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.2"
-      strokeLinecap="round"
-      className={className}
-      aria-hidden
-    >
-      <path d="M8.5 15.5a5 5 0 0 1 7 0" />
-      <path d="M5.5 12.5a9 9 0 0 1 13 0" />
-      <path d="M12 18.5h.01" />
-    </svg>
-  );
-}
-
-function DestinationArrowIcon({ className }: { className?: string }) {
-  return (
-    <span
-      className={`inline-flex size-4 shrink-0 items-center justify-center rounded-full bg-white ${className ?? ""}`}
-      aria-hidden
-    >
-      <svg
-        viewBox="0 0 12 12"
-        className="size-2.5 fill-current text-uva-navy"
-      >
-        <path d="M4.2 2.2 8.3 6 4.2 9.8V2.2Z" />
-      </svg>
-    </span>
-  );
-}
-
 function shortcutMinutesDisplay(
   minutes: number | null,
   loading: boolean
@@ -180,107 +150,66 @@ export function DestinationPickBar({
   shortcutsLoading = false,
   onSelectShortcut,
 }: PickBarProps) {
+  const accent = (
+    <div className="mx-auto w-full max-w-xl">
+      <h2 className="text-center text-xl font-bold tracking-tight text-white sm:text-2xl">
+        Where to?
+      </h2>
+      <p className="mt-1 text-center text-sm text-white/55">
+        Drag the pin on the map, or pick a stop below
+      </p>
+      <div className="mt-3">
+        <PlannerAccentBar
+          as="button"
+          onClick={onConfirm}
+          disabled={!pinTouched}
+          className={pinTouched ? "animate-go-cta-pop" : ""}
+        >
+          <p className="text-sm font-semibold sm:text-base">
+            Confirm destination
+          </p>
+        </PlannerAccentBar>
+      </div>
+    </div>
+  );
+
   return (
-    // Full-screen shell does not capture map gestures; only the card does.
-    <div className="pointer-events-none absolute inset-0 z-30 flex items-end justify-center p-3 pb-4 sm:p-4">
-      <section
-        role="dialog"
-        aria-label="Choose a destination"
-        className="pointer-events-auto flex max-h-[min(50vh,28rem)] w-full max-w-md flex-col overflow-hidden rounded-2xl bg-uva-navy shadow-2xl shadow-black/35 ring-1 ring-white/10"
-      >
-        {/* Instruction → Let's Go after pin drag */}
-        <div className="relative z-10 mx-auto -mt-0 w-[75%] shrink-0 translate-y-0 px-0 pt-3">
-          {!pinTouched ? (
-            <div className="flex items-center gap-2.5 rounded-xl bg-uva-orange px-3.5 py-3 shadow-lg shadow-black/20 sm:gap-3 sm:rounded-2xl sm:px-5 sm:py-3.5 md:py-4">
-              <svg
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                className="size-5 shrink-0 text-white sm:size-6 md:size-7"
-                aria-hidden
+    <PlannerSheet ariaLabel="Choose a destination" accent={accent}>
+      <ul className="flex h-full min-h-0 flex-col">
+        {shortcuts.map((shortcut) => {
+          const minutesLabel = shortcutMinutesDisplay(
+            shortcut.minutes,
+            shortcutsLoading
+          );
+
+          return (
+            <li
+              key={shortcut.id}
+              className="flex min-h-0 flex-1 border-b border-white/10"
+            >
+              <button
+                type="button"
+                disabled={shortcut.disabled || shortcutsLoading}
+                onClick={() => onSelectShortcut(shortcut.id)}
+                className="flex h-full w-full min-w-0 items-center justify-between gap-3 px-4 py-3.5 text-left transition-colors hover:bg-white/5 disabled:cursor-not-allowed disabled:opacity-45 sm:px-6 sm:py-4 md:px-8"
               >
-                <path
-                  fillRule="evenodd"
-                  d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              <div className="min-w-0">
-                <p className="text-sm font-semibold leading-snug text-white sm:text-base md:text-lg">
-                  <span className="sm:hidden">
-                    Drag the pin to
-                    <br />
-                    where you want to go
+                <p className="min-w-0 truncate text-base font-semibold tracking-tight text-white sm:text-lg">
+                  {shortcut.label}
+                </p>
+                <p className="shrink-0 text-right tabular-nums">
+                  <span className="text-base font-bold text-white sm:text-lg">
+                    {minutesLabel}
                   </span>
-                  <span className="hidden sm:inline">
-                    Drag the pin to where you want to go
+                  <span className="ml-1 text-xs font-medium text-white/55">
+                    min
                   </span>
                 </p>
-              </div>
-            </div>
-          ) : (
-            <button
-              type="button"
-              onClick={onConfirm}
-              className="animate-go-cta-pop flex w-full items-center justify-center rounded-xl bg-uva-orange px-3.5 py-3 text-center text-white shadow-lg shadow-black/20 sm:rounded-2xl sm:px-5 sm:py-3.5 md:py-4"
-            >
-              <p className="text-sm font-semibold leading-snug sm:text-base md:text-lg">
-                Let&apos;s Go
-              </p>
-            </button>
-          )}
-        </div>
-
-        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain text-white">
-          <ul>
-            {shortcuts.map((shortcut) => {
-              const minutesLabel = shortcutMinutesDisplay(
-                shortcut.minutes,
-                shortcutsLoading
-              );
-              const stopLabel = shortcut.stopName
-                ? stopDisplayName(shortcut.stopName)
-                : "Campus destination";
-
-              return (
-                <li key={shortcut.id} className="border-b border-uva-navy-light">
-                  <button
-                    type="button"
-                    disabled={shortcut.disabled || shortcutsLoading}
-                    onClick={() => onSelectShortcut(shortcut.id)}
-                    className="flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-45"
-                  >
-                    <div className="min-w-0 flex-1">
-                      <p className="truncate text-[1.65rem] font-bold leading-none tracking-tight">
-                        {shortcut.label}
-                      </p>
-                      <p className="mt-1.5 flex items-center gap-1.5 text-sm font-semibold leading-tight">
-                        <DestinationArrowIcon />
-                        <span className="truncate">Nearest stop</span>
-                      </p>
-                      <p className="mt-1 truncate text-sm font-normal text-white/90">
-                        {stopLabel}
-                      </p>
-                    </div>
-
-                    <div className="relative shrink-0 pr-1 text-right">
-                      {!shortcutsLoading && shortcut.minutes != null ? (
-                        <LiveSignalIcon className="absolute -right-0.5 -top-0.5 size-3.5 text-white/90" />
-                      ) : null}
-                      <p className="text-[2.35rem] font-bold leading-none tabular-nums">
-                        {minutesLabel}
-                      </p>
-                      <p className="mt-0.5 text-xs font-medium text-white/90">
-                        minutes
-                      </p>
-                    </div>
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      </section>
-    </div>
+              </button>
+            </li>
+          );
+        })}
+      </ul>
+    </PlannerSheet>
   );
 }
 
@@ -310,8 +239,6 @@ function TripOptionCard({
   selected: boolean;
   onSelect: () => void;
 }) {
-  const color = cardColor(trip);
-  const onColor = textOn(color);
   const rideCount = trip.steps.filter((s) => s.kind === "ride").length;
   const rankLabel = cardRankLabel(trip, rank, trips);
 
@@ -320,47 +247,30 @@ function TripOptionCard({
       type="button"
       onClick={onSelect}
       aria-pressed={selected}
-      className={`flex w-full items-stretch overflow-hidden rounded-xl text-left shadow-md transition-transform ${
-        selected
-          ? "scale-[1.01] ring-2 ring-white ring-offset-2 ring-offset-uva-navy/20"
-          : "hover:brightness-105"
+      className={`flex h-full w-full min-w-0 items-center justify-between gap-3 px-4 py-3.5 text-left transition-colors hover:bg-white/5 sm:px-6 sm:py-4 md:px-8 ${
+        selected ? "bg-academical-orange/15" : ""
       }`}
-      style={{ backgroundColor: color, color: onColor }}
     >
-      <div className="flex min-w-0 flex-1 items-center gap-3 px-3 py-3">
-        <div className="shrink-0">
-          <p className="text-sm font-bold leading-none tracking-tight">
-            {rankLabel}
-          </p>
-          <p className="mt-1 text-[10px] font-medium uppercase tracking-wide opacity-80">
-            {rideCount <= 1 ? "Direct" : "1 transfer"}
-          </p>
-        </div>
-
-        <div className="min-w-0 flex-1 border-l border-white/25 pl-3">
-          <p className="flex items-center gap-1.5 text-sm font-semibold leading-snug">
-            <span aria-hidden className="opacity-80">
-              →
-            </span>
-            <span className="truncate">{tripDestinationLabel(trip)}</span>
-          </p>
-          <p className="mt-0.5 truncate text-xs opacity-80">
-            {tripHeadline(trip)} · board at {tripBoardLabel(trip)}
-          </p>
-        </div>
-      </div>
-
-      <div className="flex w-[5.25rem] shrink-0 flex-col items-center justify-center border-l border-white/25 px-2 py-3 text-center">
-        <p className="text-lg font-bold leading-none tabular-nums">
-          ~{trip.totalMinutes}
+      <div className="min-w-0 flex-1">
+        <p className="truncate text-base font-semibold tracking-tight text-white sm:text-lg">
+          {rankLabel}
+          <span className="font-medium text-white/70">
+            {" "}
+            · {tripHeadline(trip)}
+          </span>
         </p>
-        <p className="mt-0.5 text-[10px] font-medium uppercase tracking-wide opacity-80">
-          min
-        </p>
-        <p className="mt-1 text-[10px] opacity-70">
+        <p className="mt-1 truncate text-xs text-white/55 sm:text-sm">
+          {rideCount <= 1 ? "Direct" : "1 transfer"} · {tripBoardLabel(trip)} ·{" "}
           {formatStepMeters(trip.totalMeters)}
         </p>
       </div>
+
+      <p className="shrink-0 text-right tabular-nums">
+        <span className="text-base font-bold text-white sm:text-lg">
+          {Math.round(trip.totalMinutes)}
+        </span>
+        <span className="ml-1 text-xs font-medium text-white/55">min</span>
+      </p>
     </button>
   );
 }
@@ -380,44 +290,59 @@ export function TripResultsBar({
   onSelectTrip,
   onChangeDestination,
 }: ResultsBarProps) {
-  return (
-    <div className="absolute inset-x-0 bottom-0 z-30 p-3">
-      <div className="mx-auto max-w-md rounded-2xl border border-uva-navy/10 bg-white/95 px-3 py-3 shadow-xl backdrop-blur-sm">
-        <div className="mb-2 flex items-center justify-between gap-2 px-1">
-          <p className="text-sm font-medium text-uva-navy">Route options</p>
-          <button
-            type="button"
+  const accent = (
+    <div className="mx-auto w-full max-w-xl">
+      <h2 className="text-center text-xl font-bold tracking-tight text-white sm:text-2xl">
+        Best routes
+      </h2>
+      <p className="mt-1 text-center text-sm text-white/55">
+        Pick a route to see steps on the map
+      </p>
+      <div className="mt-3">
+        <PlannerActionRow>
+          <PlannerAccentBar
+            as="button"
+            size="action"
             onClick={onChangeDestination}
-            className="text-xs font-medium text-uva-orange hover:text-uva-orange-hover"
+            className="min-w-0 flex-1"
           >
-            Change destination
-          </button>
-        </div>
-
-        {isLoadingRoutes && trips.length === 0 ? (
-          <p className="px-1 py-4 text-center text-xs text-uva-navy/45">
-            Loading active routes…
-          </p>
-        ) : trips.length === 0 ? (
-          <p className="rounded-lg border border-dashed border-uva-navy/15 px-3 py-3 text-center text-xs text-uva-navy/45">
-            No route found with at most one transfer
-          </p>
-        ) : (
-          <ul className="max-h-[40vh] space-y-2 overflow-y-auto">
-            {trips.map((trip, index) => (
-              <li key={`trip-${index}`}>
-                <TripOptionCard
-                  trip={trip}
-                  rank={index}
-                  trips={trips}
-                  selected={selectedTripIndex === index}
-                  onSelect={() => onSelectTrip(index)}
-                />
-              </li>
-            ))}
-          </ul>
-        )}
+            <span className={plannerActionLabelClassName()}>
+              Change destination
+            </span>
+          </PlannerAccentBar>
+        </PlannerActionRow>
       </div>
     </div>
+  );
+
+  return (
+    <PlannerSheet ariaLabel="Route options" accent={accent}>
+      {isLoadingRoutes && trips.length === 0 ? (
+        <p className="flex flex-1 items-center justify-center px-4 text-center text-sm text-white/55 sm:text-base">
+          Loading active routes…
+        </p>
+      ) : trips.length === 0 ? (
+        <p className="flex flex-1 items-center justify-center px-4 text-center text-sm text-white/55 sm:text-base">
+          No route found with at most one transfer
+        </p>
+      ) : (
+        <ul className="flex h-full min-h-0 flex-col">
+          {trips.map((trip, index) => (
+            <li
+              key={`trip-${index}`}
+              className="flex min-h-0 flex-1 border-b border-white/10"
+            >
+              <TripOptionCard
+                trip={trip}
+                rank={index}
+                trips={trips}
+                selected={selectedTripIndex === index}
+                onSelect={() => onSelectTrip(index)}
+              />
+            </li>
+          ))}
+        </ul>
+      )}
+    </PlannerSheet>
   );
 }
