@@ -54,16 +54,16 @@ export function buildPopularDestinationOptions(
 ): PopularDestinationOption[] {
   return POPULAR_DESTINATIONS.map((dest) => {
     const snap = snapToStop(dest.point, routeIdsForSnap, Infinity);
-    if (!snap) {
-      return {
-        id: dest.id,
-        label: dest.label,
-        minutes: null,
-        picked: null,
-      };
-    }
+    // Destination point is always the hardcoded lat/lng, not the snapped stop.
+    const picked: PickedLocation = snap
+      ? toPickedLocation(dest.point, snap)
+      : {
+          point: dest.point,
+          stopId: "",
+          stopName: dest.label,
+          walkMeters: 0,
+        };
 
-    const picked = toPickedLocation(dest.point, snap);
     if (!origin) {
       return {
         id: dest.id,

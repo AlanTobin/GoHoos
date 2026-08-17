@@ -26,13 +26,8 @@ function tripHeadline(trip: TripOption): string {
   return `${rides[0].routeName} → ${rides[rides.length - 1].routeName}`;
 }
 
-function tripDestinationLabel(trip: TripOption): string {
-  const lastRide = [...trip.steps]
-    .reverse()
-    .find((s): s is Extract<TripStep, { kind: "ride" }> => s.kind === "ride");
-  if (lastRide) return stopDisplayName(lastRide.toStopName);
-  const last = trip.steps[trip.steps.length - 1];
-  return stopDisplayName(last.toStopName);
+function tripDestinationLabel(_trip: TripOption): string {
+  return "Your destination";
 }
 
 function tripBoardLabel(trip: TripOption): string {
@@ -127,7 +122,6 @@ export type DestinationShortcut = {
 };
 
 interface PickBarProps {
-  draftDestination: PickedLocation | null;
   onConfirm: () => void;
   /** True after the user has dragged the destination pin. */
   pinTouched?: boolean;
@@ -180,7 +174,6 @@ function shortcutMinutesDisplay(
 }
 
 export function DestinationPickBar({
-  draftDestination,
   onConfirm,
   pinTouched = false,
   shortcuts,
@@ -222,11 +215,10 @@ export function DestinationPickBar({
           <button
             type="button"
             onClick={onConfirm}
-            disabled={!draftDestination}
-            className="animate-go-cta-pop flex w-full items-center justify-center rounded-xl bg-uva-orange px-3.5 py-3.5 text-center text-white shadow-lg shadow-uva-navy/25 disabled:cursor-not-allowed disabled:opacity-50 sm:rounded-2xl sm:px-5 sm:py-4 md:px-6 md:py-5"
+            className="animate-go-cta-pop flex w-full items-center justify-center rounded-xl bg-uva-orange px-3.5 py-3.5 text-center text-white shadow-lg shadow-uva-navy/25 sm:rounded-2xl sm:px-5 sm:py-4 md:px-6 md:py-5"
           >
             <p className="text-sm font-semibold leading-snug sm:text-base md:text-lg">
-              {draftDestination ? "Let's Go" : "Move closer to a campus stop"}
+              Let&apos;s Go
             </p>
           </button>
         )}

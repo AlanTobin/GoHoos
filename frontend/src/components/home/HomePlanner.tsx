@@ -12,7 +12,7 @@ import TripStepTrail from "@/components/home/TripStepTrail";
 import routeStops from "@/data/json/route-stops.json";
 import { getVehicles } from "@/services/vehicles";
 import { toRouteId } from "@/lib/routes";
-import { snapToStop, stopDisplayName, type LatLng } from "@/lib/geo";
+import { snapToStop, type LatLng } from "@/lib/geo";
 import { planTrips } from "@/lib/planTrips";
 import { buildTripPathGeoJSON } from "@/lib/planner/buildTripPathGeoJSON";
 import { boardAlightForTripStep } from "@/lib/planner/boardAlight";
@@ -42,12 +42,19 @@ function toPickedLocation(
   };
 }
 
-function snapDestination(
+/** Destination is always the selected lat/lng; nearest stop is routing metadata only. */
+function destinationFromPoint(
   point: LatLng,
   activeRouteIds: Set<string>
-): PickedLocation | null {
+): PickedLocation {
   const snap = snapToStop(point, activeRouteIds, Infinity);
-  return snap ? toPickedLocation(point, snap) : null;
+  if (snap) return toPickedLocation(point, snap);
+  return {
+    point,
+    stopId: "",
+    stopName: "Destination",
+    walkMeters: 0,
+  };
 }
 
 type GeoPermission = "unknown" | "granted" | "prompt" | "denied";
@@ -213,7 +220,7 @@ export default function HomePlanner() {
       const initialPoint =
         existing?.point ?? userLocation ?? origin?.point ?? CAMPUS_CENTER;
       setDraftPinPoint(initialPoint);
-      setDraftDestination(snapDestination(initialPoint, mapRouteIds));
+      setDraftDestination(destinationFromPoint(initialPoint, mapRouteIds));
       setPinTouched(false);
       setPickMode("picking-destination");
     },
@@ -224,7 +231,7 @@ export default function HomePlanner() {
     (point: LatLng) => {
       setPinTouched(true);
       setDraftPinPoint(point);
-      setDraftDestination(snapDestination(point, mapRouteIds));
+      setDraftDestination(destinationFromPoint(point, mapRouteIds));
     },
     [mapRouteIds]
   );
@@ -240,15 +247,17 @@ export default function HomePlanner() {
   }, [locationBlocked, userLocation, pickMode, destination, beginDestinationPick]);
 
   const handleConfirmDestination = useCallback(() => {
-    if (!draftPinPoint || !draftDestination) return;
+    if (!draftPinPoint) return;
+    const picked =
+      draftDestination ?? destinationFromPoint(draftPinPoint, mapRouteIds);
     setDestination({
-      ...draftDestination,
+      ...picked,
       point: draftPinPoint,
     });
     setPickMode("idle");
     setDraftPinPoint(null);
     setDraftDestination(null);
-  }, [draftDestination, draftPinPoint]);
+  }, [draftDestination, draftPinPoint, mapRouteIds]);
 
   const plannerRouteIds = useMemo(
     () => (activeRoutes.size > 0 ? activeRoutes : mapRouteIds),
@@ -268,7 +277,7 @@ export default function HomePlanner() {
         label: option.label,
         stopName: option.picked?.stopName ?? null,
         minutes: option.minutes,
-        disabled: !option.picked || option.minutes == null,
+        disabled: !option.picked,
       })),
     [popularOptions]
   );
@@ -276,7 +285,8 @@ export default function HomePlanner() {
   const handleSelectShortcut = useCallback(
     (id: string) => {
       const option = popularOptions.find((item) => item.id === id);
-      if (!option?.picked || option.minutes == null) return;
+      if (!option?.picked) return;
+      // Keep the popular place lat/lng as the destination endpoint.
       setDestination(option.picked);
       setDraftPinPoint(null);
       setDraftDestination(null);
@@ -430,7 +440,6 @@ export default function HomePlanner() {
         />
       ) : pickMode === "picking-destination" ? (
         <DestinationPickBar
-          draftDestination={draftDestination}
           onConfirm={handleConfirmDestination}
           pinTouched={pinTouched}
           shortcuts={destinationShortcuts}
@@ -443,7 +452,7 @@ export default function HomePlanner() {
             trip={detailTrip}
             activeStepIndex={activeStepIndex}
             onStepFocus={setActiveStepIndex}
-            destinationLabel={stopDisplayName(destination.stopName)}
+            destinationLabel="Your destination"
             onBackToRoutes={handleBackToRoutes}
             onChangeDestination={handleChangeDestination}
           />
