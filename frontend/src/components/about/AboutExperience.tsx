@@ -190,8 +190,8 @@ const STEPS: Step[] = [
             </strong>
             <span className="mt-1 block text-sm">
               Improved arrival-time estimates that account for real traffic,
-              dwell time at stops, and current vehicle speed, so you know when to
-              leave rather than TransLoc&apos;s rule-based &quot;X minutes for each 100 yards&quot; ETA.
+              dwell time at stops, and current vehicle speed, so you know
+              exactly when to leave.
             </span>
           </li>
           <li className="rounded-lg border border-uva-navy/10 bg-white p-4">
