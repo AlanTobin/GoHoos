@@ -2,7 +2,7 @@
 
 Real-time UVA transit app with live bus tracking, route exploration, and trip planning for UTS riders on Grounds and in Charlottesville.
 
-Built to fix the gap between UTS's official app and what students actually need to catch a bus on time.
+Built to fix the gap between UTS's official app and what students actually need to navigate Grounds.
 
 ![GoHoos routes map with live UTS buses, route lines, and stops around UVA Grounds](frontend/public/about/routes-map.png)
 
