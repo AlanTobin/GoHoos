@@ -286,14 +286,20 @@ export default function PlannerMap({
     if (stepFocus || boardAlight || (tripPath && tripPath.features.length > 0)) {
       return;
     }
+    if (pickingDestination) {
+      // Keep the user centered in the map strip above the pick sheet.
+      flyToPoint(map, originPoint, 15, pickSheetCameraPadding());
+      return;
+    }
     flyToPoint(map, originPoint);
-  }, [originPoint, mapReady, tripPath, boardAlight, stepFocus]);
-
-  useEffect(() => {
-    const map = mapRef.current;
-    if (!mapReady || !map || !pickingDestination || !destinationPinPoint) return;
-    flyToPoint(map, destinationPinPoint, 15);
-  }, [pickingDestination, mapReady]);
+  }, [
+    originPoint,
+    mapReady,
+    tripPath,
+    boardAlight,
+    stepFocus,
+    pickingDestination,
+  ]);
 
   return (
     <div className="absolute inset-0 min-h-0">
@@ -302,6 +308,25 @@ export default function PlannerMap({
   );
 }
 
-export function flyToPoint(map: mapboxgl.Map, point: LatLng, zoom = 16) {
-  map.flyTo({ center: [point.lon, point.lat], zoom, essential: true });
+/** Matches DestinationPickBar card height so the camera centers in the visible map. */
+export function pickSheetCameraPadding(): mapboxgl.PaddingOptions {
+  if (typeof window === "undefined") {
+    return { top: 72, bottom: 320, left: 40, right: 40 };
+  }
+  const bottom = Math.min(Math.round(window.innerHeight * 0.5) + 24, 448);
+  return { top: 72, bottom, left: 40, right: 40 };
+}
+
+export function flyToPoint(
+  map: mapboxgl.Map,
+  point: LatLng,
+  zoom = 16,
+  padding?: mapboxgl.PaddingOptions
+) {
+  map.flyTo({
+    center: [point.lon, point.lat],
+    zoom,
+    essential: true,
+    ...(padding ? { padding } : {}),
+  });
 }

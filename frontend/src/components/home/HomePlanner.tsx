@@ -12,10 +12,11 @@ import TripStepTrail from "@/components/home/TripStepTrail";
 import routeStops from "@/data/json/route-stops.json";
 import { getVehicles } from "@/services/vehicles";
 import { toRouteId } from "@/lib/routes";
-import { snapToStop, stopDisplayName, type LatLng } from "@/lib/geo";
+import { snapToStop, type LatLng } from "@/lib/geo";
 import { planTrips } from "@/lib/planTrips";
 import { buildTripPathGeoJSON } from "@/lib/planner/buildTripPathGeoJSON";
 import { boardAlightForTripStep } from "@/lib/planner/boardAlight";
+import { buildPopularDestinationOptions } from "@/lib/planner/popularDestinations";
 import { stepFocusTarget } from "@/lib/planner/stepFocusBounds";
 import { stopIdsForTripStep } from "@/lib/planner/tripStepStops";
 import type { PickedLocation, PlannerPickMode } from "@/types/planner";
@@ -23,7 +24,7 @@ import type { PickedLocation, PlannerPickMode } from "@/types/planner";
 const ALL_MAPPED_ROUTE_IDS = new Set(Object.keys(routeStops));
 const CAMPUS_CENTER: LatLng = { lat: 38.0385, lon: -78.508 };
 
-const USE_MOCK_USER_LOCATION = false;
+const USE_MOCK_USER_LOCATION = true;
 const MOCK_USER_LOCATION: LatLng = {
   lat: 38.04778,
   lon: -78.51361,
@@ -41,12 +42,19 @@ function toPickedLocation(
   };
 }
 
-function snapDestination(
+/** Destination is always the selected lat/lng; nearest stop is routing metadata only. */
+function destinationFromPoint(
   point: LatLng,
   activeRouteIds: Set<string>
-): PickedLocation | null {
+): PickedLocation {
   const snap = snapToStop(point, activeRouteIds, Infinity);
-  return snap ? toPickedLocation(point, snap) : null;
+  if (snap) return toPickedLocation(point, snap);
+  return {
+    point,
+    stopId: "",
+    stopName: "Destination",
+    walkMeters: 0,
+  };
 }
 
 type GeoPermission = "unknown" | "granted" | "prompt" | "denied";
@@ -60,6 +68,7 @@ export default function HomePlanner() {
     null
   );
   const [draftPinPoint, setDraftPinPoint] = useState<LatLng | null>(null);
+  const [pinTouched, setPinTouched] = useState(false);
   const [pickMode, setPickMode] = useState<PlannerPickMode>("idle");
   const [userLocation, setUserLocation] = useState<LatLng | null>(null);
   const [geoLoading, setGeoLoading] = useState(false);
@@ -211,7 +220,8 @@ export default function HomePlanner() {
       const initialPoint =
         existing?.point ?? userLocation ?? origin?.point ?? CAMPUS_CENTER;
       setDraftPinPoint(initialPoint);
-      setDraftDestination(snapDestination(initialPoint, mapRouteIds));
+      setDraftDestination(destinationFromPoint(initialPoint, mapRouteIds));
+      setPinTouched(false);
       setPickMode("picking-destination");
     },
     [userLocation, origin, mapRouteIds]
@@ -219,8 +229,9 @@ export default function HomePlanner() {
 
   const handleDestinationPinMove = useCallback(
     (point: LatLng) => {
+      setPinTouched(true);
       setDraftPinPoint(point);
-      setDraftDestination(snapDestination(point, mapRouteIds));
+      setDraftDestination(destinationFromPoint(point, mapRouteIds));
     },
     [mapRouteIds]
   );
@@ -236,15 +247,57 @@ export default function HomePlanner() {
   }, [locationBlocked, userLocation, pickMode, destination, beginDestinationPick]);
 
   const handleConfirmDestination = useCallback(() => {
-    if (!draftPinPoint || !draftDestination) return;
+    if (!draftPinPoint) return;
+    const picked =
+      draftDestination ?? destinationFromPoint(draftPinPoint, mapRouteIds);
     setDestination({
-      ...draftDestination,
+      ...picked,
       point: draftPinPoint,
     });
     setPickMode("idle");
     setDraftPinPoint(null);
     setDraftDestination(null);
-  }, [draftDestination, draftPinPoint]);
+  }, [draftDestination, draftPinPoint, mapRouteIds]);
+
+  const plannerRouteIds = useMemo(
+    () => (activeRoutes.size > 0 ? activeRoutes : mapRouteIds),
+    [activeRoutes, mapRouteIds]
+  );
+
+  const popularOptions = useMemo(
+    () =>
+      buildPopularDestinationOptions(origin, plannerRouteIds, mapRouteIds),
+    [origin, plannerRouteIds, mapRouteIds]
+  );
+
+  const destinationShortcuts = useMemo(
+    () =>
+      popularOptions.map((option) => ({
+        id: option.id,
+        label: option.label,
+        stopName: option.picked?.stopName ?? null,
+        minutes: option.minutes,
+        disabled: !option.picked,
+      })),
+    [popularOptions]
+  );
+
+  const handleSelectShortcut = useCallback(
+    (id: string) => {
+      const option = popularOptions.find((item) => item.id === id);
+      if (!option?.picked) return;
+      // Keep the popular place lat/lng as the destination endpoint.
+      setDestination(option.picked);
+      setDraftPinPoint(null);
+      setDraftDestination(null);
+      setPickMode("idle");
+      setSelectedTripIndex(0);
+      setActiveStepIndex(0);
+      setItineraryOpen(false);
+      setTripsKey("");
+    },
+    [popularOptions]
+  );
 
   const handleChangeDestination = useCallback(() => {
     setDestination(null);
@@ -260,9 +313,9 @@ export default function HomePlanner() {
     return planTrips({
       origin,
       destination,
-      activeRouteIds: activeRoutes,
+      activeRouteIds: plannerRouteIds,
     });
-  }, [origin, destination, activeRoutes, isLoadingRoutes]);
+  }, [origin, destination, plannerRouteIds, isLoadingRoutes]);
 
   const nextTripsKey = useMemo(
     () =>
@@ -387,8 +440,11 @@ export default function HomePlanner() {
         />
       ) : pickMode === "picking-destination" ? (
         <DestinationPickBar
-          draftDestination={draftDestination}
           onConfirm={handleConfirmDestination}
+          pinTouched={pinTouched}
+          shortcuts={destinationShortcuts}
+          shortcutsLoading={!origin || isLoadingRoutes}
+          onSelectShortcut={handleSelectShortcut}
         />
       ) : destination ? (
         itineraryOpen && detailTrip ? (
@@ -396,7 +452,7 @@ export default function HomePlanner() {
             trip={detailTrip}
             activeStepIndex={activeStepIndex}
             onStepFocus={setActiveStepIndex}
-            destinationLabel={stopDisplayName(destination.stopName)}
+            destinationLabel="Your destination"
             onBackToRoutes={handleBackToRoutes}
             onChangeDestination={handleChangeDestination}
           />

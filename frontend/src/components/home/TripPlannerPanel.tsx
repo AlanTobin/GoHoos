@@ -1,6 +1,6 @@
 "use client";
 
-import type { PickedLocation, TripOption, TripStep } from "@/types/planner";
+import type { TripOption, TripStep } from "@/types/planner";
 import { stopDisplayName } from "@/lib/geo";
 import { isGoldYellow } from "@/lib/routes";
 import { getRouteColor } from "@/lib/planner/buildTripPathGeoJSON";
@@ -26,13 +26,8 @@ function tripHeadline(trip: TripOption): string {
   return `${rides[0].routeName} → ${rides[rides.length - 1].routeName}`;
 }
 
-function tripDestinationLabel(trip: TripOption): string {
-  const lastRide = [...trip.steps]
-    .reverse()
-    .find((s): s is Extract<TripStep, { kind: "ride" }> => s.kind === "ride");
-  if (lastRide) return stopDisplayName(lastRide.toStopName);
-  const last = trip.steps[trip.steps.length - 1];
-  return stopDisplayName(last.toStopName);
+function tripDestinationLabel(_trip: TripOption): string {
+  return "Your destination";
 }
 
 function tripBoardLabel(trip: TripOption): string {
@@ -118,34 +113,173 @@ export function LocationRequiredOverlay({
   );
 }
 
+export type DestinationShortcut = {
+  id: string;
+  label: string;
+  stopName: string | null;
+  minutes: number | null;
+  disabled: boolean;
+};
+
 interface PickBarProps {
-  draftDestination: PickedLocation | null;
   onConfirm: () => void;
+  /** True after the user has dragged the destination pin. */
+  pinTouched?: boolean;
+  shortcuts: DestinationShortcut[];
+  shortcutsLoading?: boolean;
+  onSelectShortcut: (id: string) => void;
 }
 
-export function DestinationPickBar({ draftDestination, onConfirm }: PickBarProps) {
+function LiveSignalIcon({ className }: { className?: string }) {
   return (
-    <div className="absolute inset-x-0 bottom-0 z-30 p-3">
-      <div className="mx-auto max-w-md rounded-2xl border border-uva-navy/10 bg-white/95 px-4 py-3 shadow-xl backdrop-blur-sm">
-        <p className="mb-3 text-sm font-medium text-uva-navy">
-          Drag the pin to where you want to go
-        </p>
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.2"
+      strokeLinecap="round"
+      className={className}
+      aria-hidden
+    >
+      <path d="M8.5 15.5a5 5 0 0 1 7 0" />
+      <path d="M5.5 12.5a9 9 0 0 1 13 0" />
+      <path d="M12 18.5h.01" />
+    </svg>
+  );
+}
 
-        {!draftDestination ? (
-          <p className="mb-3 text-sm text-uva-navy/50">
-            No nearby bus stop — try moving the pin closer to campus
-          </p>
-        ) : null}
+function DestinationArrowIcon({ className }: { className?: string }) {
+  return (
+    <span
+      className={`inline-flex size-4 shrink-0 items-center justify-center rounded-full bg-white ${className ?? ""}`}
+      aria-hidden
+    >
+      <svg
+        viewBox="0 0 12 12"
+        className="size-2.5 fill-current text-uva-navy"
+      >
+        <path d="M4.2 2.2 8.3 6 4.2 9.8V2.2Z" />
+      </svg>
+    </span>
+  );
+}
 
-        <button
-          type="button"
-          onClick={onConfirm}
-          disabled={!draftDestination}
-          className="w-full rounded-lg bg-uva-orange px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-uva-orange-hover disabled:opacity-50"
-        >
-          Confirm destination
-        </button>
-      </div>
+function shortcutMinutesDisplay(
+  minutes: number | null,
+  loading: boolean
+): string {
+  if (loading) return "…";
+  if (minutes == null) return "—";
+  return String(minutes);
+}
+
+export function DestinationPickBar({
+  onConfirm,
+  pinTouched = false,
+  shortcuts,
+  shortcutsLoading = false,
+  onSelectShortcut,
+}: PickBarProps) {
+  return (
+    // Full-screen shell does not capture map gestures; only the card does.
+    <div className="pointer-events-none absolute inset-0 z-30 flex items-end justify-center p-3 pb-4 sm:p-4">
+      <section
+        role="dialog"
+        aria-label="Choose a destination"
+        className="pointer-events-auto flex max-h-[min(50vh,28rem)] w-full max-w-md flex-col overflow-hidden rounded-2xl bg-uva-navy shadow-2xl shadow-black/35 ring-1 ring-white/10"
+      >
+        {/* Instruction → Let's Go after pin drag */}
+        <div className="relative z-10 mx-auto -mt-0 w-[75%] shrink-0 translate-y-0 px-0 pt-3">
+          {!pinTouched ? (
+            <div className="flex items-center gap-2.5 rounded-xl bg-uva-orange px-3.5 py-3 shadow-lg shadow-black/20 sm:gap-3 sm:rounded-2xl sm:px-5 sm:py-3.5 md:py-4">
+              <svg
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                className="size-5 shrink-0 text-white sm:size-6 md:size-7"
+                aria-hidden
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              <div className="min-w-0">
+                <p className="text-sm font-semibold leading-snug text-white sm:text-base md:text-lg">
+                  <span className="sm:hidden">
+                    Drag the pin to
+                    <br />
+                    where you want to go
+                  </span>
+                  <span className="hidden sm:inline">
+                    Drag the pin to where you want to go
+                  </span>
+                </p>
+              </div>
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={onConfirm}
+              className="animate-go-cta-pop flex w-full items-center justify-center rounded-xl bg-uva-orange px-3.5 py-3 text-center text-white shadow-lg shadow-black/20 sm:rounded-2xl sm:px-5 sm:py-3.5 md:py-4"
+            >
+              <p className="text-sm font-semibold leading-snug sm:text-base md:text-lg">
+                Let&apos;s Go
+              </p>
+            </button>
+          )}
+        </div>
+
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain text-white">
+          <ul>
+            {shortcuts.map((shortcut) => {
+              const minutesLabel = shortcutMinutesDisplay(
+                shortcut.minutes,
+                shortcutsLoading
+              );
+              const stopLabel = shortcut.stopName
+                ? stopDisplayName(shortcut.stopName)
+                : "Campus destination";
+
+              return (
+                <li key={shortcut.id} className="border-b border-uva-navy-light">
+                  <button
+                    type="button"
+                    disabled={shortcut.disabled || shortcutsLoading}
+                    onClick={() => onSelectShortcut(shortcut.id)}
+                    className="flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-45"
+                  >
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate text-[1.65rem] font-bold leading-none tracking-tight">
+                        {shortcut.label}
+                      </p>
+                      <p className="mt-1.5 flex items-center gap-1.5 text-sm font-semibold leading-tight">
+                        <DestinationArrowIcon />
+                        <span className="truncate">Nearest stop</span>
+                      </p>
+                      <p className="mt-1 truncate text-sm font-normal text-white/90">
+                        {stopLabel}
+                      </p>
+                    </div>
+
+                    <div className="relative shrink-0 pr-1 text-right">
+                      {!shortcutsLoading && shortcut.minutes != null ? (
+                        <LiveSignalIcon className="absolute -right-0.5 -top-0.5 size-3.5 text-white/90" />
+                      ) : null}
+                      <p className="text-[2.35rem] font-bold leading-none tabular-nums">
+                        {minutesLabel}
+                      </p>
+                      <p className="mt-0.5 text-xs font-medium text-white/90">
+                        minutes
+                      </p>
+                    </div>
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </section>
     </div>
   );
 }
