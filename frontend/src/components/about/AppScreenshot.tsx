@@ -29,7 +29,7 @@ export default function AppScreenshot({
         />
       </div>
       {caption ? (
-        <figcaption className="mt-2 text-center text-sm text-uva-navy/55">
+        <figcaption className="mt-2 text-center text-sm text-white/55">
           {caption}
         </figcaption>
       ) : null}

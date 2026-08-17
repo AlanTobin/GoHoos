@@ -12,6 +12,15 @@ export default function PageBackdrop({ variant }: { variant: BackdropVariant }) 
     );
   }
 
+  if (variant === "about") {
+    return (
+      <div
+        className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-uva-navy"
+        aria-hidden
+      />
+    );
+  }
+
   return (
     <div
       className="pointer-events-none absolute inset-0 overflow-hidden"
@@ -33,14 +42,6 @@ export default function PageBackdrop({ variant }: { variant: BackdropVariant }) 
             opacity={0.22}
             className="absolute -right-2 top-28 hidden xl:block rotate-1"
           />
-        </>
-      )}
-
-      {variant === "about" && (
-        <>
-          <div className="absolute -left-32 top-0 size-96 rounded-full bg-uva-orange-soft/30 blur-3xl" />
-          <div className="absolute -right-24 top-1/3 size-80 rounded-full bg-uva-blue-soft/35 blur-3xl" />
-          <div className="absolute -left-20 bottom-0 size-72 rounded-full bg-uva-orange-soft/25 blur-3xl" />
         </>
       )}
     </div>

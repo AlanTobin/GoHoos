@@ -125,7 +125,7 @@ export default function SectionBusLayer({
   return (
     <div
       aria-hidden
-      className="pointer-events-none absolute inset-0 z-[1] hidden overflow-visible lg:block"
+      className="pointer-events-none absolute left-0 top-0 z-[1] hidden overflow-visible lg:block"
     >
       {buses.map((bus) => (
         <div

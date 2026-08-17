@@ -144,7 +144,7 @@ export default function FlowingRoutePath({
   return (
     <svg
       aria-hidden
-      className="pointer-events-none absolute inset-0 z-0 overflow-visible"
+      className="pointer-events-none absolute left-0 top-0 z-0 overflow-visible"
       width={width}
       height={height}
       viewBox={`0 0 ${width} ${height}`}

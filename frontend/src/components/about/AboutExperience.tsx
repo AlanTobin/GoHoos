@@ -237,11 +237,11 @@ function StepNavButton({
       aria-current={isActive ? "step" : undefined}
       className={`group flex w-full items-center gap-3 rounded-lg text-left transition-colors ${
         compact ? "shrink-0 px-3 py-2" : "px-2 py-3"
-      } ${isActive ? "text-uva-navy" : "text-uva-navy/50 hover:text-uva-navy/80"}`}
+      } ${isActive ? "text-white" : "text-white/50 hover:text-white/80"}`}
     >
       <span
         className={`flex size-8 shrink-0 items-center justify-center rounded-full text-sm font-semibold transition-all duration-300 ${
-          isActive ? "shadow-sm" : "bg-uva-navy/10 text-uva-navy/55 group-hover:bg-uva-navy/15"
+          isActive ? "shadow-sm" : "bg-white/10 text-white/55 group-hover:bg-white/15"
         }`}
         style={
           isActive
@@ -318,24 +318,24 @@ export default function AboutExperience() {
   }, []);
 
   return (
-    <div className="relative isolate min-h-full">
+    <div className="relative min-h-full bg-uva-navy">
       <PageBackdrop variant="about" />
 
       <div
         ref={setFlowContainer}
-        className="relative z-10 mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8"
+        className="relative z-10 mx-auto max-w-6xl px-4 py-10 pb-32 sm:px-6 sm:py-14 sm:pb-36 lg:px-8"
       >
       <header className="relative z-10 mx-auto max-w-2xl text-center">
-        <h1 className="text-6xl font-semibold tracking-tight text-uva-navy">
+        <h1 className="text-6xl font-semibold tracking-tight text-white">
           About
         </h1>
-        <p className="mt-4 text-base leading-relaxed text-uva-navy/65 sm:text-lg">
+        <p className="mt-4 text-base leading-relaxed text-white/65 sm:text-lg">
         </p>
       </header>
 
       <nav
         aria-label="Page sections"
-        className="sticky top-0 z-10 -mx-4 mt-8 border-b border-uva-navy/10 bg-[#fafafa]/95 px-4 py-3 backdrop-blur-sm lg:hidden"
+        className="sticky top-0 z-10 -mx-4 mt-8 border-b border-white/10 bg-uva-navy/95 px-4 py-3 backdrop-blur-sm lg:hidden"
       >
         <div className="flex gap-1 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {STEPS.map((step, index) => (
@@ -375,6 +375,7 @@ export default function AboutExperience() {
             <div key={step.id}>
               <SectionShell
                 variant={step.id}
+                active={activeStepId === step.id}
                 className={index < STEPS.length - 1 ? "mb-10 sm:mb-12 lg:mb-14" : ""}
               >
                 <section
@@ -466,8 +467,8 @@ export default function AboutExperience() {
           stepIds={STEPS.map((step) => step.id)}
           activeStepId={activeStepId}
         />
-        <footer className="relative z-10 mt-10 space-y-4 border-t border-uva-navy/10 pt-10 text-base leading-relaxed text-uva-navy/70">
-          <p className="text-sm text-uva-navy/50">
+        <footer className="relative z-10 mt-10 space-y-4 border-t border-white/10 pt-10 text-base leading-relaxed text-white/70">
+          <p className="text-sm text-white/50">
             GoHoos is independently developed and maintained by Alan Tobin and is not affiliated with or
             endorsed by the University of Virginia, UVA Transportation, or
             TransLoc.

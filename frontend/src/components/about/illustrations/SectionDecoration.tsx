@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-export type DecorationVariant =
+export type DecsheetsVariant =
   | "why"
   | "plan"
   | "routes"
@@ -17,44 +17,44 @@ function Blob({ className }: { className?: string }) {
   );
 }
 
-export function SectionDecoration({ variant }: { variant: DecorationVariant }) {
+export function SectionDecoration({ variant }: { variant: DecsheetsVariant }) {
   switch (variant) {
     case "why":
       return (
         <>
-          <Blob className="absolute -left-24 top-8 size-56 bg-uva-orange-soft/80" />
-          <Blob className="absolute -right-20 bottom-0 size-48 bg-uva-blue-soft/90" />
+          <Blob className="absolute -left-24 top-8 size-56 bg-white/25" />
+          <Blob className="absolute -right-20 bottom-0 size-48 bg-white/15" />
         </>
       );
     case "plan":
       return (
         <>
-          <Blob className="absolute -right-16 top-10 size-52 bg-uva-orange-soft/70" />
+          <Blob className="absolute -right-16 top-10 size-52 bg-white/22" />
         </>
       );
     case "routes":
       return (
         <>
-          <Blob className="absolute -left-20 top-16 size-60 bg-uva-blue-soft/80" />
+          <Blob className="absolute -left-20 top-16 size-60 bg-white/20" />
         </>
       );
     case "track":
       return (
         <>
-          <Blob className="absolute -right-24 top-0 size-56 bg-uva-orange-soft/75" />
+          <Blob className="absolute -right-24 top-0 size-56 bg-white/22" />
         </>
       );
     case "capacity":
       return (
         <>
-          <Blob className="absolute -left-16 bottom-8 size-52 bg-uva-orange-soft/80" />
+          <Blob className="absolute -left-16 bottom-8 size-52 bg-white/25" />
         </>
       );
     case "next":
       return (
         <>
-          <Blob className="absolute -left-20 top-0 size-52 bg-uva-blue-soft/70" />
-          <Blob className="absolute -right-16 bottom-6 size-44 bg-uva-orange-soft/65" />
+          <Blob className="absolute -left-20 top-0 size-52 bg-white/18" />
+          <Blob className="absolute -right-16 bottom-6 size-44 bg-white/15" />
         </>
       );
     default:
@@ -82,14 +82,21 @@ export function SectionShell({
   children,
   className = "",
   variant,
+  active = false,
 }: {
-  variant: DecorationVariant;
+  variant: DecsheetsVariant;
   children: ReactNode;
   className?: string;
+  active?: boolean;
 }) {
   return (
     <div className={`relative isolate overflow-visible ${className}`}>
-      <div className="pointer-events-none absolute inset-0" aria-hidden>
+      <div
+        className={`pointer-events-none absolute inset-0 transition-opacity duration-500 ${
+          active ? "opacity-100" : "opacity-0"
+        }`}
+        aria-hidden
+      >
         <SectionDecoration variant={variant} />
       </div>
       <div className="relative z-10">{children}</div>

@@ -11,6 +11,8 @@ import {
 } from "@/lib/layers/shapes";
 import { addVehiclesLayer, addVehicleClickHandler, updateVehiclesLayer } from "@/lib/layers/vehicles";
 import { Vehicle } from "@/types/vehicle";
+import { useMapTheme } from "@/hooks/useMapTheme";
+import MapThemeToggle from "@/components/map/MapThemeToggle";
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN!;
 
@@ -33,7 +35,10 @@ export default function Map({ selectedRoutes, visibleVehicles }: Props) {
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const selectedRoutesRef = useRef<Set<string>>(selectedRoutes);
   const visibleVehiclesRef = useRef<Vehicle[]>(visibleVehicles);
+  const styleUrlRef = useRef<string | null>(null);
+  const handlersAttachedRef = useRef(false);
   const [mapReady, setMapReady] = useState(false);
+  const { resolvedTheme, styleUrl, hydrated, toggleTheme } = useMapTheme();
 
   useEffect(() => {
     selectedRoutesRef.current = selectedRoutes;
@@ -44,32 +49,53 @@ export default function Map({ selectedRoutes, visibleVehicles }: Props) {
   }, [visibleVehicles]);
 
   useEffect(() => {
-    if (!mapContainerRef.current) return;
+    if (!hydrated || !mapContainerRef.current) return;
 
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
-      style: "mapbox://styles/mapbox/streets-v12",
+      style: styleUrl,
       center: [-78.508, 38.0385],
       zoom: 13.5,
     });
 
     mapRef.current = map;
+    styleUrlRef.current = styleUrl;
+    handlersAttachedRef.current = false;
 
-    map.on("load", () => {
+    const onStyleLoad = () => {
       addShapesLayer(map);
       addStopsLayer(map);
-      addStopClickHandler(map);
       addVehiclesLayer(map, visibleVehiclesRef.current);
-      addVehicleClickHandler(map);
+
+      if (!handlersAttachedRef.current) {
+        addStopClickHandler(map);
+        addVehicleClickHandler(map);
+        handlersAttachedRef.current = true;
+      }
+
       applyMapFilters(map, selectedRoutesRef.current);
       setMapReady(true);
-    });
+    };
+
+    map.on("style.load", onStyleLoad);
 
     return () => {
       setMapReady(false);
+      map.off("style.load", onStyleLoad);
       map.remove();
+      mapRef.current = null;
     };
-  }, []);
+    // styleUrl at first hydrate only; later changes use setStyle below
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hydrated]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!hydrated || !map || styleUrlRef.current === styleUrl) return;
+    styleUrlRef.current = styleUrl;
+    setMapReady(false);
+    map.setStyle(styleUrl);
+  }, [styleUrl, hydrated]);
 
   useEffect(() => {
     const map = mapRef.current;
@@ -86,6 +112,9 @@ export default function Map({ selectedRoutes, visibleVehicles }: Props) {
   return (
     <div className="absolute inset-0 min-h-0">
       <div ref={mapContainerRef} className="h-full w-full" />
+      {hydrated ? (
+        <MapThemeToggle resolvedTheme={resolvedTheme} onToggle={toggleTheme} />
+      ) : null}
     </div>
   );
 }

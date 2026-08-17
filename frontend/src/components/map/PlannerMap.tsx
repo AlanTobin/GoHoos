@@ -33,6 +33,8 @@ import type { BoardAlightMarkers } from "@/lib/planner/boardAlight";
 import type { StepFocusTarget } from "@/lib/planner/stepFocusBounds";
 import type { LatLng } from "@/lib/geo";
 import type { FeatureCollection, LineString } from "geojson";
+import { useMapTheme } from "@/hooks/useMapTheme";
+import MapThemeToggle from "@/components/map/MapThemeToggle";
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN!;
 
@@ -79,7 +81,9 @@ export default function PlannerMap({
   const activeRoutesRef = useRef(activeRoutes);
   const onDestinationPinMoveRef = useRef(onDestinationPinMove);
   const pickingRef = useRef(pickingDestination);
+  const styleUrlRef = useRef<string | null>(null);
   const [mapReady, setMapReady] = useState(false);
+  const { resolvedTheme, styleUrl, hydrated, toggleTheme } = useMapTheme();
 
   useEffect(() => {
     activeRoutesRef.current = activeRoutes;
@@ -94,18 +98,19 @@ export default function PlannerMap({
   }, [pickingDestination]);
 
   useEffect(() => {
-    if (!mapContainerRef.current) return;
+    if (!hydrated || !mapContainerRef.current) return;
 
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
-      style: "mapbox://styles/mapbox/streets-v12",
+      style: styleUrl,
       center: [-78.508, 38.0385],
       zoom: 15,
     });
 
     mapRef.current = map;
+    styleUrlRef.current = styleUrl;
 
-    map.on("load", () => {
+    const onStyleLoad = () => {
       addShapesLayer(map);
       addStopsLayer(map);
       addWalkRangeLayer(map);
@@ -114,7 +119,9 @@ export default function PlannerMap({
       updateStopsLayer(map, activeRoutesRef.current);
       setShapeRouteVisibility(map, activeRoutesRef.current);
       setMapReady(true);
-    });
+    };
+
+    map.on("style.load", onStyleLoad);
 
     return () => {
       destMarkerRef.current?.remove();
@@ -124,9 +131,21 @@ export default function PlannerMap({
       alightMarkerRef.current?.remove();
       alightMarkerRef.current = null;
       setMapReady(false);
+      map.off("style.load", onStyleLoad);
       map.remove();
+      mapRef.current = null;
     };
-  }, []);
+    // styleUrl at first hydrate only; later changes use setStyle below
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hydrated]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!hydrated || !map || styleUrlRef.current === styleUrl) return;
+    styleUrlRef.current = styleUrl;
+    setMapReady(false);
+    map.setStyle(styleUrl);
+  }, [styleUrl, hydrated]);
 
   useEffect(() => {
     const map = mapRef.current;
@@ -311,6 +330,9 @@ export default function PlannerMap({
   return (
     <div className="absolute inset-0 min-h-0">
       <div ref={mapContainerRef} className="h-full w-full" />
+      {hydrated ? (
+        <MapThemeToggle resolvedTheme={resolvedTheme} onToggle={toggleTheme} />
+      ) : null}
     </div>
   );
 }
