@@ -1,18 +1,19 @@
 "use client";
 
-import { isGoldYellow } from "@/lib/routes";
-import { getRouteColor } from "@/lib/planner/buildTripPathGeoJSON";
+import type { CSSProperties } from "react";
+import PlannerSheet, {
+  PlannerAccentBar,
+  plannerActionLabelClassName,
+} from "@/components/home/PlannerSheet";
 import { stopDisplayName } from "@/lib/geo";
+import { getRouteColor } from "@/lib/planner/buildTripPathGeoJSON";
 import { stopIdsForTripStep } from "@/lib/planner/tripStepStops";
+import { isGoldYellow, withAlpha } from "@/lib/routes";
 import type { TripOption, TripRideStep, TripStep, TripWalkStep } from "@/types/planner";
 
 function formatMinutes(minutes: number): string {
   const mins = Math.max(1, Math.round(minutes));
   return mins === 1 ? "1 min" : `${mins} min`;
-}
-
-function textOn(color: string): string {
-  return isGoldYellow(color) ? "#232D4B" : "#FFFFFF";
 }
 
 function WalkIcon({ className }: { className?: string }) {
@@ -23,22 +24,22 @@ function WalkIcon({ className }: { className?: string }) {
   );
 }
 
-function BusIcon({ className }: { className?: string }) {
+function BusIcon({
+  className,
+  style,
+}: {
+  className?: string;
+  style?: CSSProperties;
+}) {
   return (
-    <svg viewBox="0 0 20 20" fill="currentColor" className={className} aria-hidden>
+    <svg
+      viewBox="0 0 20 20"
+      fill="currentColor"
+      className={className}
+      style={style}
+      aria-hidden
+    >
       <path d="M4 4.5A2.5 2.5 0 016.5 2h7A2.5 2.5 0 0116 4.5V14a1 1 0 01-1 1h-.5a1.5 1.5 0 11-3 0H8.5a1.5 1.5 0 11-3 0H5a1 1 0 01-1-1V4.5zM6 6v3h8V6H6zm0 4.5v2h1.5v-2H6zm6.5 0v2H14v-2h-1.5z" />
-    </svg>
-  );
-}
-
-function DestIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 20 20" fill="currentColor" className={className} aria-hidden>
-      <path
-        fillRule="evenodd"
-        d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-        clipRule="evenodd"
-      />
     </svg>
   );
 }
@@ -57,22 +58,27 @@ function WalkRow({
       type="button"
       onClick={onSelect}
       aria-current={active ? "step" : undefined}
-      className={`flex w-full items-center gap-3 px-1 py-2 text-left transition-opacity ${
-        active ? "opacity-100" : "opacity-65 hover:opacity-100"
+      className={`flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-left transition-colors sm:gap-3 sm:px-3 sm:py-2.5 ${
+        active
+          ? "bg-white/[0.1] ring-1 ring-white/35"
+          : "bg-white/[0.04] ring-1 ring-white/10 hover:bg-white/[0.07]"
       }`}
     >
-      <div className="flex w-6 shrink-0 flex-col items-center self-stretch">
-        <div className="w-px flex-1 border-l border-dashed border-uva-navy/25" />
-      </div>
       <div
-        className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-medium ${
-          active ? "bg-uva-navy text-white" : "bg-uva-navy/8 text-uva-navy/70"
+        className={`inline-flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold ${
+          active
+            ? "bg-white/20 text-white"
+            : "bg-white/12 text-white/90"
         }`}
       >
         <WalkIcon className="size-3.5" />
         <span>{formatMinutes(step.minutes)}</span>
       </div>
-      <span className="truncate text-xs text-uva-navy/50">
+      <span
+        className={`min-w-0 truncate text-sm font-medium ${
+          active ? "text-white" : "text-white/75"
+        }`}
+      >
         {step.toStopId
           ? `Walk to ${stopDisplayName(step.toStopName)}`
           : "Walk to destination"}
@@ -94,102 +100,72 @@ function RideCard({
   active: boolean;
   onSelect: () => void;
 }) {
-  const color = getRouteColor(step.routeId);
-  const onColor = textOn(color);
   const stopIds = stopIdsForTripStep(trip, index);
   const intermediate = Math.max(0, stopIds.length - 2);
+  const routeColor = getRouteColor(step.routeId);
+  const onGold = isGoldYellow(routeColor);
+  const badgeTextClass = onGold ? "text-uva-navy" : "text-white";
 
   return (
     <button
       type="button"
       onClick={onSelect}
       aria-current={active ? "step" : undefined}
-      className={`w-full rounded-2xl border bg-white px-3 py-3 text-left shadow-sm transition-all ${
-        active
-          ? "border-uva-navy/20 ring-2 ring-uva-navy/20"
-          : "border-uva-navy/10 opacity-90 hover:opacity-100"
+      className={`w-full rounded-xl px-3 py-2.5 text-left transition-all sm:px-3.5 sm:py-3 ${
+        active ? "" : "bg-white/[0.04] hover:bg-white/[0.07]"
       }`}
+      style={{
+        backgroundColor: active ? withAlpha(routeColor, 0.18) : undefined,
+        boxShadow: active
+          ? `inset 0 0 0 1.5px ${routeColor}`
+          : "inset 0 0 0 1px rgba(255,255,255,0.12)",
+      }}
     >
-      <div className="mb-3 flex items-center gap-2">
-        <BusIcon className="size-4 text-uva-navy/40" />
+      <div className="mb-2 flex items-center gap-2">
+        <BusIcon
+          className="size-3.5 shrink-0 sm:size-4"
+          style={{ color: routeColor }}
+        />
         <span
-          className="inline-flex max-w-[14rem] items-center truncate rounded-full px-2.5 py-0.5 text-[11px] font-bold"
-          style={{ backgroundColor: color, color: onColor }}
+          className={`inline-flex max-w-[min(100%,16rem)] items-center truncate rounded-full px-2.5 py-0.5 text-xs font-bold ${badgeTextClass}`}
+          style={{ backgroundColor: routeColor }}
         >
           {step.routeName}
         </span>
-        <span className="ml-auto text-[11px] font-medium text-uva-navy/45">
+        <span className="ml-auto text-xs font-semibold tabular-nums text-white/60">
           {formatMinutes(step.minutes)}
         </span>
       </div>
 
-      <div className="flex gap-3">
-        <div className="flex w-3 shrink-0 flex-col items-center py-0.5">
+      <div className="flex gap-2.5 sm:gap-3">
+        <div className="flex w-2.5 shrink-0 flex-col items-center py-0.5 sm:w-3">
           <span
-            className="size-2.5 rounded-full border-2 bg-white"
-            style={{ borderColor: color }}
+            className="size-2 rounded-full border-2 bg-uva-navy"
+            style={{ borderColor: routeColor }}
           />
           <span
-            className="my-1 w-0.5 flex-1 min-h-[2.5rem] rounded-full"
-            style={{ backgroundColor: color }}
+            className="my-0.5 min-h-[1.5rem] w-0.5 flex-1 rounded-full"
+            style={{ backgroundColor: routeColor }}
           />
           <span
-            className="size-2.5 rounded-full border-2 bg-white"
-            style={{ borderColor: color }}
+            className="size-2 rounded-full border-2 bg-uva-navy"
+            style={{ borderColor: routeColor }}
           />
         </div>
 
-        <div className="min-w-0 flex-1">
-          <p className="truncate text-sm font-semibold text-uva-navy">
+        <div className="min-w-0 flex-1 text-white">
+          <p className="truncate text-sm font-semibold sm:text-[0.95rem]">
             {stopDisplayName(step.fromStopName)}
           </p>
-          <p className="mt-0.5 truncate text-[11px] text-uva-navy/50">
-            → {step.routeName}
-          </p>
-
-          <p className="my-2.5 text-[11px] text-uva-navy/40">
+          <p className="my-1 text-[0.7rem] text-white/45 sm:text-xs">
             {intermediate > 0
               ? `${intermediate} more stop${intermediate === 1 ? "" : "s"}`
               : "Direct"}
           </p>
-
-          <p className="truncate text-sm font-semibold text-uva-navy">
+          <p className="truncate text-sm font-semibold sm:text-[0.95rem]">
             {stopDisplayName(step.toStopName)}
           </p>
         </div>
-      </div>
-    </button>
-  );
-}
-
-function DestinationCard({
-  label,
-  active,
-  onSelect,
-}: {
-  label: string;
-  active: boolean;
-  onSelect: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onSelect}
-      aria-current={active ? "step" : undefined}
-      className={`flex w-full items-center gap-3 rounded-2xl border bg-white px-3 py-3 text-left shadow-sm transition-all ${
-        active
-          ? "border-uva-orange/40 ring-2 ring-uva-orange/25"
-          : "border-uva-navy/10 opacity-90 hover:opacity-100"
-      }`}
-    >
-      <span className="flex size-8 shrink-0 items-center justify-center rounded-md bg-uva-orange text-white">
-        <DestIcon className="size-4" />
-      </span>
-      <div className="min-w-0">
-        <p className="text-[10px] font-medium uppercase tracking-wide text-uva-navy/40">
-          Destination
-        </p>
-        <p className="truncate text-sm font-semibold text-uva-navy">{label}</p>
       </div>
     </button>
   );
@@ -199,82 +175,52 @@ interface Props {
   trip: TripOption;
   activeStepIndex: number;
   onStepFocus: (index: number) => void;
-  destinationLabel?: string;
-  onBackToRoutes: () => void;
-  onChangeDestination: () => void;
+  onBack: () => void;
 }
 
 export default function TripStepTrail({
   trip,
   activeStepIndex,
   onStepFocus,
-  destinationLabel = "Destination",
-  onBackToRoutes,
-  onChangeDestination,
+  onBack,
 }: Props) {
   if (trip.steps.length === 0) return null;
 
-  const last = trip.steps[trip.steps.length - 1];
-  const lastIsEgress = last.kind === "walk" && !last.toStopId;
+  const accent = (
+    <div className="w-full">
+      <h2 className="text-center text-base font-bold tracking-tight text-white">
+        Trip steps
+      </h2>
+    </div>
+  );
+
+  const footer = (
+    <PlannerAccentBar as="button" size="action" onClick={onBack}>
+      <span className={plannerActionLabelClassName()}>Back</span>
+    </PlannerAccentBar>
+  );
 
   return (
-    <div className="absolute inset-x-0 bottom-0 z-30 p-3">
-      <div className="mx-auto max-w-md rounded-2xl border border-uva-navy/10 bg-white/95 px-3 py-3 shadow-xl backdrop-blur-sm">
-        <div className="mb-3 flex items-center gap-2">
-          <button
-            type="button"
-            onClick={onBackToRoutes}
-            className="rounded-lg border border-uva-navy/15 bg-white px-3 py-2 text-xs font-medium text-uva-navy transition-colors hover:bg-uva-navy/5"
-          >
-            ← Routes
-          </button>
-          <p className="flex-1 text-center text-sm font-semibold text-uva-navy">
-            ~{trip.totalMinutes} min
-          </p>
-          <button
-            type="button"
-            onClick={onChangeDestination}
-            className="rounded-lg border border-uva-navy/15 bg-white px-3 py-2 text-xs font-medium text-uva-navy transition-colors hover:bg-uva-navy/5"
-          >
-            Change dest
-          </button>
-        </div>
+    <PlannerSheet
+      ariaLabel="Trip steps"
+      accent={accent}
+      collapsedLabel="Trip steps"
+      footer={footer}
+    >
+      <ol className="flex flex-col">
+        {trip.steps.map((step: TripStep, index) => {
+          const active = index === activeStepIndex;
+          const isLast = index === trip.steps.length - 1;
 
-        <ol className="max-h-[48vh] space-y-1 overflow-y-auto pr-0.5">
-          {trip.steps.map((step: TripStep, index) => {
-            const active = index === activeStepIndex;
-
-            if (step.kind === "walk") {
-              if (lastIsEgress && index === trip.steps.length - 1) {
-                return (
-                  <li key={`step-${index}`} className="space-y-1">
-                    <WalkRow
-                      step={step}
-                      active={active}
-                      onSelect={() => onStepFocus(index)}
-                    />
-                    <DestinationCard
-                      label={destinationLabel}
-                      active={active}
-                      onSelect={() => onStepFocus(index)}
-                    />
-                  </li>
-                );
-              }
-
-              return (
-                <li key={`step-${index}`}>
-                  <WalkRow
-                    step={step}
-                    active={active}
-                    onSelect={() => onStepFocus(index)}
-                  />
-                </li>
-              );
-            }
-
-            return (
-              <li key={`step-${index}`}>
+          return (
+            <li key={`step-${index}`} className="flex flex-col">
+              {step.kind === "walk" ? (
+                <WalkRow
+                  step={step}
+                  active={active}
+                  onSelect={() => onStepFocus(index)}
+                />
+              ) : (
                 <RideCard
                   step={step}
                   index={index}
@@ -282,11 +228,16 @@ export default function TripStepTrail({
                   active={active}
                   onSelect={() => onStepFocus(index)}
                 />
-              </li>
-            );
-          })}
-        </ol>
-      </div>
-    </div>
+              )}
+              {!isLast ? (
+                <div className="flex justify-center py-1" aria-hidden>
+                  <span className="h-3 w-px border-l-2 border-dashed border-white/30" />
+                </div>
+              ) : null}
+            </li>
+          );
+        })}
+      </ol>
+    </PlannerSheet>
   );
 }
