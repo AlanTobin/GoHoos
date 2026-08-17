@@ -308,12 +308,12 @@ export default function PlannerMap({
   );
 }
 
-/** Matches DestinationPickBar max height so the camera centers in the visible map. */
+/** Matches DestinationPickBar card height so the camera centers in the visible map. */
 export function pickSheetCameraPadding(): mapboxgl.PaddingOptions {
   if (typeof window === "undefined") {
-    return { top: 72, bottom: 360, left: 40, right: 40 };
+    return { top: 72, bottom: 320, left: 40, right: 40 };
   }
-  const bottom = Math.min(Math.round(window.innerHeight * 0.58), 512);
+  const bottom = Math.min(Math.round(window.innerHeight * 0.5) + 24, 448);
   return { top: 72, bottom, left: 40, right: 40 };
 }
 

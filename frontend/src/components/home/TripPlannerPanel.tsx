@@ -1,6 +1,6 @@
 "use client";
 
-import type { PickedLocation, TripOption, TripStep } from "@/types/planner";
+import type { TripOption, TripStep } from "@/types/planner";
 import { stopDisplayName } from "@/lib/geo";
 import { isGoldYellow } from "@/lib/routes";
 import { getRouteColor } from "@/lib/planner/buildTripPathGeoJSON";
@@ -181,52 +181,56 @@ export function DestinationPickBar({
   onSelectShortcut,
 }: PickBarProps) {
   return (
-    <div className="absolute inset-x-0 bottom-0 z-30 flex max-h-[min(58vh,32rem)] flex-col">
-      {/* Instruction → Go CTA after pin drag; 75% width, scales up on larger screens */}
-      <div className="relative z-10 mx-auto -mb-3 w-[75%] max-w-3xl">
-        {!pinTouched ? (
-          <div className="flex items-center gap-2.5 rounded-xl bg-uva-orange px-3.5 py-3.5 shadow-lg shadow-uva-navy/25 sm:gap-3 sm:rounded-2xl sm:px-5 sm:py-4 md:px-6 md:py-5">
-            <svg
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              className="size-5 shrink-0 text-white sm:size-6 md:size-7"
-              aria-hidden
-            >
-              <path
-                fillRule="evenodd"
-                d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-                clipRule="evenodd"
-              />
-            </svg>
-            <div className="min-w-0">
-              <p className="text-sm font-semibold leading-snug text-white sm:text-base md:text-lg">
-                <span className="sm:hidden">
-                  Drag the pin to
-                  <br />
-                  where you want to go
-                </span>
-                <span className="hidden sm:inline">
-                  Drag the pin to where you want to go
-                </span>
-              </p>
+    // Full-screen shell does not capture map gestures; only the card does.
+    <div className="pointer-events-none absolute inset-0 z-30 flex items-end justify-center p-3 pb-4 sm:p-4">
+      <section
+        role="dialog"
+        aria-label="Choose a destination"
+        className="pointer-events-auto flex max-h-[min(50vh,28rem)] w-full max-w-md flex-col overflow-hidden rounded-2xl bg-uva-navy shadow-2xl shadow-black/35 ring-1 ring-white/10"
+      >
+        {/* Instruction → Let's Go after pin drag */}
+        <div className="relative z-10 mx-auto -mt-0 w-[75%] shrink-0 translate-y-0 px-0 pt-3">
+          {!pinTouched ? (
+            <div className="flex items-center gap-2.5 rounded-xl bg-uva-orange px-3.5 py-3 shadow-lg shadow-black/20 sm:gap-3 sm:rounded-2xl sm:px-5 sm:py-3.5 md:py-4">
+              <svg
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                className="size-5 shrink-0 text-white sm:size-6 md:size-7"
+                aria-hidden
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              <div className="min-w-0">
+                <p className="text-sm font-semibold leading-snug text-white sm:text-base md:text-lg">
+                  <span className="sm:hidden">
+                    Drag the pin to
+                    <br />
+                    where you want to go
+                  </span>
+                  <span className="hidden sm:inline">
+                    Drag the pin to where you want to go
+                  </span>
+                </p>
+              </div>
             </div>
-          </div>
-        ) : (
-          <button
-            type="button"
-            onClick={onConfirm}
-            className="animate-go-cta-pop flex w-full items-center justify-center rounded-xl bg-uva-orange px-3.5 py-3.5 text-center text-white shadow-lg shadow-uva-navy/25 sm:rounded-2xl sm:px-5 sm:py-4 md:px-6 md:py-5"
-          >
-            <p className="text-sm font-semibold leading-snug sm:text-base md:text-lg">
-              Let&apos;s Go
-            </p>
-          </button>
-        )}
-      </div>
+          ) : (
+            <button
+              type="button"
+              onClick={onConfirm}
+              className="animate-go-cta-pop flex w-full items-center justify-center rounded-xl bg-uva-orange px-3.5 py-3 text-center text-white shadow-lg shadow-black/20 sm:rounded-2xl sm:px-5 sm:py-3.5 md:py-4"
+            >
+              <p className="text-sm font-semibold leading-snug sm:text-base md:text-lg">
+                Let&apos;s Go
+              </p>
+            </button>
+          )}
+        </div>
 
-      {/* Navy arrivals-style destination list */}
-      <div className="flex min-h-0 flex-1 flex-col bg-uva-navy pt-5 text-white shadow-[0_-8px_24px_rgba(35,45,75,0.35)]">
-        <div className="min-h-0 flex-1 overflow-y-auto">
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain text-white">
           <ul>
             {shortcuts.map((shortcut) => {
               const minutesLabel = shortcutMinutesDisplay(
@@ -275,7 +279,7 @@ export function DestinationPickBar({
             })}
           </ul>
         </div>
-      </div>
+      </section>
     </div>
   );
 }
