@@ -24,6 +24,11 @@ export const POPULAR_DESTINATIONS: PopularDestination[] = [
     point: { lat: 38.03645, lon: -78.50575 },
   },
   {
+    id: "rouss-robertson-hall",
+    label: "Rouss Robertson Hall",
+    point: { lat: 38.0331, lon: -78.5042 },
+  },
+  {
     id: "o-hill",
     label: "O-Hill",
     point: { lat: 38.0342, lon: -78.5145 },

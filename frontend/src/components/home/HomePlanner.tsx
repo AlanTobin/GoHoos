@@ -12,7 +12,7 @@ import TripStepTrail from "@/components/home/TripStepTrail";
 import routeStops from "@/data/json/route-stops.json";
 import { getVehicles } from "@/services/vehicles";
 import { toRouteId } from "@/lib/routes";
-import { snapToStop, type LatLng } from "@/lib/geo";
+import { snapToStop, stopDisplayName, type LatLng } from "@/lib/geo";
 import { planTrips } from "@/lib/planTrips";
 import { buildTripPathGeoJSON } from "@/lib/planner/buildTripPathGeoJSON";
 import { boardAlightForTripStep } from "@/lib/planner/boardAlight";
@@ -64,6 +64,7 @@ export default function HomePlanner() {
   const [isLoadingRoutes, setIsLoadingRoutes] = useState(true);
   const [origin, setOrigin] = useState<PickedLocation | null>(null);
   const [destination, setDestination] = useState<PickedLocation | null>(null);
+  const [destinationLabel, setDestinationLabel] = useState<string | null>(null);
   const [draftDestination, setDraftDestination] = useState<PickedLocation | null>(
     null
   );
@@ -254,6 +255,9 @@ export default function HomePlanner() {
       ...picked,
       point: draftPinPoint,
     });
+    setDestinationLabel(
+      picked.stopName ? stopDisplayName(picked.stopName) : "your destination"
+    );
     setPickMode("idle");
     setDraftPinPoint(null);
     setDraftDestination(null);
@@ -275,7 +279,10 @@ export default function HomePlanner() {
       popularOptions.map((option) => ({
         id: option.id,
         label: option.label,
-        stopName: option.picked?.stopName ?? null,
+        stopName: option.picked?.stopName
+          ? stopDisplayName(option.picked.stopName)
+          : null,
+        walkMeters: option.picked?.walkMeters ?? null,
         minutes: option.minutes,
         disabled: !option.picked,
       })),
@@ -288,6 +295,7 @@ export default function HomePlanner() {
       if (!option?.picked) return;
       // Keep the popular place lat/lng as the destination endpoint.
       setDestination(option.picked);
+      setDestinationLabel(option.label);
       setDraftPinPoint(null);
       setDraftDestination(null);
       setPickMode("idle");
@@ -301,6 +309,7 @@ export default function HomePlanner() {
 
   const handleChangeDestination = useCallback(() => {
     setDestination(null);
+    setDestinationLabel(null);
     setSelectedTripIndex(0);
     setActiveStepIndex(0);
     setItineraryOpen(false);
@@ -452,17 +461,16 @@ export default function HomePlanner() {
             trip={detailTrip}
             activeStepIndex={activeStepIndex}
             onStepFocus={setActiveStepIndex}
-            destinationLabel="Your destination"
-            onBackToRoutes={handleBackToRoutes}
-            onChangeDestination={handleChangeDestination}
+            onBack={handleBackToRoutes}
           />
         ) : (
           <TripResultsBar
             trips={trips}
             selectedTripIndex={null}
             isLoadingRoutes={isLoadingRoutes}
+            destinationLabel={destinationLabel ?? "your destination"}
             onSelectTrip={handleSelectTrip}
-            onChangeDestination={handleChangeDestination}
+            onBack={handleChangeDestination}
           />
         )
       ) : null}
