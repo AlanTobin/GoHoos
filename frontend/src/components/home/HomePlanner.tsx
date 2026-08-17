@@ -24,7 +24,7 @@ import type { PickedLocation, PlannerPickMode } from "@/types/planner";
 const ALL_MAPPED_ROUTE_IDS = new Set(Object.keys(routeStops));
 const CAMPUS_CENTER: LatLng = { lat: 38.0385, lon: -78.508 };
 
-const USE_MOCK_USER_LOCATION = true;
+const USE_MOCK_USER_LOCATION = false;
 const MOCK_USER_LOCATION: LatLng = {
   lat: 38.04778,
   lon: -78.51361,
