@@ -3,7 +3,13 @@
 :root {
   --background: #fafafa;
   --foreground: #232d4b;
-  --uva-orange: #e57200;
+  /* Planner / brand accents */
+  --ink-navy: #1b2340;
+  --academical-orange: #e57200;
+  --brass: #c9a15c;
+  --parchment: #ede6d6;
+  /* Legacy aliases — orange stays brand; navy kept for non-planner surfaces */
+  --uva-orange: var(--academical-orange);
   --uva-orange-hover: #c86300;
   --uva-orange-soft: #fff4e8;
   --uva-orange-light: #f0a04a;
@@ -15,6 +21,10 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-ink-navy: var(--ink-navy);
+  --color-academical-orange: var(--academical-orange);
+  --color-brass: var(--brass);
+  --color-parchment: var(--parchment);
   --color-uva-orange: var(--uva-orange);
   --color-uva-orange-hover: var(--uva-orange-hover);
   --color-uva-orange-soft: var(--uva-orange-soft);
@@ -24,19 +34,28 @@
   --color-uva-blue-soft: var(--uva-blue-soft);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --animate-go-cta-pop: go-cta-pop 1.15s ease-in-out infinite;
+  --animate-go-cta-glow: go-cta-glow 1.6s ease-in-out infinite;
+  --animate-planner-sheet-in: planner-sheet-in 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@keyframes go-cta-pop {
+@keyframes go-cta-glow {
   0%,
   100% {
-    transform: scale(1);
+    box-shadow: 0 4px 14px rgba(229, 114, 0, 0.35);
   }
-  45% {
-    transform: scale(1.045);
+  50% {
+    box-shadow: 0 6px 28px rgba(229, 114, 0, 0.7);
   }
-  65% {
-    transform: scale(0.985);
+}
+
+@keyframes planner-sheet-in {
+  from {
+    opacity: 0.55;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
