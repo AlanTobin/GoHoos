@@ -16,6 +16,7 @@ import { snapToStop, stopDisplayName, type LatLng } from "@/lib/geo";
 import { planTrips } from "@/lib/planTrips";
 import { buildTripPathGeoJSON } from "@/lib/planner/buildTripPathGeoJSON";
 import { boardAlightForTripStep } from "@/lib/planner/boardAlight";
+import { buildPopularDestinationOptions } from "@/lib/planner/popularDestinations";
 import { stepFocusTarget } from "@/lib/planner/stepFocusBounds";
 import { stopIdsForTripStep } from "@/lib/planner/tripStepStops";
 import type { PickedLocation, PlannerPickMode } from "@/types/planner";
@@ -23,7 +24,7 @@ import type { PickedLocation, PlannerPickMode } from "@/types/planner";
 const ALL_MAPPED_ROUTE_IDS = new Set(Object.keys(routeStops));
 const CAMPUS_CENTER: LatLng = { lat: 38.0385, lon: -78.508 };
 
-const USE_MOCK_USER_LOCATION = false;
+const USE_MOCK_USER_LOCATION = true;
 const MOCK_USER_LOCATION: LatLng = {
   lat: 38.04778,
   lon: -78.51361,
@@ -60,6 +61,7 @@ export default function HomePlanner() {
     null
   );
   const [draftPinPoint, setDraftPinPoint] = useState<LatLng | null>(null);
+  const [pinTouched, setPinTouched] = useState(false);
   const [pickMode, setPickMode] = useState<PlannerPickMode>("idle");
   const [userLocation, setUserLocation] = useState<LatLng | null>(null);
   const [geoLoading, setGeoLoading] = useState(false);
@@ -212,6 +214,7 @@ export default function HomePlanner() {
         existing?.point ?? userLocation ?? origin?.point ?? CAMPUS_CENTER;
       setDraftPinPoint(initialPoint);
       setDraftDestination(snapDestination(initialPoint, mapRouteIds));
+      setPinTouched(false);
       setPickMode("picking-destination");
     },
     [userLocation, origin, mapRouteIds]
@@ -219,6 +222,7 @@ export default function HomePlanner() {
 
   const handleDestinationPinMove = useCallback(
     (point: LatLng) => {
+      setPinTouched(true);
       setDraftPinPoint(point);
       setDraftDestination(snapDestination(point, mapRouteIds));
     },
@@ -246,6 +250,45 @@ export default function HomePlanner() {
     setDraftDestination(null);
   }, [draftDestination, draftPinPoint]);
 
+  const plannerRouteIds = useMemo(
+    () => (activeRoutes.size > 0 ? activeRoutes : mapRouteIds),
+    [activeRoutes, mapRouteIds]
+  );
+
+  const popularOptions = useMemo(
+    () =>
+      buildPopularDestinationOptions(origin, plannerRouteIds, mapRouteIds),
+    [origin, plannerRouteIds, mapRouteIds]
+  );
+
+  const destinationShortcuts = useMemo(
+    () =>
+      popularOptions.map((option) => ({
+        id: option.id,
+        label: option.label,
+        stopName: option.picked?.stopName ?? null,
+        minutes: option.minutes,
+        disabled: !option.picked || option.minutes == null,
+      })),
+    [popularOptions]
+  );
+
+  const handleSelectShortcut = useCallback(
+    (id: string) => {
+      const option = popularOptions.find((item) => item.id === id);
+      if (!option?.picked || option.minutes == null) return;
+      setDestination(option.picked);
+      setDraftPinPoint(null);
+      setDraftDestination(null);
+      setPickMode("idle");
+      setSelectedTripIndex(0);
+      setActiveStepIndex(0);
+      setItineraryOpen(false);
+      setTripsKey("");
+    },
+    [popularOptions]
+  );
+
   const handleChangeDestination = useCallback(() => {
     setDestination(null);
     setSelectedTripIndex(0);
@@ -260,9 +303,9 @@ export default function HomePlanner() {
     return planTrips({
       origin,
       destination,
-      activeRouteIds: activeRoutes,
+      activeRouteIds: plannerRouteIds,
     });
-  }, [origin, destination, activeRoutes, isLoadingRoutes]);
+  }, [origin, destination, plannerRouteIds, isLoadingRoutes]);
 
   const nextTripsKey = useMemo(
     () =>
@@ -389,6 +432,10 @@ export default function HomePlanner() {
         <DestinationPickBar
           draftDestination={draftDestination}
           onConfirm={handleConfirmDestination}
+          pinTouched={pinTouched}
+          shortcuts={destinationShortcuts}
+          shortcutsLoading={!origin || isLoadingRoutes}
+          onSelectShortcut={handleSelectShortcut}
         />
       ) : destination ? (
         itineraryOpen && detailTrip ? (

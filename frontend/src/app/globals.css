@@ -6,6 +6,7 @@
   --uva-orange: #e57200;
   --uva-orange-hover: #c86300;
   --uva-orange-soft: #fff4e8;
+  --uva-orange-light: #f0a04a;
   --uva-navy: #232d4b;
   --uva-navy-light: #314067;
   --uva-blue-soft: #eef2fa;
@@ -17,11 +18,26 @@
   --color-uva-orange: var(--uva-orange);
   --color-uva-orange-hover: var(--uva-orange-hover);
   --color-uva-orange-soft: var(--uva-orange-soft);
+  --color-uva-orange-light: var(--uva-orange-light);
   --color-uva-navy: var(--uva-navy);
   --color-uva-navy-light: var(--uva-navy-light);
   --color-uva-blue-soft: var(--uva-blue-soft);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --animate-go-cta-pop: go-cta-pop 1.15s ease-in-out infinite;
+}
+
+@keyframes go-cta-pop {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.045);
+  }
+  65% {
+    transform: scale(0.985);
+  }
 }
 
 body {
