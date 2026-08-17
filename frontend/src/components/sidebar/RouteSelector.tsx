@@ -64,10 +64,19 @@ export default function RouteSelector({
   const [isOpen, setIsOpen] = useState(true);
   const [search, setSearch] = useState("");
 
-  const sortedRoutes = useMemo(
-    () => [...routes].sort((a, b) => a.route_sort_order - b.route_sort_order),
-    [routes]
-  );
+  const sortedRoutes = useMemo(() => {
+    const isPrimaryRoute = (name: string) =>
+      /\b(line|loop|pilot)\b/i.test(name);
+
+    return [...routes].sort((a, b) => {
+      const aPrimary = isPrimaryRoute(a.route_long_name);
+      const bPrimary = isPrimaryRoute(b.route_long_name);
+      if (aPrimary !== bPrimary) return aPrimary ? -1 : 1;
+      return a.route_long_name.localeCompare(b.route_long_name, undefined, {
+        sensitivity: "base",
+      });
+    });
+  }, [routes]);
 
   const activeRoutes = useMemo(
     () => sortedRoutes.filter(r => routesWithVehicles.has(r.route_id)),
