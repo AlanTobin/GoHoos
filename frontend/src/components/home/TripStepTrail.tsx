@@ -63,6 +63,8 @@ function WalkRow({
           ? "bg-planner-ink/[0.1] ring-1 ring-planner-ink/35"
           : "bg-planner-ink/[0.04] ring-1 ring-planner-ink/10 hover:bg-planner-ink/[0.07]"
       }`}
+      data-planner-trip-step=""
+      {...(active ? { "data-planner-trip-step-active": "" } : {})}
     >
       <div
         className={`inline-flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold ${
@@ -116,6 +118,8 @@ function RideCard({
           ? ""
           : "bg-planner-ink/[0.04] ring-1 ring-planner-ink/12 hover:bg-planner-ink/[0.07]"
       }`}
+      data-planner-trip-step=""
+      {...(active ? { "data-planner-trip-step-active": "" } : {})}
       style={{
         backgroundColor: active ? withAlpha(routeColor, 0.18) : undefined,
         boxShadow: active ? `inset 0 0 0 1.5px ${routeColor}` : undefined,

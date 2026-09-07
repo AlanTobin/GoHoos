@@ -9,6 +9,7 @@ import {
   TripResultsBar,
 } from "@/components/home/TripPlannerPanel";
 import TripStepTrail from "@/components/home/TripStepTrail";
+import TripStepCoach from "@/components/home/TripStepCoach";
 import routeStops from "@/data/json/route-stops.json";
 import { getVehicles } from "@/services/vehicles";
 import { toRouteId } from "@/lib/routes";
@@ -79,6 +80,7 @@ export default function HomePlanner() {
   const [activeStepIndex, setActiveStepIndex] = useState(0);
   const [tripsKey, setTripsKey] = useState("");
   const [itineraryOpen, setItineraryOpen] = useState(false);
+  const [stepTouched, setStepTouched] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
@@ -395,12 +397,19 @@ export default function HomePlanner() {
   const handleSelectTrip = useCallback((index: number) => {
     setSelectedTripIndex(index);
     setActiveStepIndex(0);
+    setStepTouched(false);
     setItineraryOpen(true);
   }, []);
 
   const handleBackToRoutes = useCallback(() => {
     setItineraryOpen(false);
     setActiveStepIndex(0);
+    setStepTouched(false);
+  }, []);
+
+  const handleStepFocus = useCallback((index: number) => {
+    setStepTouched(true);
+    setActiveStepIndex(index);
   }, []);
 
   return (
@@ -458,12 +467,15 @@ export default function HomePlanner() {
         />
       ) : destination ? (
         itineraryOpen && detailTrip ? (
-          <TripStepTrail
-            trip={detailTrip}
-            activeStepIndex={activeStepIndex}
-            onStepFocus={setActiveStepIndex}
-            onBack={handleBackToRoutes}
-          />
+          <>
+            <TripStepCoach active={!stepTouched} />
+            <TripStepTrail
+              trip={detailTrip}
+              activeStepIndex={activeStepIndex}
+              onStepFocus={handleStepFocus}
+              onBack={handleBackToRoutes}
+            />
+          </>
         ) : (
           <TripResultsBar
             trips={trips}

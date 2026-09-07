@@ -405,18 +405,18 @@ export function TripResultsBar({
   onSelectTrip,
   onBack,
 }: ResultsBarProps) {
-  const hint = destinationLabel
-    ? `To ${destinationLabel} · Ranked by time`
-    : "Ranked by time";
+  const hint = destinationLabel ? `To ${destinationLabel}` : null;
 
   const accent = (
     <div className="w-full">
       <h2 className="text-center text-base font-bold tracking-tight text-planner-ink">
         Possible routes
       </h2>
-      <p className="mt-0.5 text-center text-xs leading-snug text-planner-ink/55">
-        {hint}
-      </p>
+      {hint ? (
+        <p className="mt-0.5 text-center text-xs leading-snug text-planner-ink/55">
+          {hint}
+        </p>
+      ) : null}
     </div>
   );
 

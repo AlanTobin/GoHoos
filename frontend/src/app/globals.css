@@ -44,7 +44,7 @@
   --font-mono: var(--font-geist-mono);
   --animate-go-cta-glow: go-cta-glow 1.6s ease-in-out infinite;
   --animate-planner-sheet-in: planner-sheet-in 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-  --animate-pin-coach-pulse: pin-coach-pulse 1.4s ease-in-out infinite;
+  --animate-pin-coach-pulse: pin-coach-pulse 2.2s cubic-bezier(0.45, 0, 0.55, 1) infinite;
 }
 
 @keyframes go-cta-glow {
@@ -61,11 +61,11 @@
   0%,
   100% {
     transform: scale(1);
-    opacity: 0.95;
+    opacity: 0.85;
   }
   50% {
-    transform: scale(1.18);
-    opacity: 0.45;
+    transform: scale(1.05);
+    opacity: 0.55;
   }
 }
 
