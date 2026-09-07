@@ -17,7 +17,7 @@ export default function MapThemeToggle({
       onClick={onToggle}
       aria-label={goingDark ? "Use dark map" : "Use light map"}
       title={goingDark ? "Dark map" : "Light map"}
-      className="absolute top-3 right-3 z-20 flex size-10 items-center justify-center rounded-lg bg-uva-navy/90 text-white shadow-md ring-1 ring-white/15 backdrop-blur-sm transition-colors hover:bg-uva-navy"
+      className="absolute top-3 right-3 z-20 flex size-10 items-center justify-center rounded-lg bg-planner-sheet/90 text-planner-ink shadow-md ring-1 ring-planner-ink/15 backdrop-blur-sm transition-colors hover:bg-planner-sheet"
     >
       {goingDark ? <MoonIcon /> : <SunIcon />}
     </button>

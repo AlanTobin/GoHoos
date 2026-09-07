@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import AppHeader from "@/components/layout/AppHeader";
+import { MapThemeProvider } from "@/hooks/useMapTheme";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -39,9 +40,11 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-dvh antialiased`}
     >
       <body className="flex h-dvh flex-col">
-        <AppHeader />
-        <main className="min-h-0 flex-1 overflow-auto">{children}</main>
-        <Analytics />
+        <MapThemeProvider>
+          <AppHeader />
+          <main className="min-h-0 flex-1 overflow-auto">{children}</main>
+          <Analytics />
+        </MapThemeProvider>
       </body>
     </html>
   );

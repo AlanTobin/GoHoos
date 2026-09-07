@@ -84,7 +84,7 @@ function RoutesPageContent() {
     <div className="relative h-full min-h-0 w-full overflow-hidden">
       {!isMockup ? <PageBackdrop variant="routes" /> : null}
       {isMockup ? (
-        <div className="absolute left-1/2 top-3 z-30 -translate-x-1/2 rounded-full bg-uva-navy/90 px-4 py-1.5 text-xs font-medium text-white shadow-md">
+        <div className="absolute left-1/2 top-3 z-30 -translate-x-1/2 rounded-full bg-planner-sheet/90 px-4 py-1.5 text-xs font-medium text-planner-ink shadow-md">
           Screenshot mode — sample data only
         </div>
       ) : null}

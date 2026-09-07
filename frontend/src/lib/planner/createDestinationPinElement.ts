@@ -1,6 +1,25 @@
-/** Classic black teardrop pin for the destination map picker. */
-export function createDestinationPinElement(): HTMLDivElement {
+import type { ResolvedMapTheme } from "@/lib/mapTheme";
+
+/** Classic teardrop pin; fill inverts with the map theme. */
+export function applyDestinationPinTheme(
+  root: HTMLElement,
+  theme: ResolvedMapTheme
+) {
+  const path = root.querySelector("path");
+  const circle = root.querySelector("circle");
+  if (path) {
+    path.setAttribute("fill", theme === "dark" ? "#E2E2E2" : "#111111");
+  }
+  if (circle) {
+    circle.setAttribute("fill", theme === "dark" ? "#232D4B" : "#FFFFFF");
+  }
+}
+
+export function createDestinationPinElement(
+  theme: ResolvedMapTheme = "light"
+): HTMLDivElement {
   const root = document.createElement("div");
+  root.setAttribute("data-planner-dest-pin", "");
   root.className =
     "flex cursor-grab flex-col items-center active:cursor-grabbing";
   root.innerHTML = `
@@ -20,5 +39,6 @@ export function createDestinationPinElement(): HTMLDivElement {
       <circle cx="18" cy="17" r="6.5" fill="#FFFFFF" />
     </svg>
   `;
+  applyDestinationPinTheme(root, theme);
   return root;
 }

@@ -5,6 +5,8 @@ const SOURCE_ID = "trip-path";
 const RIDE_LAYER_ID = "trip-path-ride";
 const RIDE_ARROW_LAYER_ID = "trip-path-ride-arrows";
 const WALK_LAYER_ID = "trip-path-walk";
+const WALK_LINE_COLOR_LIGHT = "#232D4B";
+const WALK_LINE_COLOR_DARK = "#F4F4F4";
 
 /** Match planner map route line styling from shapes.ts */
 const ROUTE_COLOR: mapboxgl.ExpressionSpecification = [
@@ -73,7 +75,7 @@ export function addTripPathLayer(map: mapboxgl.Map) {
         "line-cap": "round",
       },
       paint: {
-        "line-color": ["get", "color"],
+        "line-color": WALK_LINE_COLOR_LIGHT,
         "line-width": 4,
         "line-dasharray": [1.5, 1.5],
         "line-opacity": 0.85,
@@ -112,6 +114,18 @@ export function addTripPathLayer(map: mapboxgl.Map) {
       paint: ARROW_PAINT,
     },
     "stops"
+  );
+}
+
+export function setTripPathWalkColor(
+  map: mapboxgl.Map,
+  theme: "light" | "dark"
+) {
+  if (!map.getLayer(WALK_LAYER_ID)) return;
+  map.setPaintProperty(
+    WALK_LAYER_ID,
+    "line-color",
+    theme === "dark" ? WALK_LINE_COLOR_DARK : WALK_LINE_COLOR_LIGHT
   );
 }
 

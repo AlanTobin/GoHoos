@@ -16,6 +16,10 @@
   --uva-navy: #232d4b;
   --uva-navy-light: #314067;
   --uva-blue-soft: #eef2fa;
+  --planner-sheet: #232d4b;
+  --planner-sheet-2: #314067;
+  --planner-ink: #ffffff;
+  --planner-card: #eef2fa;
 }
 
 @theme inline {
@@ -32,10 +36,15 @@
   --color-uva-navy: var(--uva-navy);
   --color-uva-navy-light: var(--uva-navy-light);
   --color-uva-blue-soft: var(--uva-blue-soft);
+  --color-planner-sheet: var(--planner-sheet);
+  --color-planner-sheet-2: var(--planner-sheet-2);
+  --color-planner-ink: var(--planner-ink);
+  --color-planner-card: var(--planner-card);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --animate-go-cta-glow: go-cta-glow 1.6s ease-in-out infinite;
   --animate-planner-sheet-in: planner-sheet-in 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-pin-coach-pulse: pin-coach-pulse 1.4s ease-in-out infinite;
 }
 
 @keyframes go-cta-glow {
@@ -45,6 +54,18 @@
   }
   50% {
     box-shadow: 0 6px 28px rgba(229, 114, 0, 0.7);
+  }
+}
+
+@keyframes pin-coach-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.95;
+  }
+  50% {
+    transform: scale(1.18);
+    opacity: 0.45;
   }
 }
 
@@ -72,4 +93,11 @@ button:not(:disabled),
 
 button:disabled {
   cursor: not-allowed;
+}
+
+.location-gate-globe {
+  background:
+    radial-gradient(circle at 35% 30%, #4a6a8a, transparent 42%),
+    radial-gradient(circle at 70% 60%, #2a3d5c, #1a2740 72%, #141c30);
+  box-shadow: inset -8px -6px 20px rgba(0, 0, 0, 0.35);
 }

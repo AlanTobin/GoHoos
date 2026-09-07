@@ -439,6 +439,7 @@ export default function HomePlanner() {
             : destination?.point ?? null
         }
         onDestinationPinMove={handleDestinationPinMove}
+        showDestinationHint={pickMode === "picking-destination" && !pinTouched}
       />
 
       {locationBlocked ? (

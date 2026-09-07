@@ -25,9 +25,13 @@ import {
 import {
   addTripPathLayer,
   setTripPathActiveStep,
+  setTripPathWalkColor,
   updateTripPathLayer,
 } from "@/lib/layers/tripPath";
-import { createDestinationPinElement } from "@/lib/planner/createDestinationPinElement";
+import {
+  applyDestinationPinTheme,
+  createDestinationPinElement,
+} from "@/lib/planner/createDestinationPinElement";
 import { createBoardAlightArrowElement } from "@/lib/planner/createBoardAlightArrowElement";
 import type { BoardAlightMarkers } from "@/lib/planner/boardAlight";
 import type { StepFocusTarget } from "@/lib/planner/stepFocusBounds";
@@ -35,6 +39,7 @@ import type { LatLng } from "@/lib/geo";
 import type { FeatureCollection, LineString } from "geojson";
 import { useMapTheme } from "@/hooks/useMapTheme";
 import MapThemeToggle from "@/components/map/MapThemeToggle";
+import DestinationPinCoach from "@/components/home/DestinationPinCoach";
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN!;
 
@@ -55,6 +60,7 @@ interface Props {
   pickingDestination: boolean;
   destinationPinPoint: LatLng | null;
   onDestinationPinMove: (point: LatLng) => void;
+  showDestinationHint?: boolean;
 }
 
 export default function PlannerMap({
@@ -72,6 +78,7 @@ export default function PlannerMap({
   pickingDestination,
   destinationPinPoint,
   onDestinationPinMove,
+  showDestinationHint = false,
 }: Props) {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
@@ -81,6 +88,7 @@ export default function PlannerMap({
   const activeRoutesRef = useRef(activeRoutes);
   const onDestinationPinMoveRef = useRef(onDestinationPinMove);
   const pickingRef = useRef(pickingDestination);
+  const pickCameraFramedRef = useRef(false);
   const styleUrlRef = useRef<string | null>(null);
   const [mapReady, setMapReady] = useState(false);
   const { resolvedTheme, styleUrl, hydrated, toggleTheme } = useMapTheme();
@@ -167,6 +175,12 @@ export default function PlannerMap({
     updateTripPathLayer(map, tripPath);
     setTripPathActiveStep(map, tripPath ? activeStepIndex : null);
   }, [tripPath, activeStepIndex, mapReady]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!mapReady || !map) return;
+    setTripPathWalkColor(map, resolvedTheme);
+  }, [resolvedTheme, mapReady]);
 
   useEffect(() => {
     const map = mapRef.current;
@@ -285,7 +299,7 @@ export default function PlannerMap({
 
     if (!destMarkerRef.current) {
       const marker = new mapboxgl.Marker({
-        element: createDestinationPinElement(),
+        element: createDestinationPinElement(resolvedTheme),
         draggable: pickingDestination,
         anchor: "bottom",
       })
@@ -304,7 +318,8 @@ export default function PlannerMap({
     destMarkerRef.current
       .setLngLat([destinationPinPoint.lon, destinationPinPoint.lat])
       .setDraggable(pickingDestination);
-  }, [destinationPinPoint, pickingDestination, mapReady]);
+    applyDestinationPinTheme(destMarkerRef.current.getElement(), resolvedTheme);
+  }, [destinationPinPoint, pickingDestination, mapReady, resolvedTheme]);
 
   useEffect(() => {
     const map = mapRef.current;
@@ -313,10 +328,12 @@ export default function PlannerMap({
       return;
     }
     if (pickingDestination) {
-      // Keep the user centered in the map strip above the pick sheet.
+      if (pickCameraFramedRef.current) return;
+      pickCameraFramedRef.current = true;
       flyToPoint(map, originPoint, 15, pickSheetCameraPadding());
       return;
     }
+    pickCameraFramedRef.current = false;
     flyToPoint(map, originPoint);
   }, [
     originPoint,
@@ -333,6 +350,7 @@ export default function PlannerMap({
       {hydrated ? (
         <MapThemeToggle resolvedTheme={resolvedTheme} onToggle={toggleTheme} />
       ) : null}
+      <DestinationPinCoach active={showDestinationHint} />
     </div>
   );
 }

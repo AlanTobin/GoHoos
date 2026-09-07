@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import PlannerSheet, {
   PlannerAccentBar,
   plannerActionLabelClassName,
@@ -27,11 +28,7 @@ function LocationGateArt() {
   return (
     <div className="relative mx-auto mb-7 size-32" aria-hidden>
       <div
-        className="absolute bottom-0 left-1/2 size-[6.5rem] -translate-x-1/2 rounded-full shadow-[inset_-8px_-6px_20px_rgba(0,0,0,0.35)]"
-        style={{
-          background:
-            "radial-gradient(circle at 35% 30%, #4a6a8a, transparent 42%), radial-gradient(circle at 70% 60%, #2a3d5c, #1a2740 72%, #141c30)",
-        }}
+        className="location-gate-globe absolute bottom-0 left-1/2 size-[6.5rem] -translate-x-1/2 rounded-full"
       />
       <svg
         viewBox="0 0 36 48"
@@ -55,7 +52,7 @@ export function LocationRequiredOverlay({
 }: LocationGateProps) {
   return (
     <div
-      className="pointer-events-auto absolute inset-0 z-50 flex flex-col bg-uva-navy text-white"
+      className="pointer-events-auto absolute inset-0 z-50 flex flex-col bg-planner-sheet text-planner-ink"
       role="alertdialog"
       aria-labelledby="location-required-title"
       aria-describedby="location-required-desc"
@@ -70,7 +67,7 @@ export function LocationRequiredOverlay({
         </h2>
         <p
           id="location-required-desc"
-          className="mt-2.5 max-w-[28ch] text-sm leading-snug text-white/60"
+          className="mt-2.5 max-w-[28ch] text-sm leading-snug text-planner-ink/60"
         >
           {geoLoading
             ? "Please ensure location is enabled in your browser."
@@ -79,7 +76,7 @@ export function LocationRequiredOverlay({
       </div>
 
       <div className="flex flex-col gap-3.5 px-5 pb-6 pt-4 sm:px-8">
-        <p className="text-center text-[0.7rem] leading-snug text-white/40">
+        <p className="text-center text-[0.7rem] leading-snug text-planner-ink/40">
           By allowing access, you consent to share your location with GoHoos to
           plan trips on Grounds.
         </p>
@@ -153,7 +150,7 @@ function PopularDestinationCard({
       type="button"
       disabled={shortcut.disabled || loading}
       onClick={onSelect}
-      className="w-full rounded-xl bg-uva-navy-light/80 p-1.5 text-left ring-1 ring-white/12 transition-opacity disabled:cursor-not-allowed disabled:opacity-45"
+      className="w-full rounded-xl bg-planner-sheet-2/80 p-1.5 text-left ring-1 ring-planner-ink/12 transition-opacity disabled:cursor-not-allowed disabled:opacity-45"
     >
       <div className="flex items-center gap-2.5 rounded-[14px] bg-uva-blue-soft px-2.5 py-2">
         <span className="inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-uva-orange text-xs font-bold text-white">
@@ -171,18 +168,18 @@ function PopularDestinationCard({
 
       <div className="flex items-center gap-2.5 px-2 pb-1.5 pt-2 sm:gap-3 sm:px-2.5">
         <div className="min-w-0 flex-1">
-          <p className="text-[0.6rem] font-medium uppercase tracking-wide text-white/50">
+          <p className="text-[0.6rem] font-medium uppercase tracking-wide text-planner-ink/50">
             Time
           </p>
-          <p className="mt-0.5 text-sm font-bold tabular-nums text-white">
+          <p className="mt-0.5 text-sm font-bold tabular-nums text-planner-ink">
             {shortcutMinutesDisplay(shortcut.minutes, loading)}
           </p>
         </div>
         <div className="min-w-0 flex-1">
-          <p className="text-[0.6rem] font-medium uppercase tracking-wide text-white/50">
+          <p className="text-[0.6rem] font-medium uppercase tracking-wide text-planner-ink/50">
             Distance
           </p>
-          <p className="mt-0.5 text-sm font-bold tabular-nums text-white">
+          <p className="mt-0.5 text-sm font-bold tabular-nums text-planner-ink">
             {formatWalkDistance(shortcut.walkMeters, loading)}
           </p>
         </div>
@@ -201,50 +198,73 @@ export function DestinationPickBar({
   shortcutsLoading = false,
   onSelectShortcut,
 }: PickBarProps) {
-  const accent = (
-    <div className="w-full">
-      <h2 className="text-center text-base font-bold tracking-tight text-white">
-        Where to?
-      </h2>
-      <p className="mt-0.5 text-center text-xs leading-snug text-white/55">
-        Drag the pin on the map, or pick a stop below
-      </p>
-      <div className="mt-2">
+  const [spotsOpen, setSpotsOpen] = useState(false);
+
+  return (
+    <div className="pointer-events-none absolute inset-x-0 bottom-0 z-40">
+      <div className="pointer-events-auto px-3 pb-3 sm:px-5 lg:px-6">
         <PlannerAccentBar
           as="button"
           onClick={onConfirm}
           disabled={!pinTouched}
-          className={
-            pinTouched
-              ? "animate-go-cta-glow shadow-[0_4px_14px_rgba(229,114,0,0.45)]"
-              : ""
-          }
+          className={`min-h-14 py-4 shadow-[0_8px_22px_rgba(229,114,0,0.4)] ${
+            pinTouched ? "animate-go-cta-glow" : ""
+          }`}
         >
-          <p className="text-sm font-semibold">Confirm destination</p>
+          <p className="text-base font-bold tracking-tight sm:text-lg">
+            Confirm destination
+          </p>
         </PlannerAccentBar>
       </div>
-    </div>
-  );
 
-  return (
-    <PlannerSheet
-      ariaLabel="Choose a destination"
-      accent={accent}
-      collapsedLabel="Where to?"
-    >
-      <ul className="flex flex-col gap-2">
-        {shortcuts.map((shortcut, index) => (
-          <li key={shortcut.id}>
-            <PopularDestinationCard
-              shortcut={shortcut}
-              index={index}
-              loading={shortcutsLoading}
-              onSelect={() => onSelectShortcut(shortcut.id)}
-            />
-          </li>
-        ))}
-      </ul>
-    </PlannerSheet>
+      <section
+        role="dialog"
+        aria-label="Choose a destination"
+        className="pointer-events-auto w-full bg-planner-sheet text-planner-ink shadow-[0_-10px_32px_rgba(0,0,0,0.35)]"
+      >
+        <button
+          type="button"
+          onClick={() => setSpotsOpen((open) => !open)}
+          aria-expanded={spotsOpen}
+          className="flex w-full flex-col items-center justify-center px-4 py-2.5 transition-colors hover:bg-planner-ink/5"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={`size-3.5 text-planner-ink/45 transition-transform ${
+              spotsOpen ? "" : "rotate-180"
+            }`}
+            aria-hidden
+          >
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+          <span className="mt-0.5 text-center text-sm font-medium tracking-tight text-planner-ink/70">
+            …or pick from popular spots
+          </span>
+        </button>
+
+        {spotsOpen ? (
+          <ul className="flex max-h-[36dvh] flex-col gap-2 overflow-y-auto overscroll-contain px-3 pb-4 sm:px-5 lg:px-6">
+            {shortcuts.map((shortcut, index) => (
+              <li key={shortcut.id}>
+                <PopularDestinationCard
+                  shortcut={shortcut}
+                  index={index}
+                  loading={shortcutsLoading}
+                  onSelect={() => onSelectShortcut(shortcut.id)}
+                />
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div className="h-1.5" />
+        )}
+      </section>
+    </div>
   );
 }
 
@@ -282,7 +302,7 @@ function TripStepsPreview({ steps }: { steps: TripStep[] }) {
           <div key={`preview-step-${i}`} className="flex items-center">
             {i > 0 ? (
               <span
-                className="mx-0.5 h-px w-2 shrink-0 bg-white/35 sm:w-2.5"
+                className="mx-0.5 h-px w-2 shrink-0 bg-planner-ink/35 sm:w-2.5"
                 aria-hidden
               />
             ) : null}
@@ -290,7 +310,7 @@ function TripStepsPreview({ steps }: { steps: TripStep[] }) {
               className={`inline-flex size-6 shrink-0 items-center justify-center rounded-full sm:size-7 ${
                 step.kind === "ride"
                   ? iconTone
-                  : "bg-white/15 text-white/90"
+                  : "bg-planner-ink/15 text-planner-ink/90"
               }`}
               style={
                 routeColor ? { backgroundColor: routeColor } : undefined
@@ -329,7 +349,7 @@ function TripOptionCard({
       className={`w-full rounded-xl p-1.5 text-left ring-1 transition-colors ${
         selected
           ? "bg-uva-orange/15 ring-uva-orange/50"
-          : "bg-uva-navy-light/80 ring-white/12 hover:bg-uva-navy-light"
+          : "bg-planner-sheet-2/80 ring-planner-ink/12 hover:bg-planner-sheet-2"
       }`}
     >
       <div className="flex items-center gap-2.5 rounded-[14px] bg-uva-blue-soft px-2.5 py-2">
@@ -345,15 +365,15 @@ function TripOptionCard({
 
       <div className="flex items-center gap-2.5 px-2 pb-1.5 pt-2 sm:gap-3 sm:px-2.5">
         <div className="min-w-0 shrink-0">
-          <p className="text-[0.6rem] font-medium uppercase tracking-wide text-white/50">
+          <p className="text-[0.6rem] font-medium uppercase tracking-wide text-planner-ink/50">
             Time
           </p>
-          <p className="mt-0.5 text-sm font-bold tabular-nums text-white">
+          <p className="mt-0.5 text-sm font-bold tabular-nums text-planner-ink">
             {Math.round(trip.totalMinutes)} min
           </p>
         </div>
         <div className="min-w-0 flex-1">
-          <p className="text-[0.6rem] font-medium uppercase tracking-wide text-white/50">
+          <p className="text-[0.6rem] font-medium uppercase tracking-wide text-planner-ink/50">
             Steps
           </p>
           <div className="mt-0.5">
@@ -391,10 +411,10 @@ export function TripResultsBar({
 
   const accent = (
     <div className="w-full">
-      <h2 className="text-center text-base font-bold tracking-tight text-white">
+      <h2 className="text-center text-base font-bold tracking-tight text-planner-ink">
         Possible routes
       </h2>
-      <p className="mt-0.5 text-center text-xs leading-snug text-white/55">
+      <p className="mt-0.5 text-center text-xs leading-snug text-planner-ink/55">
         {hint}
       </p>
     </div>
@@ -414,11 +434,11 @@ export function TripResultsBar({
       footer={footer}
     >
       {isLoadingRoutes && trips.length === 0 ? (
-        <p className="py-6 text-center text-sm text-white/55">
+        <p className="py-6 text-center text-sm text-planner-ink/55">
           Loading active routes…
         </p>
       ) : trips.length === 0 ? (
-        <p className="py-6 text-center text-sm text-white/55">
+        <p className="py-6 text-center text-sm text-planner-ink/55">
           No route found with at most one transfer
         </p>
       ) : (

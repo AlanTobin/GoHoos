@@ -60,15 +60,15 @@ function WalkRow({
       aria-current={active ? "step" : undefined}
       className={`flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-left transition-colors sm:gap-3 sm:px-3 sm:py-2.5 ${
         active
-          ? "bg-white/[0.1] ring-1 ring-white/35"
-          : "bg-white/[0.04] ring-1 ring-white/10 hover:bg-white/[0.07]"
+          ? "bg-planner-ink/[0.1] ring-1 ring-planner-ink/35"
+          : "bg-planner-ink/[0.04] ring-1 ring-planner-ink/10 hover:bg-planner-ink/[0.07]"
       }`}
     >
       <div
         className={`inline-flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold ${
           active
-            ? "bg-white/20 text-white"
-            : "bg-white/12 text-white/90"
+            ? "bg-planner-ink/20 text-planner-ink"
+            : "bg-planner-ink/12 text-planner-ink/90"
         }`}
       >
         <WalkIcon className="size-3.5" />
@@ -76,7 +76,7 @@ function WalkRow({
       </div>
       <span
         className={`min-w-0 truncate text-sm font-medium ${
-          active ? "text-white" : "text-white/75"
+          active ? "text-planner-ink" : "text-planner-ink/75"
         }`}
       >
         {step.toStopId
@@ -112,13 +112,13 @@ function RideCard({
       onClick={onSelect}
       aria-current={active ? "step" : undefined}
       className={`w-full rounded-xl px-3 py-2.5 text-left transition-all sm:px-3.5 sm:py-3 ${
-        active ? "" : "bg-white/[0.04] hover:bg-white/[0.07]"
+        active
+          ? ""
+          : "bg-planner-ink/[0.04] ring-1 ring-planner-ink/12 hover:bg-planner-ink/[0.07]"
       }`}
       style={{
         backgroundColor: active ? withAlpha(routeColor, 0.18) : undefined,
-        boxShadow: active
-          ? `inset 0 0 0 1.5px ${routeColor}`
-          : "inset 0 0 0 1px rgba(255,255,255,0.12)",
+        boxShadow: active ? `inset 0 0 0 1.5px ${routeColor}` : undefined,
       }}
     >
       <div className="mb-2 flex items-center gap-2">
@@ -132,7 +132,7 @@ function RideCard({
         >
           {step.routeName}
         </span>
-        <span className="ml-auto text-xs font-semibold tabular-nums text-white/60">
+        <span className="ml-auto text-xs font-semibold tabular-nums text-planner-ink/60">
           {formatMinutes(step.minutes)}
         </span>
       </div>
@@ -140,7 +140,7 @@ function RideCard({
       <div className="flex gap-2.5 sm:gap-3">
         <div className="flex w-2.5 shrink-0 flex-col items-center py-0.5 sm:w-3">
           <span
-            className="size-2 rounded-full border-2 bg-uva-navy"
+            className="size-2 rounded-full border-2 bg-planner-sheet"
             style={{ borderColor: routeColor }}
           />
           <span
@@ -148,16 +148,16 @@ function RideCard({
             style={{ backgroundColor: routeColor }}
           />
           <span
-            className="size-2 rounded-full border-2 bg-uva-navy"
+            className="size-2 rounded-full border-2 bg-planner-sheet"
             style={{ borderColor: routeColor }}
           />
         </div>
 
-        <div className="min-w-0 flex-1 text-white">
+        <div className="min-w-0 flex-1 text-planner-ink">
           <p className="truncate text-sm font-semibold sm:text-[0.95rem]">
             {stopDisplayName(step.fromStopName)}
           </p>
-          <p className="my-1 text-[0.7rem] text-white/45 sm:text-xs">
+          <p className="my-1 text-[0.7rem] text-planner-ink/45 sm:text-xs">
             {intermediate > 0
               ? `${intermediate} more stop${intermediate === 1 ? "" : "s"}`
               : "Direct"}
@@ -188,7 +188,7 @@ export default function TripStepTrail({
 
   const accent = (
     <div className="w-full">
-      <h2 className="text-center text-base font-bold tracking-tight text-white">
+      <h2 className="text-center text-base font-bold tracking-tight text-planner-ink">
         Trip steps
       </h2>
     </div>
@@ -231,7 +231,7 @@ export default function TripStepTrail({
               )}
               {!isLast ? (
                 <div className="flex justify-center py-1" aria-hidden>
-                  <span className="h-3 w-px border-l-2 border-dashed border-white/30" />
+                  <span className="h-3 w-px border-l-2 border-dashed border-planner-ink/30" />
                 </div>
               ) : null}
             </li>

@@ -1,6 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import {
+  createContext,
+  createElement,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from "react";
 import {
   MAP_THEME_STORAGE_KEY,
   mapStyleUrl,
@@ -11,7 +19,18 @@ import {
   type ResolvedMapTheme,
 } from "@/lib/mapTheme";
 
-export function useMapTheme() {
+interface MapThemeValue {
+  preference: MapThemePreference;
+  resolvedTheme: ResolvedMapTheme;
+  styleUrl: string;
+  hydrated: boolean;
+  setTheme: (next: MapThemePreference) => void;
+  toggleTheme: () => void;
+}
+
+const MapThemeContext = createContext<MapThemeValue | null>(null);
+
+function useMapThemeState(): MapThemeValue {
   const [preference, setPreference] = useState<MapThemePreference>("system");
   const [systemDark, setSystemDark] = useState(false);
   const [hydrated, setHydrated] = useState(false);
@@ -47,12 +66,28 @@ export function useMapTheme() {
     setTheme(nextOverrideTheme(resolvedTheme));
   }
 
-  return {
-    preference,
-    resolvedTheme,
-    styleUrl,
-    hydrated,
-    setTheme,
-    toggleTheme,
-  };
+  return useMemo(
+    () => ({
+      preference,
+      resolvedTheme,
+      styleUrl,
+      hydrated,
+      setTheme,
+      toggleTheme,
+    }),
+    [preference, resolvedTheme, styleUrl, hydrated]
+  );
+}
+
+export function MapThemeProvider({ children }: { children: ReactNode }) {
+  const value = useMapThemeState();
+  return createElement(MapThemeContext.Provider, { value }, children);
+}
+
+export function useMapTheme() {
+  const context = useContext(MapThemeContext);
+  if (!context) {
+    throw new Error("useMapTheme must be used within MapThemeProvider");
+  }
+  return context;
 }

@@ -30,7 +30,7 @@ function ChevronIcon({ up }: { up?: boolean }) {
       strokeWidth="2.2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className={`size-4 text-white/70 transition-transform ${up ? "rotate-180" : ""}`}
+      className={`size-4 text-planner-ink/70 transition-transform ${up ? "rotate-180" : ""}`}
       aria-hidden
     >
       <path d="M6 9l6 6 6-6" />
@@ -63,7 +63,7 @@ export default function PlannerSheet({
         role="dialog"
         aria-label={ariaLabel}
         aria-expanded={!collapsed}
-        className={`pointer-events-auto w-full overflow-hidden bg-uva-navy text-white shadow-[0_-10px_32px_rgba(0,0,0,0.35)] ${
+        className={`pointer-events-auto w-full overflow-hidden bg-planner-sheet text-planner-ink shadow-[0_-10px_32px_rgba(0,0,0,0.35)] ${
           collapsed ? "" : `animate-planner-sheet-in ${expandedHeightClass}`
         } ${className}`}
       >
@@ -71,21 +71,21 @@ export default function PlannerSheet({
           <button
             type="button"
             onClick={() => setCollapsed(false)}
-            className="flex w-full items-center justify-center gap-2 px-4 pt-2.5 pb-4 transition-colors hover:bg-white/5 sm:pt-3 sm:pb-5"
+            className="flex w-full items-center justify-center gap-2 px-4 pt-2.5 pb-4 transition-colors hover:bg-planner-ink/5 sm:pt-3 sm:pb-5"
             aria-label="Expand panel"
           >
             <ChevronIcon up />
-            <span className="text-sm font-semibold text-white">
+            <span className="text-sm font-semibold text-planner-ink">
               {collapsedLabel}
             </span>
           </button>
         ) : (
           <div className={`overflow-y-auto overscroll-contain ${expandedHeightClass}`}>
-            <div className="sticky top-0 z-10 bg-uva-navy/95 backdrop-blur-sm">
+            <div className="sticky top-0 z-10 bg-planner-sheet/95 backdrop-blur-sm">
               <button
                 type="button"
                 onClick={() => setCollapsed(true)}
-                className="flex w-full items-center justify-center gap-2 px-4 pt-2 pb-1 transition-colors hover:bg-white/5"
+                className="flex w-full items-center justify-center gap-2 px-4 pt-2 pb-1 transition-colors hover:bg-planner-ink/5"
                 aria-label="Collapse panel"
               >
                 <ChevronIcon />
@@ -96,7 +96,7 @@ export default function PlannerSheet({
             <div className="px-3 pb-2 sm:px-5 lg:px-6">{children}</div>
 
             {footer ? (
-              <div className="sticky bottom-0 z-10 border-t border-white/10 bg-uva-navy/95 px-3 pt-2.5 pb-3 backdrop-blur-sm sm:px-5 lg:px-6">
+              <div className="sticky bottom-0 z-10 border-t border-planner-ink/10 bg-planner-sheet/95 px-3 pt-2.5 pb-3 backdrop-blur-sm sm:px-5 lg:px-6">
                 {footer}
               </div>
             ) : (
@@ -123,8 +123,8 @@ interface PlannerAccentBarProps {
 
 const accentToneClass = {
   primary: "bg-uva-orange text-white",
-  muted: "bg-white/10 text-white ring-1 ring-white/15",
-  ghost: "bg-transparent text-white ring-1 ring-white/35",
+  muted: "bg-planner-ink/10 text-planner-ink ring-1 ring-planner-ink/15",
+  ghost: "bg-transparent text-planner-ink ring-1 ring-planner-ink/35",
 } as const;
 
 const accentSizeClass = {
