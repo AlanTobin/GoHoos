@@ -206,9 +206,14 @@ const STEPS: Step[] = [
           </li>
         </ul>
         <p>
-          If you have any ideas or suggestions, I&apos;d love to hear them!
-                    <br />
-          Reach me at <a href="mailto:srp4da@virginia.edu" className="text-uva-orange hover:underline">srp4da@virginia.edu</a> or submit an issue on <a href="https://github.com/AlanTobin/GoHoos/issues" className="text-uva-orange hover:underline">GitHub</a>.
+          If you have any ideas or suggestions, I&apos;d love to hear them on the{" "}
+          <Link
+            href="/issues"
+            className="font-medium text-uva-orange hover:underline"
+          >
+            Issues
+          </Link>{" "}
+          page.
         </p>
       </>
     ),
@@ -469,7 +474,7 @@ export default function AboutExperience() {
         />
         <footer className="relative z-10 mt-10 space-y-4 border-t border-white/10 pt-10 text-base leading-relaxed text-white/70">
           <p className="text-sm text-white/50">
-            GoHoos is independently developed and maintained by Alan Tobin and is not affiliated with or
+            GoHoos is independently developed and maintained and is not affiliated with or
             endorsed by the University of Virginia, UVA Transportation, or
             TransLoc.
           </p>

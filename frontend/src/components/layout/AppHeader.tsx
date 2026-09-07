@@ -8,6 +8,7 @@ const NAV_ITEMS = [
   { href: "/", label: "Home" },
   { href: "/routes", label: "Routes" },
   { href: "/about", label: "About" },
+  { href: "/issues", label: "Issues" },
 ] as const;
 
 function isActive(pathname: string, href: string) {
