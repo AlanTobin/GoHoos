@@ -4,6 +4,21 @@ import { useState, type FormEvent } from "react";
 
 type Status = "idle" | "sending" | "sent" | "confirm" | "error";
 
+const FORMSUBMIT_EMAIL =
+  process.env.NEXT_PUBLIC_FEEDBACK_TO_EMAIL?.trim() || "gohoosapp@gmail.com";
+
+function isFormSubmitSuccess(data: unknown) {
+  if (!data || typeof data !== "object") return false;
+  const success = (data as { success?: unknown }).success;
+  return success === true || success === "true";
+}
+
+function formSubmitMessage(data: unknown) {
+  if (!data || typeof data !== "object") return "";
+  const message = (data as { message?: unknown }).message;
+  return typeof message === "string" ? message : "";
+}
+
 export default function FeedbackForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -17,25 +32,61 @@ export default function FeedbackForm() {
     setStatus("sending");
     setError(null);
 
+    if (website.trim()) {
+      setStatus("sent");
+      return;
+    }
+
+    if (!FORMSUBMIT_EMAIL) {
+      setStatus("error");
+      setError("Feedback is not configured.");
+      return;
+    }
+
     try {
-      const response = await fetch("/api/feedback", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, message, website }),
-      });
+      const response = await fetch(
+        `https://formsubmit.co/ajax/${encodeURIComponent(FORMSUBMIT_EMAIL)}`,
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            _subject: "GoHoos feedback",
+            _template: "box",
+            _captcha: false,
+            name: name.trim() || "Anonymous",
+            email: email.trim() || "anonymous@gohoos.app",
+            message: message.trim(),
+          }),
+        }
+      );
 
-      const data = (await response.json()) as {
-        error?: string;
-        needsConfirmation?: boolean;
-      };
+      let data: unknown = null;
+      try {
+        data = await response.json();
+      } catch {
+        data = null;
+      }
 
-      if (!response.ok) {
-        setStatus("error");
-        setError(data.error ?? "Could not send feedback.");
+      const providerMessage = formSubmitMessage(data);
+
+      if (/activat|confirm/i.test(providerMessage)) {
+        setStatus("confirm");
+        setName("");
+        setEmail("");
+        setMessage("");
         return;
       }
 
-      setStatus(data.needsConfirmation ? "confirm" : "sent");
+      if (!response.ok || !isFormSubmitSuccess(data)) {
+        setStatus("error");
+        setError("Could not send feedback. Try again in a moment.");
+        return;
+      }
+
+      setStatus("sent");
       setName("");
       setEmail("");
       setMessage("");
