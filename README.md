@@ -79,4 +79,4 @@ npm run convert:gtfs
 
 ## Contact
 
-Built by [Alan Tobin](https://github.com/AlanTobin) — feedback and issues welcome on [GitHub Issues](https://github.com/AlanTobin/GoHoos/issues).
+Built by [Alan Tobin](https://github.com/AlanTobin) and [Chiebuka Onuoha][https://github.com/conuoha24] — feedback and issues welcome on [GitHub Issues](https://github.com/AlanTobin/GoHoos/issues).
